@@ -1,0 +1,125 @@
+/*-- Cards --*/
+.uamswp-news-syndication-cards {
+	/* Flex Layout */
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+}
+.uamswp-news-syndication-cards .default-card {
+	/* Flex Layout */
+	display: block;
+	flex: 1 0 240px; /* Workaround for Safari Bug */
+	min-width: 240px;
+	margin-right: 10px;
+	margin-top: 10px;
+	vertical-align: top;  
+	padding: 0 40px 20px; 
+	background-color: #eee;
+}
+.uamswp-news-syndication-cards .default-card .card-image {
+	margin: 0 -41px;
+}
+.uamswp-news-syndication-cards .default-card .card-image img {
+	width: 100%;
+}
+.uamswp-news-syndication-cards .default-card .card-body h3 {
+	font-size: 25px;
+	color: #9d2235;
+}
+.uamswp-news-syndication-cards .default-card .card-body h3 a {
+	color: #9d2235;
+}
+.uamswp-news-syndication-cards .default-card .card-body p {
+	font-size: 16px; 
+ 	line-height: 1.4; 
+ 	padding-bottom: 10px; 
+}
+/*-- Excerpts --*/
+.uamswp-news-syndication-excerpts {
+	padding: 0;
+}
+.uamswp-news-syndication-excerpts li {
+	clear: both;
+	padding-top: 15px;
+	list-style: none;
+	margin: 0;
+}
+.uamswp-news-syndication-excerpts li:last-child p:after {
+	display: none;
+}
+.uamswp-news-syndication-excerpts p {
+	margin: 0;
+	position: relative;
+ 	padding-bottom: 20px;
+}
+.uamswp-news-syndication-excerpts p:after {
+	position: absolute;
+  	bottom: 10px;
+  	left: 0;
+  	content: "";
+  	height: 1px;
+  	width: 50px;
+  	background-color: #c9c9c9;
+}
+.uamswp-news-syndication-excerpts img {
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+  	border-radius: 100%;
+ 	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+  	background-clip: padding-box;
+  	overflow: hidden;
+  	display: block;
+  	min-width: 70px;
+  	min-height: 70px;
+  	max-width: 150px;
+  	max-height: 150px;
+  	height: 20%;
+  	width: 20%;
+  	margin: 5px 25px 15px 0px;
+  	float: left;
+}
+.uamswp-news-syndication-excerpts a.news-link {
+	color: #9d2235;
+  	font-size: 25px;
+  	font-weight: 800;
+  	line-height: 1.4;
+  	overflow: hidden;
+  	/*display: inline-block;*/
+  	/*border-bottom: none;*/
+}
+.uamswp-news-syndication-excerpts a.news-link span {
+	font-size: 17px;
+  	color: #818181;
+  	margin-top: 3px;
+  	font-weight: 400
+}
+.uamswp-news-syndication-excerpts a.news-link:hover,
+.uamswp-news-syndication-excerpts a.news-link:focus {
+  	border-bottom: none;
+  	text-decoration: underline;
+}
+.uamswp-news-syndication-excerpts .more {
+	margin: 10px 0 0 0;
+}
+.uamswp-news-syndication-excerpts small {
+	font-size: 15px;
+  	font-weight: 400;
+}
+.uamswp-news-syndication-excerpts span {
+	display: block;
+  	overflow: hidden;
+}
+.uamswp-news-syndication-excerpts .news-item-byline .news-item-byline-date,
+.uamswp-news-syndication-excerpts .news-item-byline .news-item-byline-author {
+	display: inline-block;
+}
+
+/* Lazy Loader fix -> uamshealth */
+.uamswp-news-syndication-full .wp-caption img:first-child {
+	display: none;
+}
+.uamswp-news-syndication-full .wp-caption img:only-child {
+    display: block;
+}
