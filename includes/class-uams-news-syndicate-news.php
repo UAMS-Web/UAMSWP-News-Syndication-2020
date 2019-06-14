@@ -1,6 +1,6 @@
 <?php
 
-class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
+class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 
 	/**
 	 * @var string Shortcode name.
@@ -8,16 +8,16 @@ class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
 	public $shortcode_name = 'uamswp_news';
 	public function __construct() {
 		parent::construct();
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_syndication_stylesheet' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_news_syndication_stylesheet' ) );
 		if ( class_exists('UAMS_Shortcakes') ) {
 			add_action( 'admin_init', array( $this, 'build_shortcake' ) );
-			add_editor_style( plugins_url( '/css/uams-syndication-admin.css', __DIR__ ) );
+			add_editor_style( plugins_url( '/css/uams-news-syndication-admin.css', __DIR__ ) );
 			add_action( 'enqueue_shortcode_ui', function() {
-				wp_enqueue_script( 'uams_syndications_editor_js', plugins_url( '/js/uams-syndication-shortcake.js', __DIR__ ) );
+				wp_enqueue_script( 'uams_news_syndications_editor_js', plugins_url( '/js/uams-news-syndication-shortcake.js', __DIR__ ) );
 			});
 		}
 		if (function_exists('register_block_type')) {
-			wp_enqueue_script( 'uams_syndications_block_js', 
+			wp_enqueue_script( 'uams_news_syndications_block_js', 
 				plugins_url( '/block/blocks.build.js', __DIR__ ), 
 				array(
 					'wp-blocks',
@@ -456,6 +456,7 @@ class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
             <!-- UAMSWP Output Grid -->
 			<div class="uamswp-news-syndication-wrapper">
 				<div class="uamswp-news-syndication-grid">
+					<div class="row">
 					<!-- <style>.uamswp-news-syndication-grid a.more {display: none;}</style> -->
 					<?php
 					$offset_x = 0;
@@ -467,7 +468,7 @@ class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
 							continue;
 						}
 						?>
-						<?php if(1 == $count) { ?>
+						<?php if( 1 == $count ) { ?>
 						<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
 							<div itemscope itemtype="http://schema.org/NewsArticle">
 								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
@@ -496,13 +497,13 @@ class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
 					              	<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 					              	<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
 								<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-								<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-								<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-									<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-								    <meta itemprop="width" content="297"/>
-								    <meta itemprop="height" content="40"/>
+									<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+									<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+										<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+										<meta itemprop="width" content="297"/>
+										<meta itemprop="height" content="40"/>
+									</span>
 								</span>
-							</span>
 							</div>
 						</div>
 						<div class="col-12 col-sm-5 col-md-12 col-lg-5 secondary">
@@ -514,11 +515,13 @@ class UAMS_Syndicate_Shortcode_News extends UAMS_Syndicate_Shortcode_Base {
 								<a class="btn btn-primary" href="#">Read more</a>
 							</div>
 						<?php } ?>
-						</div>							
+													
 						<?php
 						$count++;
 					}
 					?>
+					</div>
+					</div>
 				</div>
 			</div>
 			<?php
