@@ -454,74 +454,85 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'grid' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Grid -->
-			<div class="uamswp-news-syndication-wrapper">
+			<div class="uams-module uamswp-news-syndication-wrapper bg-white">
 				<div class="uamswp-news-syndication-grid">
-					<div class="row">
-					<!-- <style>.uamswp-news-syndication-grid a.more {display: none;}</style> -->
-					<?php
-					$offset_x = 0;
-					$count = 1;
-					echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>';
-					foreach ( $new_data as $content ) {
-						if ( $offset_x < absint( $atts['offset'] ) ) {
-							$offset_x++;
-							continue;
-						}
-						?>
-						<?php if( 1 == $count ) { ?>
-						<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
-							<div itemscope itemtype="http://schema.org/NewsArticle">
-								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-								<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><!-- 16:9 Aspect Ratio -->
-									<!-- <source media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1500px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1294/728/?image=804">
-									<source media="(min-width: 1500px)" srcset="https://picsum.photos/647/364/?image=804">
-									<source media="(min-width: 1200px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1200px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/994/559/?image=804">
-									<source media="(min-width: 1200px)" srcset="https://picsum.photos/497/280/?image=804">
-									<source media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
-									<source media="(min-width: 992px)" srcset="https://picsum.photos/704/396/?image=804">
-									<source media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 768px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/984/554/?image=804">
-									<source media="(min-width: 768px)" srcset="https://picsum.photos/492/277/?image=804">
-									<source media="(min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
-									<source media="(min-width: 576px)" srcset="https://picsum.photos/704/396/?image=804">
-									<source media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1024/576/?image=804">
-									<source media="(min-width: 1px)" srcset="https://picsum.photos/512/288/?image=804"> -->
-									<!-- <img src="https://picsum.photos/665/374/?image=804" alt="Random image"> -->
-									<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="http://via.placeholder.com/560x350?text=Not%20Available" alt="" itemprop="url"><?php endif; ?>
-								</picture>
-								<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
-								<span itemprop="articleBody">
-								<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-								</span>
-								<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary" itemprop="url">Read more</a>
-								<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
-					              	<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-					              	<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
-								<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-									<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-									<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-										<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-										<meta itemprop="width" content="297"/>
-										<meta itemprop="height" content="40"/>
-									</span>
-								</span>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
 							</div>
-						</div>
-						<div class="col-12 col-sm-5 col-md-12 col-lg-5 secondary">
-						<?php } else { ?>
-							<div itemscope itemtype="http://schema.org/NewsArticle">
-								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-								<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
-								<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-								<a class="btn btn-primary" href="#">Read more</a>
-							</div>
-						<?php } ?>
-													
-						<?php
-						$count++;
-					}
-					?>
-					</div>
-					</div>
+							<div class="col-12">
+								<div class="inner-container">
+									<div class="row">
+										<!-- <style>.uamswp-news-syndication-grid a.more {display: none;}</style> -->
+										<?php
+										$offset_x = 0;
+										$count = 1;
+										echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>';
+										foreach ( $new_data as $content ) {
+											if ( $offset_x < absint( $atts['offset'] ) ) {
+												$offset_x++;
+												continue;
+											}
+											?>
+											<?php if( 1 == $count ) { ?>
+											<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
+												<div itemscope itemtype="http://schema.org/NewsArticle">
+													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><!-- 16:9 Aspect Ratio -->
+														<!-- <source media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1500px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1294/728/?image=804">
+														<source media="(min-width: 1500px)" srcset="https://picsum.photos/647/364/?image=804">
+														<source media="(min-width: 1200px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1200px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/994/559/?image=804">
+														<source media="(min-width: 1200px)" srcset="https://picsum.photos/497/280/?image=804">
+														<source media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
+														<source media="(min-width: 992px)" srcset="https://picsum.photos/704/396/?image=804">
+														<source media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 768px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/984/554/?image=804">
+														<source media="(min-width: 768px)" srcset="https://picsum.photos/492/277/?image=804">
+														<source media="(min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
+														<source media="(min-width: 576px)" srcset="https://picsum.photos/704/396/?image=804">
+														<source media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1024/576/?image=804">
+														<source media="(min-width: 1px)" srcset="https://picsum.photos/512/288/?image=804"> -->
+														<!-- <img src="https://picsum.photos/665/374/?image=804" alt="Random image"> -->
+														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="http://via.placeholder.com/560x350?text=Not%20Available" alt="" itemprop="url"><?php endif; ?>
+													</picture>
+													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
+													<span itemprop="articleBody">
+													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
+													</span>
+													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary" itemprop="url">Read more</a>
+													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
+														<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
+													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+															<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+															<meta itemprop="width" content="297"/>
+															<meta itemprop="height" content="40"/>
+														</span>
+													</span>
+												</div>
+											</div>
+											<div class="col-12 col-sm-5 col-md-12 col-lg-5 secondary">
+											<?php } else { ?>
+												<div itemscope itemtype="http://schema.org/NewsArticle">
+													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+													<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
+													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
+													<a class="btn btn-primary" href="#">Read more</a>
+												</div>
+											<?php } ?>
+																		
+											<?php
+											$count++;
+											}
+											?>
+										</div>
+									</div>
+								</div><!-- end div.inner-container -->
+							</div><!-- end div.col-12 -->
+						</div><!-- end div.row -->
+					</div><!-- end div.container-fluid -->
 				</div>
 			</div>
 			<?php
