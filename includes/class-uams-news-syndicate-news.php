@@ -454,7 +454,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'grid' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Grid -->
-			<div class="uams-module uamswp-news-syndication-wrapper bg-white">
+			<div class="uamswp-news-syndication-wrapper">
 				<div class="uamswp-news-syndication-grid">
 					<div class="container-fluid">
 						<div class="row">
