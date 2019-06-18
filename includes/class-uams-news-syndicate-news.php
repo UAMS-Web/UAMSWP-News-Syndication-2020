@@ -46,7 +46,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	public function enqueue_news_syndication_stylesheet() {
 		$post = get_post();
 	 	if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'uamswp_news' ) ) {
-			wp_enqueue_style( 'uamswp-syndication-news-style', plugins_url( '/css/uamswp-syndication-news.css', __DIR__ ), array(), '' );
+			wp_enqueue_style( 'uamswp-syndication-news-style', plugins_url( '/css/uamswp-news-syndication-news.css', __DIR__ ), array(), '' );
 		}
 	}
 
@@ -54,7 +54,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 * Enqueue styles specific to the network admin dashboard.
 	 */
 	// public function enqueue_news_syndication_stylesheet_admin() {
-	// 	add_editor_style( 'uamswp-syndication-news-style-admin', plugins_url( '/css/uamswp-syndication-news.css', __DIR__ ), array(), '' );
+	// 	add_editor_style( 'uamswp-syndication-news-style-admin', plugins_url( '/css/uamswp-news-syndication-admin.css', __DIR__ ), array(), '' );
 	// }
 	public function build_shortcake() {
 		shortcode_ui_register_for_shortcode(
