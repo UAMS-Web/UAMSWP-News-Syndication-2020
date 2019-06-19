@@ -522,12 +522,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<a class="btn btn-primary" href="#">Read more</a>
 												</div>
 											<?php } ?>
+										</div>
 																		
 											<?php
 											$count++;
 											}
 											?>
-										</div>
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
