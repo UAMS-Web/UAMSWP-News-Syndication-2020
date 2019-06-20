@@ -519,7 +519,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-													<a class="btn btn-primary stretched-link" href="#">Read more</a>
+													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
 												</div>
 											<?php } ?>
 																		
