@@ -410,44 +410,85 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
             <!-- UAMSWP Output Cards -->
 			<div class="uamswp-news-syndication-wrapper">
 				<div class="uamswp-news-syndication-cards">
-					<?php
-					$offset_x = 0;
-					foreach ( $new_data as $content ) {
-						if ( $offset_x < absint( $atts['offset'] ) ) {
-							$offset_x++;
-							continue;
-						}
-						?>
-					    <div class="default-card" itemscope itemtype="http://schema.org/NewsArticle">
-					    	<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-					    	<div class="card-image" itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="http://via.placeholder.com/560x350?text=Not%20Available" alt="" itemprop="url"><?php endif; ?></div>
-							<div class="card-body">
-					      		<span>
-					      			<h3 itemprop="headline">
-					                	<a href="<?php echo esc_url( $content->link ); ?>" class="pic-title"><?php echo esc_html( $content->title ); ?></a>
-					              	</h3>
-					              	<span itemprop="articleBody">
-					      			<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
-					      			</span>
-					              	<a href="<?php echo esc_url( $content->link ); ?>" class="pic-text-more uams-btn btn-sm btn-red" itemprop="url">Read more</a>
-					              	<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
-					              	<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-					              	<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
-					            </span>
-
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
 							</div>
-							<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-								<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-								<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-									<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-								    <meta itemprop="width" content="297"/>
-								    <meta itemprop="height" content="40"/>
-								</span>
-							</span>
-					    </div>
-						<?php
-					}
-					?>
+							<?php
+							$offset_x = 0;
+							foreach ( $new_data as $content ) {
+								if ( $offset_x < absint( $atts['offset'] ) ) {
+									$offset_x++;
+									continue;
+								}
+								?>
+								<div class="col-12 col-sm-6 col-xl-3 item" itemscope itemtype="http://schema.org/NewsArticle">
+									<div class="card">
+										<div class="card-img-top">
+											<picture>
+												<?php if ( $content->image ) : ?>
+													<?php if ( function_exists( 'fly_add_image_size' ) ) { ?>  
+														<!-- 16:9 Aspect Ratio -->
+														<!--<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
+															media="(min-width: 1921px) and (-webkit-min-device-pixel-ratio: 2), 
+															(min-width: 1921px) and (min-resolution: 192dpi)">
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+															media="(min-width: 1921px)">
+														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>" 
+															media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), 
+															(min-width: 1500px) and (min-resolution: 192dpi)">
+														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>" 
+															media="(min-width: 1500px)">
+														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
+															media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2), 
+															(min-width: 992px) and (min-resolution: 192dpi)">
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+															media="(min-width: 992px)">
+														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>" 
+															media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2), 
+															(min-width: 768px) and (min-resolution: 192dpi)">
+														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>" 
+															media="(min-width: 768px)">
+														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
+															media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), 
+															(min-width: 1px) and (min-resolution: 192dpi)">
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+															media="(min-width: 1px)">-->
+													<?php } //endif ?>
+													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
+												<?php else: ?>
+												<img src="http://via.placeholder.com/455x284?text=Not%20Available" alt="" itemprop="url">
+												<?php endif; ?>
+											</picture>
+										</div>
+										<div class="card-body">
+											<h3 class="card-title h5" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
+											<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
+											<!-- <p class="card-text" itemprop="articleBody"></p> -->
+											<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" aria-label="<?php echo esc_html( $content->title ); ?>" itemprop="url">Read more</a>
+										</div>
+									</div>
+									<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+										<meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/>
+									</span>
+									<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+									<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
+									<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+										<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+										<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+											<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+											<meta itemprop="width" content="297"/>
+											<meta itemprop="height" content="40"/>
+										</span>
+									</span>
+									<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+								</div>
+								<?php
+							}
+							?>
+						</div>
+					</div>
 				</div>
 			</div>
 			<?php
