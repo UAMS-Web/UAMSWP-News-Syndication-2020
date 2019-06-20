@@ -477,7 +477,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											?>
 											<?php if( 1 == $count ) { ?>
 											<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
-												<div itemscope itemtype="http://schema.org/NewsArticle">
+												<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><!-- 16:9 Aspect Ratio -->
 														<!-- <source media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1500px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1294/728/?image=804">
@@ -515,11 +515,13 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											</div>
 											<div class="col-12 col-sm-5 col-md-12 col-lg-5 secondary">
 											<?php } else { ?>
-												<div itemscope itemtype="http://schema.org/NewsArticle">
-													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-													<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
-													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
+												<div class="item-container">
+													<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
+														<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+														<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
+														<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
+														<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
+													</div>
 												</div>
 											<?php } ?>
 																		
