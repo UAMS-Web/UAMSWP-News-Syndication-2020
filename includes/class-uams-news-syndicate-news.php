@@ -371,7 +371,14 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			?>
             <!-- UAMSWP Output Excerpts -->
 			<div class="uamswp-news-syndication-wrapper">
-				<ul class="uamswp-news-syndication-excerpts">
+				<div class="uamswp-news-syndication-excerpts">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+							</div>
+							<div class="col-12">
+					<div class="item-container">
 					<?php
 					$offset_x = 0;
 					foreach ( $new_data as $content ) {
@@ -380,29 +387,46 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							continue;
 						}
 						?>
-						<li class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
-							<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-							<a class="news-item-thumbnail" href="<?php echo esc_url( $content->link ); ?>" itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><?php if ( $content->thumbnail ) : ?><img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url"><?php endif; ?></a>
-							<span class="news-item-title" itemprop="headline"><a href="<?php echo esc_url( $content->link ); ?>" class="news-link" itemprop="url"><?php echo esc_html( $content->title ); ?></a></span>
-							<span class="news-item-byline">
-								<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> | </small></span>
-								<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-								<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
-							</span>
-							<span class="news-item-excerpt" itemprop="articleBody"><?php echo wp_kses_post( $content->excerpt ); ?></span>
-							<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-								<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-								<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-									<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-								    <meta itemprop="width" content="297"/>
-								    <meta itemprop="height" content="40"/>
-								</span>
-							</span>
-						</li>
+						<div class="item">
+							<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
+								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+								<div class="row">
+									<?php if ( $content->thumbnail ) { ?>
+									<div class="col-12 col-sm-4 image-container">
+										<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url">
+									</div>
+									<div class="col-12 col-sm-8 text-container">
+									<?php } else { ?>
+									<div class="col-12 col-sm-8 col-sm-offset-4 text-container">
+									<?php } //endif ?>
+										<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
+										<div class="news-item-byline">
+											<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> | </small></span>
+											<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+											<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
+										</div>
+										<div class="news-item-excerpt" itemprop="articleBody"><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></div>
+										<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
+										<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+											<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+											<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+												<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+												<meta itemprop="width" content="297"/>
+												<meta itemprop="height" content="40"/>
+											</span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
 						<?php
 					}
 					?>
-				</ul>
+					</div>
+				</div>
+			</div>
+					</div>
+				</div>
 			</div>
 			<?php
 		} elseif ( 'cards' === $atts['output'] ) {
@@ -604,7 +628,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo ($content->imagealt); ?>"><?php else: ?><meta itemprop="url" content="http://www.uams.edu/_images/blank.gif"/><?php endif; ?>
 								<?php echo( $content->imagecaption ? '<div class="wp-caption-text">' . $content->imagecaption . '</div>' : '' );?>
 							</div>
-							<div class="news-item-title"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url"><?php echo '<h2 itemprop="headline">' . esc_html( $content->title ) . '</h2>'; ?></a></div>
+							<header class="news-item-title"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url"><?php echo '<h2 itemprop="headline">' . esc_html( $content->title ) . '</h2>'; ?></a></header>
 							<div class="news-item-byline">
 								<!-- <?php if ( $content->date) : ?><span class="news-item-byline-date"><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?></span> | <?php endif; ?>-->
 								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
