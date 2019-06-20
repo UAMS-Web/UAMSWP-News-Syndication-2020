@@ -499,7 +499,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<span itemprop="articleBody">
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 													</span>
-													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary" itemprop="url">Read more</a>
+													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" itemprop="url">Read more</a>
 													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
 														<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
@@ -519,7 +519,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-													<a class="btn btn-primary" href="#">Read more</a>
+													<a class="btn btn-primary stretched-link" href="#">Read more</a>
 												</div>
 											<?php } ?>
 																		
