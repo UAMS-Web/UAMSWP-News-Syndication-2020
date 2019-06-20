@@ -353,18 +353,31 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			?>
             <!-- UAMSWP Output Headlines -->
 			<div class="uamswp-news-syndication-wrapper">
-				<ul class="uamswp-news-syndication-list">
-					<?php
-					$offset_x = 0;
-					foreach ( $new_data as $content ) {
-						if ( $offset_x < absint( $atts['offset'] ) ) {
-							$offset_x++;
-							continue;
-						}
-						?><li class="uamswp-news-syndication-item"><a href="<?php echo esc_url( $content->link ); ?>"><?php echo esc_html( $content->title ); ?></a></li><?php
-					}
-					?>
-				</ul>
+				<div class="uamswp-news-syndication-headlines">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+							</div>
+							<div class="col-12">
+								<div class="inner-container">
+									<ul class="uamswp-news-syndication-list">
+										<?php
+										$offset_x = 0;
+										foreach ( $new_data as $content ) {
+											if ( $offset_x < absint( $atts['offset'] ) ) {
+												$offset_x++;
+												continue;
+											}
+											?><li class="uamswp-news-syndication-item"><a href="<?php echo esc_url( $content->link ); ?>"><?php echo esc_html( $content->title ); ?></a></li><?php
+										}
+										?>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<?php
 		} elseif ( 'excerpts' === $atts['output'] ) {
