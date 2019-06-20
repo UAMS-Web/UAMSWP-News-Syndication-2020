@@ -598,16 +598,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							continue;
 						}
 						?>
-						<div class="uamswp-news-syndication-full" itemscope itemtype="http://schema.org/NewsArticle">
+						<section class="uamswp-news-syndication-full" itemscope itemtype="http://schema.org/NewsArticle">
 							<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 							<div class="news-item-thumbnail" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 								<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo ($content->imagealt); ?>"><?php else: ?><meta itemprop="url" content="http://www.uams.edu/_images/blank.gif"/><?php endif; ?>
-								<?php echo( $content->imagecaption ? '<span class="wp-caption-text">' . $content->imagecaption . '</span>' : '' );?>
+								<?php echo( $content->imagecaption ? '<div class="wp-caption-text">' . $content->imagecaption . '</div>' : '' );?>
 							</div>
-							<span class="news-item-title"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url"><?php echo '<h2 itemprop="headline">' . esc_html( $content->title ) . '</h2>'; ?></a></span>
+							<div class="news-item-title"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url"><?php echo '<h2 itemprop="headline">' . esc_html( $content->title ) . '</h2>'; ?></a></div>
 							<div class="news-item-byline">
 								<!-- <?php if ( $content->date) : ?><span class="news-item-byline-date"><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?></span> | <?php endif; ?>-->
-								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
+								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
 								<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 					            <meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
 							</div>
@@ -619,7 +619,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										echo do_shortcode( wp_kses_post( $content->content ) ); 
 									}
 								?>
-								<hr size="1" width="75%"/>
+								<!-- <hr size="1" width="75%"/> -->
 							</div>
 							<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
 								<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
@@ -629,7 +629,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								    <meta itemprop="height" content="40"/>
 								</span>
 							</span>
-						</div>
+						</section>
 						<?php
 					}
 					?>
