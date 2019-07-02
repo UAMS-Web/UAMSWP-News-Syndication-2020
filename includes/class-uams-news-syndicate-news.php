@@ -495,7 +495,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<?php } //endif ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
 												<?php else: ?>
-												<img src="http://via.placeholder.com/455x284?text=Not%20Available" alt="" itemprop="url">
+												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url">
 												<?php endif; ?>
 											</picture>
 										</div>
@@ -571,7 +571,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														<source media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1024/576/?image=804">
 														<source media="(min-width: 1px)" srcset="https://picsum.photos/512/288/?image=804"> -->
 														<!-- <img src="https://picsum.photos/665/374/?image=804" alt="Random image"> -->
-														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="http://via.placeholder.com/560x350?text=Not%20Available" alt="" itemprop="url"><?php endif; ?>
+														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<span itemprop="articleBody">
