@@ -606,12 +606,13 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<?php
 											$count++;
 											}
+											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
 											?>
 										</div>
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
-												<a href="#" class="btn btn-outline-primary">View the Full List</a>
+												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
 											</div>
 										</div>
 									</div>
