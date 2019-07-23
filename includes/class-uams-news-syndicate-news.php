@@ -131,6 +131,17 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				'description'  => 'Specific ID of article',
 				),
 
+				/** Output format */
+				array(
+					'label'     => esc_html__('Background Color', 'uamswp_news'),
+					'attr'      => 'bgCcolor',
+					'type'      => 'radio',
+						'options' => array(
+							'bg-white'      => 'White',
+							'bg-gray'    => 'Gray',
+						),
+					'description'  => 'Preferred background color',
+					),
 			 
 			),
 			 
@@ -141,7 +152,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	}
 
 	public function build_block() {
-		register_block_type('uamswp/uams-news-cgb', array(
+		register_block_type('uamswp/uams-news', array(
 			'editor_script' => 'uams_syndications_block_js',
 			'render_callback' => 'uamswp_news_block_handler',
 			'attributes' => [
@@ -154,18 +165,31 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				'count' => [
 					'default' => 3
 				],
+				'advancedCat' => [
+					'default' => ''
+				],
+				'local' => [
+					'default' => 0
+				],
+				'site' => [
+					'default' => ''
+				],
 				'offset' => [
 					'default' => 0
+				],
+				'bgcolor' => [
+					'default' => ''
 				]
 			]
 		));
 	}
 
-	function uamswp_news_block_handler($atts){
+	public function uamswp_news_block_handler($atts){
 		return ('Works');
-		return $this->display_shortcode($atts[ 'category' ], $atts[ 'count' ]);
+		// return $this->display_shortcode($atts[ 'category' ], $atts[ 'count' ]);
 		// echo ($atts[ 'category' ] . $atts[ 'count' ]);
 		// return display_shortcode($atts[ 'object' ], $atts[ 'output' ], $atts[ 'host' ], $atts[ 'scheme' ], $atts[ 'category' ], $atts[ 'advanced_cat' ], $atts[ 'tag' ], $atts[ 'id' ], $atts[ 'query' ], $atts[ 'local' ], $atts[ 'offset' ], $atts[ 'cache_bust' ]);
+		// return display_shortcode( $atts[ 'output' ], $atts[ 'category' ], $atts[ 'count' ], $atts[ 'advancedCat' ], $atts[ 'local' ], $atts[ 'site' ], $atts[ 'offset' ], $atts[ 'bgColor' ]);
 	}
 
 	/**
@@ -344,6 +368,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	private function generate_shortcode_output( $new_data, $atts ) {
 
 		ob_start();
+		$style = $atts['style'] ? ' ' . $atts['style'] : '';
 		// By default, we output a JSON object that can then be used by a script.
 		if ( 'json' === $atts['output'] ) {
             echo '<!-- UAMSWP Output JSON -->';
@@ -352,7 +377,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'headlines' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Headlines -->
-			<div class="uamswp-news-syndication-wrapper">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
 				<div class="uamswp-news-syndication-headlines">
 					<div class="container-fluid">
 						<div class="row">
@@ -378,12 +403,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 			<?php
 		} elseif ( 'excerpts' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Excerpts -->
-			<div class="uamswp-news-syndication-wrapper">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
 				<div class="uamswp-news-syndication-excerpts">
 					<div class="container-fluid">
 						<div class="row">
@@ -440,12 +465,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 			<?php
 		} elseif ( 'cards' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Cards -->
-			<div class="uamswp-news-syndication-wrapper">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
 				<div class="uamswp-news-syndication-cards">
 					<div class="container-fluid">
 						<div class="row">
@@ -527,12 +552,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 			<?php
 		} elseif ( 'grid' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Grid -->
-			<div class="uamswp-news-syndication-wrapper">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
 				<div class="uamswp-news-syndication-grid">
 					<div class="container-fluid">
 						<div class="row">
@@ -621,12 +646,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 			<?php
 		} elseif ( 'full' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Full -->
-			<div class="uamswp-news-syndication-wrapper">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
 				<div class="uamswp-news-syndication-container">
 					<?php
 					$offset_x = 0;
@@ -672,7 +697,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					}
 					?>
 				</div>
-			</div>
+			</section>
 			<?php
 		} // End if().
 		$content = ob_get_contents();
