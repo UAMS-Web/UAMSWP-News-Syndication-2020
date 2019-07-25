@@ -310,7 +310,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$local_atts[ $attribute ] = $value;
 				}
 			}
-			$local_shortcodes['host'] = get_site()->domain . get_site()->path;
+			$local_atts['host'] = get_site()->domain . get_site()->path;
 			$local_atts['count'] = $atts['count'];
 			$local_url = $this->get_request_url( $local_atts );
 			$request = $this->build_initial_request( $local_url, $local_atts );
