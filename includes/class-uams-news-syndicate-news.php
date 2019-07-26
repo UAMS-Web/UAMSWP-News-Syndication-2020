@@ -205,6 +205,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *                              - headlines      Display an unordered list of headlines.
 	 *                              - excerpts       Display only excerpt information in an unordered list.
 	 *                              - cards       	 Display information in a card format.
+	 * 								- grid       	 Display information in a 1 x 2 grid format.
+	 * 								- side       	 Display information in a Side-by-Side Image & Text format.
 	 *                              - full           Display full content for each item.
 	 *     @type string $host                     The hostname to pull items from. Defaults to uamshealth.com.
 	 *     @type string $site                     Overrides setting for host. Hostname and path to pull items from.
@@ -222,6 +224,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *                                            shortcode instances where one may pull in an excerpt and another
 	 *                                            may pull in the rest of the feed as headlines.
 	 *     @type string $cache_bust               Any change to this value will clear the cache and pull fresh data.
+	 * 	   @type int	$include_link			  Option to include link to category. Optional
+	 * 	   @type string $news_position			  The image position for side-by-side. 
 	 * }
 	 *
 	 * @return string Data to output where the shortcode is used.
@@ -548,7 +552,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								</div>
 								<?php
 							}
+							$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+								if ( 0 !== absint( $atts['include_link'] ) ) {
 							?>
+							<div class="col-12 more">
+								<p class="lead">Want to read more stories like these?</p>
+								<div class="cta-container">
+									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
+								</div>
+							</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -631,15 +644,19 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<?php
 											$count++;
 											}
-											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
 											?>
 										</div>
+										<?php 
+											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+											if ( $atts['include_link'] ) {
+										?>
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
 												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
 											</div>
 										</div>
+										<?php } ?>
 									</div>
 								</div>
 							</div>
@@ -647,6 +664,59 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					</div>
 				</div>
 			</section>
+			<?php
+		} elseif ( 'side' === $atts['output'] ) {
+			$image_postion = $atts['news_position'] ? $atts['news_position'] : 'left';
+			if( 0 !== absint( $atts['local'] ) ) {
+				$categorylink = get_category_link( get_cat_ID($atts['category']) );
+			} else {
+				$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+			}
+			?>
+			<!-- UAMSWP Output Side-by-Side Image & Text -->
+			<?php
+			$offset_x = 0;
+			foreach ( $new_data as $content ) {
+				if ( $offset_x < absint( $atts['offset'] ) ) {
+					$offset_x++;
+					continue;
+				}
+				$article_id = esc_attr($content->ID);
+			?>
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_postion; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
+				<div class="uamswp-news-syndication-side">
+				
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-md-6 image-container" aria-label="<?php echo esc_html( $content->imagealt ); ?>" role="img">
+								<style>
+									#side-by-side-<?php echo $article_id; ?> .image-container {
+										background-image: url("<?php echo esc_url( $content->image ); ?>");
+									}
+								</style>
+								<div class="image-inner-container">
+								</div>
+							</div>
+							<div class="col-12 col-md-6 text-container">
+								<div class="text-inner-container">
+									<h2 class="h3"><?php echo esc_html( $content->title ); ?></h2>
+									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
+									<div class="cta-container">
+										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
+										<?php 
+											if ( $atts['include_link'] ) {
+										?>
+											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Archive</a>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<?php
+				}
+				?>
 			<?php
 		} elseif ( 'full' === $atts['output'] ) {
 			?>
@@ -867,6 +937,15 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					} else {
 						$subset->thumbnail = $media_response->data['source_url'];
 					}
+					// Add Medium Image
+					if ( isset( $data['large'] ) ) {
+						$subset->image = $data['large']['source_url'];
+						$subset->imagealt = $media_response->data['alt_text'];
+						$subset->imagecaption = $media_response->data['caption']['rendered'];
+					} else {
+						$subset->image = false;
+					}	
+						
 				} else {
 					$subset->thumbnail = false;
 				}
