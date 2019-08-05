@@ -17,8 +17,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			});
 		}
 		// if (function_exists('register_block_type')) {
-		// 	wp_enqueue_script( 'uams_news_syndications_block_js', 
-		// 		plugins_url( '/block/blocks.build.js', __DIR__ ), 
+		// 	wp_enqueue_script( 'uams_news_syndications_block_js',
+		// 		plugins_url( '/block/blocks.build.js', __DIR__ ),
 		// 		array(
 		// 			'wp-blocks',
 		// 			'wp-i18n',
@@ -27,7 +27,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		// 		)
 		// 	);
 		// 	add_action( 'init', array( $this, 'build_block' ) );
-		// }	
+		// }
 		// }
 		// add_action( 'acf/init', array( $this, 'uamswp_news_register_blocks'));
 		// add_action( 'admin_init', array( $this, 'uamswp_news_register_acf') );
@@ -58,22 +58,22 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	// }
 	public function build_shortcake() {
 		shortcode_ui_register_for_shortcode(
-	 
+
 			/** Your shortcode handle */
 			'uamswp_news',
-			 
+
 			/** Your Shortcode label and icon */
 			array(
-			 
+
 			/** Label for your shortcode user interface. This part is required. */
 			'label' => esc_html__('News Syndication', 'uamswp_news'),
-			 
+
 			/** Icon or an image attachment for shortcode. Optional. src or dashicons-$icon.  */
 			'listItemImage' => 'dashicons-rss',
-			 
+
 			/** Shortcode Attributes */
 			'attrs'          => array(
-			 
+
 				/** Output format */
 				array(
 				'label'     => esc_html__('Format', 'uamswp_news'),
@@ -89,7 +89,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				),
 
 				array(
-				 
+
 				/** This label will appear in user interface */
 				'label'        => esc_html__('Category', 'uamswp_news'),
 				'attr'         => 'category',
@@ -142,11 +142,11 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						),
 					'description'  => 'Preferred background color',
 					),
-			 
+
 			),
-			 
+
 			/** You can select which post types will show shortcode UI */
-			'post_type'     => array( 'post', 'page' ), 
+			'post_type'     => array( 'post', 'page' ),
 			)
 		);
 	}
@@ -225,7 +225,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *                                            may pull in the rest of the feed as headlines.
 	 *     @type string $cache_bust               Any change to this value will clear the cache and pull fresh data.
 	 * 	   @type int	$include_link			  Option to include link to category. Optional
-	 * 	   @type string $news_position			  The image position for side-by-side. 
+	 * 	   @type string $news_position			  The image position for side-by-side.
 	 * }
 	 *
 	 * @return string Data to output where the shortcode is used.
@@ -494,32 +494,32 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="card-img-top">
 											<picture>
 												<?php if ( $content->image ) : ?>
-													<?php if ( function_exists( 'fly_add_image_size' ) ) { ?>  
+													<?php if ( function_exists( 'fly_add_image_size' ) ) { ?>
 														<!-- 16:9 Aspect Ratio -->
-														<!--<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
-															media="(min-width: 1921px) and (-webkit-min-device-pixel-ratio: 2), 
+														<!--<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+															media="(min-width: 1921px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1921px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 1921px)">
-														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>" 
-															media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), 
+														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>"
+															media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1500px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>" 
+														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>"
 															media="(min-width: 1500px)">
-														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
-															media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2), 
+														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+															media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 992px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 992px)">
-														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>" 
-															media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2), 
+														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>"
+															media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 768px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>" 
+														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>"
 															media="(min-width: 768px)">
-														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>" 
-															media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), 
+														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+															media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>" 
+														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 1px)">-->
 													<?php } //endif ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
@@ -640,13 +640,13 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													</div>
 												</div>
 											<?php } ?>
-																		
+
 											<?php
 											$count++;
 											}
 											?>
 										</div>
-										<?php 
+										<?php
 											if( 0 !== absint( $atts['local'] ) ) {
 												$categorylink = get_category_link( get_cat_ID($atts['category']) );
 											} else {
@@ -670,7 +670,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			</section>
 			<?php
 		} elseif ( 'side' === $atts['output'] ) {
-			$image_postion = $atts['news_position'] ? $atts['news_position'] : 'left';
+			$image_position = $atts['news_position'] ? $atts['news_position'] : 'left';
 			if( 0 !== absint( $atts['local'] ) ) {
 				$categorylink = get_category_link( get_cat_ID($atts['category']) );
 			} else {
@@ -687,9 +687,9 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				}
 				$article_id = esc_attr($content->ID);
 			?>
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_postion; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
 				<div class="uamswp-news-syndication-side">
-				
+
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo esc_html( $content->imagealt ); ?>" role="img">
@@ -705,7 +705,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 									<div class="cta-container">
 										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
-										<?php 
+										<?php
 											if ( $atts['include_link'] ) {
 										?>
 											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Archive</a>
@@ -747,11 +747,11 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					            <meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
 							</div>
 							<div class="news-item-content" itemprop="articleBody">
-								<?php 
+								<?php
 									if ( $content->fullcontent ) {
 										echo do_shortcode( wp_kses_post( $content->fullcontent ) );
 									} else {
-										echo do_shortcode( wp_kses_post( $content->content ) ); 
+										echo do_shortcode( wp_kses_post( $content->content ) );
 									}
 								?>
 								<!-- <hr size="1" width="75%"/> -->
@@ -946,8 +946,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
 					} else {
 						$subset->image = false;
-					}	
-						
+					}
+
 				} else {
 					$subset->thumbnail = false;
 				}

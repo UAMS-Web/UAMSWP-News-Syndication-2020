@@ -35,7 +35,7 @@ class UAMS_Syndicate_News_Base {
 		'cache_bust' => '',
 		'id' => '',
 		'include_link' => false,
-		'news_position' => false,
+		'news_position' => 'left',
 	);
 
 	/**
@@ -106,7 +106,7 @@ class UAMS_Syndicate_News_Base {
 	 */
 	public function process_attributes( $atts ) {
 		$defaults = apply_filters( 'uamswp_news_syndicate_default_atts', $this->defaults_atts );
-		
+
 		$defaults = shortcode_atts( $defaults, $this->local_default_atts );
 		$defaults = array_merge( $defaults, $this->local_extended_atts );
 		$local_defaults = array();
@@ -259,7 +259,7 @@ class UAMS_Syndicate_News_Base {
 			$request_url = add_query_arg( array(
 				'filter[p]' => $terms,
 			), $request_url );
-        }     
+        }
 
 		return $request_url;
 	}
