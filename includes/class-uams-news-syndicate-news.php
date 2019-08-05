@@ -647,7 +647,11 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											?>
 										</div>
 										<?php 
-											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+											if( 0 !== absint( $atts['local'] ) ) {
+												$categorylink = get_category_link( get_cat_ID($atts['category']) );
+											} else {
+												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+											}
 											if ( $atts['include_link'] ) {
 										?>
 										<div class="col-12 more">
@@ -676,7 +680,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			<!-- UAMSWP Output Side-by-Side Image & Text -->
 			<?php
 			$offset_x = 0;
-			foreach ( $new_data as $content ) {
+			foreach ( $new_data as $content ):
 				if ( $offset_x < absint( $atts['offset'] ) ) {
 					$offset_x++;
 					continue;
@@ -690,9 +694,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo esc_html( $content->imagealt ); ?>" role="img">
 								<style>
-									#side-by-side-<?php echo $article_id; ?> .image-container {
-										background-image: url("<?php echo esc_url( $content->image ); ?>");
-									}
+									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( $content->image ) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>"); }
 								</style>
 								<div class="image-inner-container">
 								</div>
@@ -715,7 +717,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					</div>
 				</section>
 				<?php
-				}
+				endforeach;
 				?>
 			<?php
 		} elseif ( 'full' === $atts['output'] ) {
