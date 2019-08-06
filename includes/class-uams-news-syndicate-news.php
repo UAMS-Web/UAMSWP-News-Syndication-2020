@@ -534,7 +534,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 more">
 								<p class="lead">Want to read more stories like these?</p>
 								<div class="cta-container">
-									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
+									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
 								</div>
 							</div>
 							<?php } ?>
@@ -578,7 +578,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<span itemprop="articleBody">
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 													</span>
-													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" itemprop="url">Read more</a>
+													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
 													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
 														<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
@@ -599,7 +599,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 														<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
 														<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-														<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
+														<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
 													</div>
 												</div>
 											<?php } ?>
@@ -620,7 +620,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
-												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
+												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
 											</div>
 										</div>
 										<?php } ?>
@@ -664,14 +664,17 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							</div>
 							<div class="col-12 col-md-6 text-container">
 								<div class="text-inner-container">
-									<h2 class="h3"><?php echo esc_html( $content->title ); ?></h2>
+									<h2 class="h3">
+										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more [category name] stories">[category name]</a></span><span class="sr-only">: </span>
+										<span class="title"><?php echo esc_html( $content->title ); ?></span>
+									</h2>
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 									<div class="cta-container">
-										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>">Read more</a>
+										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
 										<?php
 											if ( $atts['include_link'] ) {
 										?>
-											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Archive</a>
+											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the [category name] Archive</a>
 										<?php } ?>
 									</div>
 								</div>
