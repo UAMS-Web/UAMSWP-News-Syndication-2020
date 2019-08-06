@@ -701,7 +701,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							</div>
 							<div class="col-12 col-md-6 text-container">
 								<div class="text-inner-container">
-									<h2 class="h3"><?php echo esc_html( $content->title ); ?></h2>
+									<h2 class="h3">
+										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more [category name] stories">[category name]</a></span><span class="sr-only">: </span>
+										<span class="title"><?php echo esc_html( $content->title ); ?></span>
+									</h2>
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 									<div class="cta-container">
 										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
