@@ -223,7 +223,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *     @type int    $offset                   The number of items to offset when displaying. Used with multiple
 	 *                                            shortcode instances where one may pull in an excerpt and another
 	 *                                            may pull in the rest of the feed as headlines.
-	 *     @type string $cache_bust (Depreciated) Any change to this value will clear the cache and pull fresh data. 
+	 *     @type string $cache_bust (Depreciated) Any change to this value will clear the cache and pull fresh data.
 	 * 	   @type int	$include_link			  Option to include link to category. Optional
 	 * 	   @type string $news_position			  The image position for side-by-side.
 	 * }
@@ -273,16 +273,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		}
 
 		if ( 'local' === $request['scheme'] ) {
-			$last_changed = wp_cache_get_last_changed( 'uamswp-content' );
+			$last_changed = wp_cache_get_last_changed( 'uamswp-news' );
 			$cache_key = md5( $request_url ) . ':' . $last_changed;
-			$new_data = wp_cache_get( $cache_key, 'uamswp-content' );
+			$new_data = wp_cache_get( $cache_key, 'uamswp-news' );
 			if ( ! is_array( $new_data ) ) {
 				$request = WP_REST_Request::from_url( $request_url );
 				$response = rest_do_request( $request );
 				if ( 200 === $response->get_status() ) {
 					$new_data = $this->process_local_posts( $response->data, $atts );
 				}
-				wp_cache_set( $cache_key, $new_data, 'uamswp-content' );
+				wp_cache_set( $cache_key, $new_data, 'uamswp-news' );
 			}
 		} else {
 			$new_data = $this->get_content_cache( $atts, 'uamswp_news' );
@@ -494,34 +494,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="card-img-top">
 											<picture>
 												<?php if ( $content->image ) : ?>
-													<?php if ( function_exists( 'fly_add_image_size' ) ) { ?>
-														<!-- 16:9 Aspect Ratio -->
-														<!--<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
-															media="(min-width: 1921px) and (-webkit-min-device-pixel-ratio: 2),
-															(min-width: 1921px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
-															media="(min-width: 1921px)">
-														<source srcset="<?php echo image_sizer($content->image, 866, 487, 'center', 'center'); ?>"
-															media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2),
-															(min-width: 1500px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($content->image, 433, 244, 'center', 'center'); ?>"
-															media="(min-width: 1500px)">
-														<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
-															media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2),
-															(min-width: 992px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
-															media="(min-width: 992px)">
-														<source srcset="<?php echo image_sizer($content->image, 866, 487, 'center', 'center'); ?>"
-															media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
-															(min-width: 768px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($content->image, 433, 244, 'center', 'center'); ?>"
-															media="(min-width: 768px)">
-														<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
-															media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2),
-															(min-width: 1px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
-															media="(min-width: 1px)">-->
-													<?php } //endif ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
 												<?php else: ?>
 												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url">
@@ -595,20 +567,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
 												<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject"><!-- 16:9 Aspect Ratio -->
-														<!-- <source media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1500px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1294/728/?image=804">
-														<source media="(min-width: 1500px)" srcset="https://picsum.photos/647/364/?image=804">
-														<source media="(min-width: 1200px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1200px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/994/559/?image=804">
-														<source media="(min-width: 1200px)" srcset="https://picsum.photos/497/280/?image=804">
-														<source media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 992px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
-														<source media="(min-width: 992px)" srcset="https://picsum.photos/704/396/?image=804">
-														<source media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 768px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/984/554/?image=804">
-														<source media="(min-width: 768px)" srcset="https://picsum.photos/492/277/?image=804">
-														<source media="(min-width: 576px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 576px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1408/792/?image=804">
-														<source media="(min-width: 576px)" srcset="https://picsum.photos/704/396/?image=804">
-														<source media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 1px) and (min-resolution: 192dpi)" srcset="https://picsum.photos/1024/576/?image=804">
-														<source media="(min-width: 1px)" srcset="https://picsum.photos/512/288/?image=804"> -->
-														<!-- <img src="https://picsum.photos/665/374/?image=804" alt="Random image"> -->
+													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
@@ -718,7 +677,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				</section>
 				<?php
 				endforeach;
-				$article_id = '';
 				?>
 			<?php
 		} elseif ( 'full' === $atts['output'] ) {
