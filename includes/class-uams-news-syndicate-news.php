@@ -524,7 +524,11 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								</div>
 								<?php
 							}
-							$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+							if( 0 !== absint( $atts['local'] ) ) {
+								$categorylink = get_category_link( get_cat_ID($atts['category']) );
+							} else {
+								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+							}
 								if ( 0 !== absint( $atts['include_link'] ) ) {
 							?>
 							<div class="col-12 more">
