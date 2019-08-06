@@ -558,7 +558,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 more">
 								<p class="lead">Want to read more stories like these?</p>
 								<div class="cta-container">
-									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
+									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
 								</div>
 							</div>
 							<?php } ?>
@@ -657,7 +657,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
-												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Full List</a>
+												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
 											</div>
 										</div>
 										<?php } ?>
@@ -708,7 +708,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<?php
 											if ( $atts['include_link'] ) {
 										?>
-											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary">View the Archive</a>
+											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the [category name]Archive</a>
 										<?php } ?>
 									</div>
 								</div>
