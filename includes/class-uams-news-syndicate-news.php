@@ -188,7 +188,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	// 	return ('Works');
 	// 	// return $this->display_shortcode($atts[ 'category' ], $atts[ 'count' ]);
 	// 	// echo ($atts[ 'category' ] . $atts[ 'count' ]);
-	// 	// return display_shortcode($atts[ 'object' ], $atts[ 'output' ], $atts[ 'host' ], $atts[ 'scheme' ], $atts[ 'category' ], $atts[ 'advanced_cat' ], $atts[ 'tag' ], $atts[ 'id' ], $atts[ 'query' ], $atts[ 'local' ], $atts[ 'offset' ], $atts[ 'cache_bust' ]);
+	// 	// return display_shortcode($atts[ 'object' ], $atts[ 'output' ], $atts[ 'host' ], $atts[ 'scheme' ], $atts[ 'category' ], $atts[ 'advanced_cat' ], $atts[ 'tag' ], $atts[ 'id' ], $atts[ 'query' ], $atts[ 'local' ], $atts[ 'offset' ]);
 	// 	// return display_shortcode( $atts[ 'output' ], $atts[ 'category' ], $atts[ 'count' ], $atts[ 'advancedCat' ], $atts[ 'local' ], $atts[ 'site' ], $atts[ 'offset' ], $atts[ 'bgColor' ]);
 	// }
 
@@ -223,7 +223,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *     @type int    $offset                   The number of items to offset when displaying. Used with multiple
 	 *                                            shortcode instances where one may pull in an excerpt and another
 	 *                                            may pull in the rest of the feed as headlines.
-	 *     @type string $cache_bust               Any change to this value will clear the cache and pull fresh data.
+	 *     @type string $cache_bust (Depreciated) Any change to this value will clear the cache and pull fresh data. 
 	 * 	   @type int	$include_link			  Option to include link to category. Optional
 	 * 	   @type string $news_position			  The image position for side-by-side.
 	 * }
@@ -496,30 +496,30 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												<?php if ( $content->image ) : ?>
 													<?php if ( function_exists( 'fly_add_image_size' ) ) { ?>
 														<!-- 16:9 Aspect Ratio -->
-														<!--<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+														<!--<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
 															media="(min-width: 1921px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1921px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 1921px)">
-														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 866, 487, 'center', 'center'); ?>"
 															media="(min-width: 1500px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1500px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 433, 244, 'center', 'center'); ?>"
 															media="(min-width: 1500px)">
-														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
 															media="(min-width: 992px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 992px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 992px)">
-														<source srcset="<?php echo image_sizer($image, 866, 487, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 866, 487, 'center', 'center'); ?>"
 															media="(min-width: 768px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 768px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 433, 244, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 433, 244, 'center', 'center'); ?>"
 															media="(min-width: 768px)">
-														<source srcset="<?php echo image_sizer($image, 910, 512, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 910, 512, 'center', 'center'); ?>"
 															media="(min-width: 1px) and (-webkit-min-device-pixel-ratio: 2),
 															(min-width: 1px) and (min-resolution: 192dpi)">
-														<source srcset="<?php echo image_sizer($image, 455, 256, 'center', 'center'); ?>"
+														<source srcset="<?php echo image_sizer($content->image, 455, 256, 'center', 'center'); ?>"
 															media="(min-width: 1px)">-->
 													<?php } //endif ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
@@ -718,6 +718,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				</section>
 				<?php
 				endforeach;
+				$article_id = '';
 				?>
 			<?php
 		} elseif ( 'full' === $atts['output'] ) {

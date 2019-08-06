@@ -25,7 +25,7 @@ function bootstrap() {
 function activate_shortcodes() {
 	include_once dirname( __FILE__ ) . '/class-uams-news-syndicate-news.php';
 
-	// Add the [uamswp_json] shortcode to pull standard post news.
+	// Add the [uamswp_news] shortcode to pull standard post news.
 	new \UAMS_Syndicate_News();
 
 	do_action( 'uamswp_news_syndicate_shortcodes' );

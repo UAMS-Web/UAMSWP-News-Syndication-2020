@@ -32,7 +32,6 @@ class UAMS_Syndicate_News_Base {
 		'count' => false,
 		'date_format' => 'F j, Y',
 		'offset' => 0,
-		'cache_bust' => '',
 		'id' => '',
 		'include_link' => false,
 		'news_position' => 'left',
