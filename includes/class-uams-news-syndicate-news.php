@@ -386,7 +386,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="inner-container">
@@ -417,7 +417,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="item-container">
@@ -479,7 +479,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
 							<?php
 							$offset_x = 0;
@@ -558,7 +558,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title<?php echo $atts['hide_title'] ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
+								<h2 class="module-title<?php echo $atts['hide_title'] ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="inner-container">
