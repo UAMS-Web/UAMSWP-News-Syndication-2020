@@ -495,7 +495,9 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<picture>
 												<?php if ( $content->image_sm ) : ?>
 													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
-												<?php else: ?>
+													<?php elseif ( $content->image ) : ?>
+													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
+													<?php else: ?>
 												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
 												<?php endif; ?>
 											</picture>
@@ -950,8 +952,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						$subset->image = $data['aspect-16-9']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
-						if ( isset( $data['aspect-16-9'] ) ) {
-							$subset->image_sm = $data['aspect-16-9-small']['source_url'];
+						if ( isset( $subset_feature->sizes->{'aspect-16-9-small'} ) ) {
+							$subset->image_sm = $subset_feature->sizes->{'aspect-16-9-small'}->source_url;
 						}
 					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
 						$subset->image = $data['aspect-16-9-small']['source_url'];
