@@ -386,7 +386,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="inner-container">
@@ -417,7 +417,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="item-container">
@@ -479,7 +479,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
 							</div>
 							<?php
 							$offset_x = 0;
@@ -558,7 +558,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12">
-								<h2 class="module-title"><span class="title">News &amp; Announcements</span></h2>
+								<h2 class="module-title<?php echo $atts['hide_title'] ? ' sr-only' : ''; ?>"><span class="title"><?php echo esc_html( $atts['news_title'] ); ?></span></h2>
 							</div>
 							<div class="col-12">
 								<div class="inner-container">
@@ -952,8 +952,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						$subset->image = $data['aspect-16-9']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
-						if ( isset( $subset_feature->sizes->{'aspect-16-9-small'} ) ) {
-							$subset->image_sm = $subset_feature->sizes->{'aspect-16-9-small'}->source_url;
+						if ( isset( $data['aspect-16-9-small'] ) ) {
+							$subset->image_sm =  $data['aspect-16-9-small']['source_url'];
 						}
 					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
 						$subset->image = $data['aspect-16-9-small']['source_url'];
@@ -962,6 +962,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
 					} elseif ( isset( $data['large'] ) ) {
 						$subset->image = $data['large']['source_url'];
+						$subset->image_sm = $data['large']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
 					} else {

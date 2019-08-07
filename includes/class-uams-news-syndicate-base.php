@@ -22,6 +22,8 @@ class UAMS_Syndicate_News_Base {
 		'output' => 'json',
 		'host' => 'news.uams.edu',
 		'scheme' => 'https',
+		'news_title' => 'News &amp; Announcements',
+		'hide_title' => false,
 		'site' => '',
 		'category' => '',
 		'advanced_cat' => '',
