@@ -494,9 +494,9 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="card-img-top">
 											<picture>
 												<?php if ( $content->image_sm ) : ?>
-													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
+													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
 													<?php elseif ( $content->image ) : ?>
-													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
+													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
 													<?php else: ?>
 												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
 												<?php endif; ?>
