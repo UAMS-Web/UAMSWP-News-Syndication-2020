@@ -493,10 +493,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<div class="card">
 										<div class="card-img-top">
 											<picture>
-												<?php if ( $content->image ) : ?>
-													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
+												<?php if ( $content->image_sm ) : ?>
+													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url">
 												<?php else: ?>
-												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url">
+												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
 												<?php endif; ?>
 											</picture>
 										</div>
@@ -526,15 +526,20 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							}
 							if( 0 !== absint( $atts['local'] ) ) {
 								$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+								$categoryname = get_category_by_slug( $atts['category'] )->name ;
 							} else {
 								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+								foreach( $content->terms as $cat ) {
+									if ( $atts['category'] == $cat->slug )
+									$categoryname = $cat->name;
+								}
 							}
 								if ( 0 !== absint( $atts['include_link'] ) ) {
 							?>
 							<div class="col-12 more">
 								<p class="lead">Want to read more stories like these?</p>
 								<div class="cta-container">
-									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
+									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the Full List</a>
 								</div>
 							</div>
 							<?php } ?>
@@ -565,6 +570,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											if ( $offset_x < absint( $atts['offset'] ) ) {
 												$offset_x++;
 												continue;
+											}
+											if( 0 !== absint( $atts['local'] ) ) {
+												$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+												$categoryname = get_category_by_slug( $atts['category'] )->name ;
+											} else {
+												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+												foreach( $content->terms as $cat ) {
+													if ( $atts['category'] == $cat->slug )
+													$categoryname = $cat->name;
+												}
 											}
 											?>
 											<?php if( 1 == $count ) { ?>
@@ -610,17 +625,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											?>
 										</div>
 										<?php
-											if( 0 !== absint( $atts['local'] ) ) {
-												$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-											} else {
-												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
-											}
 											if ( $atts['include_link'] ) {
 										?>
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
-												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the Full List</a>
+												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the Full List</a>
 											</div>
 										</div>
 										<?php } ?>
@@ -634,11 +644,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			<?php
 		} elseif ( 'side' === $atts['output'] ) {
 			$image_position = $atts['news_position'] ? $atts['news_position'] : 'left';
-			if( 0 !== absint( $atts['local'] ) ) {
-				$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-			} else {
-				$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
-			}
 			?>
 			<!-- UAMSWP Output Side-by-Side Image & Text -->
 			<?php
@@ -647,6 +652,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				if ( $offset_x < absint( $atts['offset'] ) ) {
 					$offset_x++;
 					continue;
+				}
+				if( 0 !== absint( $atts['local'] ) ) {
+					$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+					$categoryname = get_category_by_slug( $atts['category'] )->name ;
+				} else {
+					$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+					foreach( $content->terms as $cat ) {
+						if ( $atts['category'] == $cat->slug )
+						$categoryname = $cat->name;
+					}
 				}
 				$article_id = esc_attr($content->ID);
 			?>
@@ -665,7 +680,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 col-md-6 text-container">
 								<div class="text-inner-container">
 									<h2 class="h3">
-										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more [category name] stories">[category name]</a></span><span class="sr-only">: </span>
+										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more <?php echo $categoryname; ?> stories"><?php echo $categoryname; ?></a></span><span class="sr-only">: </span>
 										<span class="title"><?php echo esc_html( $content->title ); ?></span>
 									</h2>
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
@@ -674,7 +689,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<?php
 											if ( $atts['include_link'] ) {
 										?>
-											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of [category name] stories">View the [category name] Archive</a>
+											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the <?php echo $categoryname; ?> Archive</a>
 										<?php } ?>
 									</div>
 								</div>
@@ -803,7 +818,26 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					}
 
 					// Add Medium Image
-					if ( isset( $subset_feature->sizes->{'uams_news'} ) ) {
+					if ( isset( $subset_feature->sizes->{'aspect-16-9'} ) ) {
+						$subset->image = $subset_feature->sizes->{'aspect-16-9'}->source_url;
+						if ( isset( $subset_feature->sizes->{'aspect-16-9-small'} ) ) {
+							$subset->image_sm = $subset_feature->sizes->{'aspect-16-9-small'}->source_url;
+						}
+						$subset->imagealt = $post->_embedded->{'wp:featuredmedia'}[0]->alt_text;
+						$subset->imagecaption = $post->_embedded->{'wp:featuredmedia'}[0]->caption->rendered;
+					} elseif ( isset( $subset_feature->sizes->{'aspect-16-9-small'} ) ) {
+						$subset->image = $subset_feature->sizes->{'aspect-16-9-small'}->source_url;
+						$subset->image_sm = $subset_feature->sizes->{'aspect-16-9-small'}->source_url;
+						$subset->imagealt = $post->_embedded->{'wp:featuredmedia'}[0]->alt_text;
+						$subset->imagecaption = $post->_embedded->{'wp:featuredmedia'}[0]->caption->rendered;
+					} elseif ( isset( $subset_feature->sizes->{'news-full'} ) ) {
+						$subset->image = $subset_feature->sizes->{'news-full'}->source_url;
+						if ( isset( $subset_feature->sizes->{'uams_news'} ) ) {
+							$subset->image_sm = $subset_feature->sizes->{'uams_news'}->source_url;
+						}
+						$subset->imagealt = $post->_embedded->{'wp:featuredmedia'}[0]->alt_text;
+						$subset->imagecaption = $post->_embedded->{'wp:featuredmedia'}[0]->caption->rendered;
+					} elseif ( isset( $subset_feature->sizes->{'uams_news'} ) ) {
 						$subset->image = $subset_feature->sizes->{'uams_news'}->source_url;
 						$subset->imagealt = $post->_embedded->{'wp:featuredmedia'}[0]->alt_text;
 						$subset->imagecaption = $post->_embedded->{'wp:featuredmedia'}[0]->caption->rendered;
@@ -823,6 +857,12 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 
 				// We've always provided an empty value for terms. @todo Implement terms. :)
 				$subset->terms = array();
+				$subset->terms = $post->post_categories;
+				// if ( isset( $post->post_categories ) && isset( $post->post_categories->slug ) && 0 < count( $post->post_categories ) ) {
+				// 	foreach( $post->post_categories as $cat ) {
+				// 		$subset->terms[ $cat->slug ] = $cat->name;
+				// 	}
+				// }
 
 			} // End if().
 
@@ -905,8 +945,20 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					} else {
 						$subset->thumbnail = $media_response->data['source_url'];
 					}
-					// Add Medium Image
-					if ( isset( $data['large'] ) ) {
+					// Add Image
+					if ( isset( $data['aspect-16-9'] ) ) {
+						$subset->image = $data['aspect-16-9']['source_url'];
+						$subset->imagealt = $media_response->data['alt_text'];
+						$subset->imagecaption = $media_response->data['caption']['rendered'];
+						if ( isset( $data['aspect-16-9'] ) ) {
+							$subset->image_sm = $data['aspect-16-9-small']['source_url'];
+						}
+					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
+						$subset->image = $data['aspect-16-9-small']['source_url'];
+						$subset->image_sm = $data['aspect-16-9-small']['source_url'];
+						$subset->imagealt = $media_response->data['alt_text'];
+						$subset->imagecaption = $media_response->data['caption']['rendered'];
+					} elseif ( isset( $data['large'] ) ) {
 						$subset->image = $data['large']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
