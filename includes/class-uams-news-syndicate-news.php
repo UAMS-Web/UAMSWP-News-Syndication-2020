@@ -433,7 +433,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
 											<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 											<div class="row">
-												<?php if ( $content->thumbnail ) { ?>
+												<?php if ( $content->thumbnail && !$atts[ 'hide_img' ] ) { ?>
 												<div class="col-12 col-sm-4 image-container">
 													<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url">
 												</div>
@@ -491,6 +491,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								?>
 								<div class="col-12 col-sm-6 col-xl-3 item" itemscope itemtype="http://schema.org/NewsArticle">
 									<div class="card">
+										<?php if ( !$atts[ 'hide_img' ] ) { ?>
 										<div class="card-img-top">
 											<picture>
 												<?php if ( $content->image_sm ) : ?>
@@ -502,6 +503,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												<?php endif; ?>
 											</picture>
 										</div>
+										<?php } ?>
 										<div class="card-body">
 											<h3 class="card-title h5" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 											<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
@@ -588,9 +590,11 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
 												<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+													<?php if ( !$atts[ 'hide_img' ] ) { ?>
 													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
+													<?php } ?>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<span itemprop="articleBody">
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
