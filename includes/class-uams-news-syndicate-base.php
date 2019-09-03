@@ -167,7 +167,7 @@ class UAMS_Syndicate_News_Base {
 	 * @return array List of request information.
 	 */
 	public function build_initial_request( $site_url, $atts ) {
-		$url_scheme = 'http';
+		$url_scheme = 'https';
 		$local_site_id = false;
 		// Account for a previous version that allowed "local" as a manual scheme.
 		if ( 'local' === $atts['scheme'] ) {
