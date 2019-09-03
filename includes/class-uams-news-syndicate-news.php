@@ -538,7 +538,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									$categoryname = $cat->name;
 								}
 							}
-								if ( 0 !== absint( $atts['include_link'] ) ) {
+								if ( 0 !== absint( $atts['include_link'] ) && $atts['category'] ) {
 							?>
 							<div class="col-12 more">
 								<p class="lead">Want to read more stories like these?</p>
@@ -576,13 +576,27 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												continue;
 											}
 											if( 0 !== absint( $atts['local'] ) ) {
-												$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-												$categoryname = get_category_by_slug( $atts['category'] )->name ;
+												if ( $atts['category'] ) {
+													$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+													$categoryname = get_category_by_slug( $atts['category'] )->name ;
+												} else {
+													foreach( $content->terms as $cat ) {
+														$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														$categoryname = $cat->name;
+													}
+												}
 											} else {
-												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
-												foreach( $content->terms as $cat ) {
-													if ( $atts['category'] == $cat->slug )
-													$categoryname = $cat->name;
+												if ( $atts['category'] ) {
+													$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+													foreach( $content->terms as $cat ) {
+														if ( $atts['category'] == $cat->slug )
+														$categoryname = $cat->name;
+													}
+												} else {
+													foreach( $content->terms as $cat ) {
+														$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														$categoryname = $cat->name;
+													}
 												}
 											}
 											?>
@@ -631,7 +645,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											?>
 										</div>
 										<?php
-											if ( $atts['include_link'] ) {
+											if ( $atts['include_link'] && $atts['category'] ) {
 										?>
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
@@ -659,14 +673,29 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$offset_x++;
 					continue;
 				}
+				
 				if( 0 !== absint( $atts['local'] ) ) {
-					$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-					$categoryname = get_category_by_slug( $atts['category'] )->name ;
+					if ( $atts['category'] ) {
+						$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+						$categoryname = get_category_by_slug( $atts['category'] )->name ;
+					} else {
+						foreach( $content->terms as $cat ) {
+							$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+							$categoryname = $cat->name;
+						}
+					}
 				} else {
-					$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
-					foreach( $content->terms as $cat ) {
-						if ( $atts['category'] == $cat->slug )
-						$categoryname = $cat->name;
+					if ( $atts['category'] ) {
+						$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+						foreach( $content->terms as $cat ) {
+							if ( $atts['category'] == $cat->slug )
+							$categoryname = $cat->name;
+						}
+					} else {
+						foreach( $content->terms as $cat ) {
+							$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+							$categoryname = $cat->name;
+						}
 					}
 				}
 				$article_id = esc_attr($content->ID);
