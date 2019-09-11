@@ -679,9 +679,19 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
 						$categoryname = get_category_by_slug( $atts['category'] )->name ;
 					} else {
-						foreach( $content->terms as $cat ) {
-							$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-							$categoryname = $cat->name;
+						if ($content->terms) {
+							foreach( $content->terms as $cat ) {
+								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+								$categoryname = $cat->name;
+							}
+						} else {
+							$postcat = get_the_category( $content->ID );
+							if ( ! empty( $postcat ) ) {
+								foreach( $postcat  as $cat ) {
+									$categorylink = get_category_link( $cat->term_id );
+									$categoryname = $cat->name ;
+								}
+							}
 						}
 					}
 				} else {
