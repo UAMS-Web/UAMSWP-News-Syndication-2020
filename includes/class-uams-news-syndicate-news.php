@@ -381,7 +381,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'headlines' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Headlines -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-headlines">
 					<div class="container-fluid">
 						<div class="row">
@@ -412,7 +412,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'excerpts' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Excerpts -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-excerpts">
 					<div class="container-fluid">
 						<div class="row">
@@ -474,7 +474,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'cards' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Cards -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-cards">
 					<div class="container-fluid">
 						<div class="row">
@@ -555,7 +555,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'grid' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Grid -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-grid">
 					<div class="container-fluid">
 						<div class="row">
@@ -710,7 +710,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				}
 				$article_id = esc_attr($content->ID);
 			?>
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-side">
 
 					<div class="container-fluid">
@@ -749,7 +749,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'full' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Full -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-container">
 					<?php
 					$offset_x = 0;
