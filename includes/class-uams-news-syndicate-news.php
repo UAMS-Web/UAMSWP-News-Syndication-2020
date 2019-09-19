@@ -439,7 +439,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												</div>
 												<div class="col-12 col-sm-8 text-container">
 												<?php } else { ?>
-												<div class="col-12 col-sm-8 col-sm-offset-4 text-container">
+												<div class="col-12 col-sm-8 offset-sm-4 text-container">
 												<?php } //endif ?>
 													<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<div class="news-item-byline">
