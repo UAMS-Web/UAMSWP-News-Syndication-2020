@@ -381,7 +381,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'headlines' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Headlines -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-headlines">
 					<div class="container-fluid">
 						<div class="row">
@@ -398,7 +398,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												$offset_x++;
 												continue;
 											}
-											?><li class="uamswp-news-syndication-item"><a href="<?php echo esc_url( $content->link ); ?>"><?php echo esc_html( $content->title ); ?></a></li><?php
+											?><li class="uamswp-news-syndication-item"><a href="<?php echo esc_url( $content->link ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo esc_html( $content->title ); ?></a></li><?php
 										}
 										?>
 									</ul>
@@ -412,7 +412,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'excerpts' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Excerpts -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-excerpts">
 					<div class="container-fluid">
 						<div class="row">
@@ -439,7 +439,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												</div>
 												<div class="col-12 col-sm-8 text-container">
 												<?php } else { ?>
-												<div class="col-12 col-sm-8 col-sm-offset-4 text-container">
+												<div class="col-12 col-sm-8 offset-sm-4 text-container">
 												<?php } //endif ?>
 													<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<div class="news-item-byline">
@@ -448,7 +448,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
 													</div>
 													<div class="news-item-excerpt" itemprop="articleBody"><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></div>
-													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
+													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
 													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
 														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
 														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
@@ -474,7 +474,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'cards' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Cards -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-cards">
 					<div class="container-fluid">
 						<div class="row">
@@ -508,7 +508,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<h3 class="card-title h5" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 											<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
 											<!-- <p class="card-text" itemprop="articleBody"></p> -->
-											<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" aria-label="<?php echo esc_html( $content->title ); ?>" itemprop="url">Read more</a>
+											<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" aria-label="<?php echo esc_html( $content->title ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
 										</div>
 									</div>
 									<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -568,7 +568,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 more">
 								<p class="lead">Want to read more stories like these?</p>
 								<div class="cta-container">
-									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the Full List</a>
+									<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">View the Full List</a>
 								</div>
 							</div>
 							<?php } ?>
@@ -580,7 +580,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'grid' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Grid -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-grid">
 					<div class="container-fluid">
 						<div class="row">
@@ -663,7 +663,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<span itemprop="articleBody">
 													<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 													</span>
-													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
+													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
 													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/></span>
 														<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
@@ -684,7 +684,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 														<h3 class="h5"><?php echo esc_html( $content->title ); ?></h3>
 														<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
-														<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
+														<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
 													</div>
 												</div>
 											<?php } ?>
@@ -700,7 +700,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="col-12 more">
 											<p class="lead">Want to read more stories like these?</p>
 											<div class="cta-container">
-												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the Full List</a>
+												<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">View the Full List</a>
 											</div>
 										</div>
 										<?php } ?>
@@ -785,7 +785,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				// }
 				$article_id = esc_attr($content->ID);
 			?>
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-side">
 				<?php echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>'; ?>
 					<div class="container-fluid">
@@ -800,16 +800,16 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 col-md-6 text-container">
 								<div class="text-inner-container">
 									<h2 class="h3">
-										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more <?php echo $categoryname; ?> stories"><?php echo $categoryname; ?></a></span><span class="sr-only">: </span>
+										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo $categoryname; ?></a></span><span class="sr-only">: </span>
 										<span class="title"><?php echo esc_html( $content->title ); ?></span>
 									</h2>
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 									<div class="cta-container">
-										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="<?php echo esc_html( $content->title ); ?>">Read more</a>
+										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="Read <?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
 										<?php
 											if ( $atts['include_link'] ) {
 										?>
-											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories">View the <?php echo $categoryname; ?> Archive</a>
+											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">View the <?php echo $categoryname; ?> Archive</a>
 										<?php } ?>
 									</div>
 								</div>
@@ -824,7 +824,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'full' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Full -->
-			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>">
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-container">
 					<?php
 					$offset_x = 0;
@@ -834,13 +834,13 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							continue;
 						}
 						?>
-						<section class="uamswp-news-syndication-full" itemscope itemtype="http://schema.org/NewsArticle">
+						<div class="uamswp-news-syndication-full" itemscope itemtype="http://schema.org/NewsArticle">
 							<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 							<div class="news-item-thumbnail" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 								<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo ($content->imagealt); ?>"><?php else: ?><meta itemprop="url" content="http://www.uams.edu/_images/blank.gif"/><?php endif; ?>
 								<?php echo( $content->imagecaption ? '<div class="wp-caption-text">' . $content->imagecaption . '</div>' : '' );?>
 							</div>
-							<header class="news-item-title"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url"><?php echo '<h2 itemprop="headline">' . esc_html( $content->title ) . '</h2>'; ?></a></header>
+							<header class="news-item-title"><h2 itemprop="headline"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo esc_html( $content->title ); ?></a></h2></header>
 							<div class="news-item-byline">
 								<!-- <?php if ( $content->date) : ?><span class="news-item-byline-date"><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?></span> | <?php endif; ?>-->
 								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
@@ -865,7 +865,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								    <meta itemprop="height" content="40"/>
 								</span>
 							</span>
-						</section>
+						</div>
 						<?php
 					}
 					?>
