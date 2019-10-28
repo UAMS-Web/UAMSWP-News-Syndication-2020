@@ -792,7 +792,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo (isset($content->imagealt) ? esc_html( $content->imagealt ) : 'UAMS logo'); ?>" role="img">
 								<style>
-									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( isset($content->image) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'); ?>"); }
+									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( isset($content->image) && !empty($content->image) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png' ); ?>"); }
 								</style>
 								<div class="image-inner-container">
 								</div>
