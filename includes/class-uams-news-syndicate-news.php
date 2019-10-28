@@ -1056,7 +1056,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$media_request = WP_REST_Request::from_url( $media_request_url );
 					$media_response = rest_do_request( $media_request );
 					$data = $media_response->data;
-					$data = $data['media_details']['sizes'];
+					$data = $data->media_details->sizes;
 
 					if ( isset( $data['post-thumbnail'] ) ) {
 						$subset->thumbnail = $data['post-thumbnail']['source_url'];
