@@ -488,15 +488,39 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									$offset_x++;
 									continue;
 								}
+								if (strpos($content->link, get_home_url()) !== false) { // Local
+									if($content->terms) {
+										foreach ($content->terms as $cat_id) {
+											if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+												$categorylink = get_category_link($cat_id);
+												$categoryname = get_category( $cat_id )->name;
+											}
+										}
+									}
+								} else { // Remote
+									if ( $atts['category'] ) {
+										foreach( $content->terms as $cat ) {
+											if ( strpos($atts['category'], $cat->slug ) !== false ) {
+												$categoryname = $cat->name;
+												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+											}
+										}
+									} else {
+										foreach( $content->terms as $cat ) {
+											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+											$categoryname = $cat->name;
+										}
+									}
+								}
 								?>
 								<div class="col-12 col-sm-6 col-xl-3 item" itemscope itemtype="http://schema.org/NewsArticle">
 									<div class="card">
 										<?php if ( !$atts[ 'hide_img' ] ) { ?>
 										<div class="card-img-top">
 											<picture>
-												<?php if ( $content->image_sm ) : ?>
+												<?php if ( isset($content->image_sm) ) : ?>
 													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
-													<?php elseif ( $content->image ) : ?>
+													<?php elseif ( isset($content->image) ) : ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
 													<?php else: ?>
 												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
@@ -527,30 +551,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 								</div>
 								<?php
-							}
-							if (strpos($content->link, get_home_url()) !== false) { // Local
-								if($content->terms) {
-									foreach ($content->terms as $cat_id) {
-										if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
-											$categorylink = get_category_link($cat_id);
-											$categoryname = get_category( $cat_id )->name;
-										}
-									}
-								} 
-							} else { // Remote
-								if ( $atts['category'] ) {
-									foreach( $content->terms as $cat ) {
-										if ( strpos($atts['category'], $cat->slug ) !== false ) {
-											$categoryname = $cat->name;
-											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-										}
-									}
-								} else {
-									foreach( $content->terms as $cat ) {
-										$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-										$categoryname = $cat->name;
-									}
-								}
 							}
 							// Original Code
 							// if( 0 !== absint( $atts['local'] ) ) {
@@ -608,7 +608,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 															$categoryname = get_category( $cat_id )->name;
 														}
 													}
-												} 
+												}
 											} else { // Remote
 												if ( $atts['category'] ) {
 													foreach( $content->terms as $cat ) {
@@ -656,7 +656,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<?php if ( !$atts[ 'hide_img' ] ) { ?>
 													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-														<?php if ( $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
+														<?php if ( isset($content->image) ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
 													<?php } ?>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
@@ -723,7 +723,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$offset_x++;
 					continue;
 				}
-				
+
 				if (strpos($content->link, get_home_url()) !== false) { // Local
 					if($content->terms) {
 						foreach ($content->terms as $cat_id) {
@@ -732,7 +732,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								$categoryname = get_category( $cat_id )->name;
 							}
 						}
-					} 
+					}
 				} else { // Remote
 					if ( $atts['category'] ) {
 						foreach( $content->terms as $cat ) {
@@ -790,9 +790,9 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				<?php echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>'; ?>
 					<div class="container-fluid">
 						<div class="row">
-							<div class="col-12 col-md-6 image-container" aria-label="<?php echo ($content->imagealt) ? esc_html( $content->imagealt ) : 'UAMS logo'; ?>" role="img">
+							<div class="col-12 col-md-6 image-container" aria-label="<?php echo (isset($content->imagealt) ? esc_html( $content->imagealt ) : 'UAMS logo'); ?>" role="img">
 								<style>
-									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( $content->image ) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>"); }
+									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( isset($content->image) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'); ?>"); }
 								</style>
 								<div class="image-inner-container">
 								</div>
@@ -1056,29 +1056,29 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$media_request = WP_REST_Request::from_url( $media_request_url );
 					$media_response = rest_do_request( $media_request );
 					$data = $media_response->data;
-					$data = $data->media_details->sizes;
+					$data = $data['media_details']['sizes'];
 
-					if ( isset( $data['post-thumbnail'] ) ) {
+					if ( isset( $data->{'post-thumbnail'} ) ) {
 						$subset->thumbnail = $data['post-thumbnail']['source_url'];
-					} elseif ( isset( $data['thumbnail'] ) ) {
-						$subset->thumbnail = $data['thumbnail']['source_url'];
+					} elseif ( isset( $data->{'thumbnail'} ) ) {
+						$subset->thumbnail = $data->{'thumbnail'}->{'source_url'};
 					} else {
 						$subset->thumbnail = $media_response->data['source_url'];
 					}
 					// Add Image
-					if ( isset( $data['aspect-16-9'] ) ) {
+					if ( isset( $data->{'aspect-16-9'} ) ) {
 						$subset->image = $data['aspect-16-9']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
 						if ( isset( $data['aspect-16-9-small'] ) ) {
 							$subset->image_sm =  $data['aspect-16-9-small']['source_url'];
 						}
-					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
+					} elseif ( isset( $data->{'aspect-16-9-small'} ) ) {
 						$subset->image = $data['aspect-16-9-small']['source_url'];
 						$subset->image_sm = $data['aspect-16-9-small']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
-					} elseif ( isset( $data['large'] ) ) {
+					} elseif ( isset( $data->{'large'} ) ) {
 						$subset->image = $data['large']['source_url'];
 						$subset->image_sm = $data['large']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
