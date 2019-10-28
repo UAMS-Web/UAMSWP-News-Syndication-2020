@@ -528,16 +528,41 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								</div>
 								<?php
 							}
-							if( 0 !== absint( $atts['local'] ) ) {
-								$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-								$categoryname = get_category_by_slug( $atts['category'] )->name ;
-							} else {
-								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
-								foreach( $content->terms as $cat ) {
-									if ( $atts['category'] == $cat->slug )
-									$categoryname = $cat->name;
+							if (strpos($content->link, get_home_url()) !== false) { // Local
+								if($content->terms) {
+									foreach ($content->terms as $cat_id) {
+										if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+											$categorylink = get_category_link($cat_id);
+											$categoryname = get_category( $cat_id )->name;
+										}
+									}
+								} 
+							} else { // Remote
+								if ( $atts['category'] ) {
+									foreach( $content->terms as $cat ) {
+										if ( strpos($atts['category'], $cat->slug ) !== false ) {
+											$categoryname = $cat->name;
+											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+										}
+									}
+								} else {
+									foreach( $content->terms as $cat ) {
+										$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+										$categoryname = $cat->name;
+									}
 								}
 							}
+							// Original Code
+							// if( 0 !== absint( $atts['local'] ) ) {
+							// 	$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+							// 	$categoryname = get_category_by_slug( $atts['category'] )->name ;
+							// } else {
+							// 	$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+							// 	foreach( $content->terms as $cat ) {
+							// 		if ( $atts['category'] == $cat->slug )
+							// 		$categoryname = $cat->name;
+							// 	}
+							// }
 								if ( 0 !== absint( $atts['include_link'] ) && $atts['category'] ) {
 							?>
 							<div class="col-12 more">
@@ -575,22 +600,22 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												$offset_x++;
 												continue;
 											}
-											if( 0 !== absint( $atts['local'] ) ) {
-												if ( $atts['category'] ) {
-													$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-													$categoryname = get_category_by_slug( $atts['category'] )->name ;
-												} else {
-													foreach( $content->terms as $cat ) {
-														$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-														$categoryname = $cat->name;
+											if (strpos($content->link, get_home_url()) !== false) { // Local
+												if($content->terms) {
+													foreach ($content->terms as $cat_id) {
+														if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+															$categorylink = get_category_link($cat_id);
+															$categoryname = get_category( $cat_id )->name;
+														}
 													}
-												}
-											} else {
+												} 
+											} else { // Remote
 												if ( $atts['category'] ) {
-													$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
 													foreach( $content->terms as $cat ) {
-														if ( $atts['category'] == $cat->slug )
-														$categoryname = $cat->name;
+														if ( strpos($atts['category'], $cat->slug ) !== false ) {
+															$categoryname = $cat->name;
+															$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														}
 													}
 												} else {
 													foreach( $content->terms as $cat ) {
@@ -599,6 +624,31 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													}
 												}
 											}
+											// Original Code
+											// if( 0 !== absint( $atts['local'] ) ) {
+											// 	if ( $atts['category'] ) {
+											// 		$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+											// 		$categoryname = get_category_by_slug( $atts['category'] )->name ;
+											// 	} else {
+											// 		foreach( $content->terms as $cat ) {
+											// 			$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+											// 			$categoryname = $cat->name;
+											// 		}
+											// 	}
+											// } else {
+											// 	if ( $atts['category'] ) {
+											// 		$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+											// 		foreach( $content->terms as $cat ) {
+											// 			if ( $atts['category'] == $cat->slug )
+											// 			$categoryname = $cat->name;
+											// 		}
+											// 	} else {
+											// 		foreach( $content->terms as $cat ) {
+											// 			$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+											// 			$categoryname = $cat->name;
+											// 		}
+											// 	}
+											// }
 											?>
 											<?php if( 1 == $count ) { ?>
 											<div class="col-12 col-sm-7 col-md-12 col-lg-7 featured">
@@ -674,32 +724,22 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					continue;
 				}
 				
-				if( 0 !== absint( $atts['local'] ) ) {
-					if ( $atts['category'] ) {
-						$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
-						$categoryname = get_category_by_slug( $atts['category'] )->name ;
-					} else {
-						if ($content->terms) {
-							foreach( $content->terms as $cat ) {
-								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-								$categoryname = $cat->name;
-							}
-						} else {
-							$postcat = get_the_category( $content->ID );
-							if ( ! empty( $postcat ) ) {
-								foreach( $postcat  as $cat ) {
-									$categorylink = get_category_link( $cat->term_id );
-									$categoryname = $cat->name ;
-								}
+				if (strpos($content->link, get_home_url()) !== false) { // Local
+					if($content->terms) {
+						foreach ($content->terms as $cat_id) {
+							if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+								$categorylink = get_category_link($cat_id);
+								$categoryname = get_category( $cat_id )->name;
 							}
 						}
-					}
-				} else {
+					} 
+				} else { // Remote
 					if ( $atts['category'] ) {
-						$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
 						foreach( $content->terms as $cat ) {
-							if ( $atts['category'] == $cat->slug )
-							$categoryname = $cat->name;
+							if ( strpos($atts['category'], $cat->slug ) !== false ) {
+								$categoryname = $cat->name;
+								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+							}
 						}
 					} else {
 						foreach( $content->terms as $cat ) {
@@ -708,11 +748,46 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						}
 					}
 				}
+				// Original Code
+				// if( 0 !== absint( $atts['local'] ) ) {
+				// 	if ( $atts['category'] ) {
+				// 		$categorylink = get_category_link( get_category_by_slug( $atts['category'] )->term_id );
+				// 		$categoryname = get_category_by_slug( $atts['category'] )->name ;
+				// 	} else {
+				// 		if ($content->terms) {
+				// 			foreach( $content->terms as $cat ) {
+				// 				$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+				// 				$categoryname = $cat->name;
+				// 			}
+				// 		} else {
+				// 			$postcat = get_the_category( $content->ID );
+				// 			if ( ! empty( $postcat ) ) {
+				// 				foreach( $postcat  as $cat ) {
+				// 					$categorylink = get_category_link( $cat->term_id );
+				// 					$categoryname = $cat->name ;
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// } else {
+				// 	if ( $atts['category'] ) {
+				// 		$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $atts['category'] . '/';
+				// 		foreach( $content->terms as $cat ) {
+				// 			if ( $atts['category'] == $cat->slug )
+				// 			$categoryname = $cat->name;
+				// 		}
+				// 	} else {
+				// 		foreach( $content->terms as $cat ) {
+				// 			$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+				// 			$categoryname = $cat->name;
+				// 		}
+				// 	}
+				// }
 				$article_id = esc_attr($content->ID);
 			?>
 			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>">
 				<div class="uamswp-news-syndication-side">
-
+				<?php echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>'; ?>
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo ($content->imagealt) ? esc_html( $content->imagealt ) : 'UAMS logo'; ?>" role="img">
@@ -1029,6 +1104,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 
 				// We've always provided an empty value for terms. @todo Implement terms. :)
 				$subset->terms = array();
+				$subset->terms = $post['categories']; // Category IDs
 			} // End if().
 
 			/**
