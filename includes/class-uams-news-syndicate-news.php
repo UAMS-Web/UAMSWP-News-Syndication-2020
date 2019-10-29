@@ -398,6 +398,30 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												$offset_x++;
 												continue;
 											}
+											if (strpos($content->link, get_home_url()) !== false) { // Local
+												if($content->terms) {
+													foreach ($content->terms as $cat_id) {
+														if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+															$categorylink = get_category_link($cat_id);
+															$categoryname = get_category( $cat_id )->name;
+														}
+													}
+												}
+											} else { // Remote
+												if ( $atts['category'] ) {
+													foreach( $content->terms as $cat ) {
+														if ( strpos($atts['category'], $cat->slug ) !== false ) {
+															$categoryname = $cat->name;
+															$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														}
+													}
+												} else {
+													foreach( $content->terms as $cat ) {
+														$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														$categoryname = $cat->name;
+													}
+												}
+											}
 											?><li class="uamswp-news-syndication-item"><a href="<?php echo esc_url( $content->link ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo esc_html( $content->title ); ?></a></li><?php
 										}
 										?>
@@ -800,14 +824,14 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12 col-md-6 text-container">
 								<div class="text-inner-container">
 									<h2 class="h3">
-										<span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo $categoryname; ?></a></span><span class="sr-only">: </span>
+										<?php if (isset($categoryname) && isset($categorylink)) : ?><span class="category"><a href="<?php echo $categorylink; ?>" aria-label="See more <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo $categoryname; ?></a></span><span class="sr-only">: </span><?php endif; ?>
 										<span class="title"><?php echo esc_html( $content->title ); ?></span>
 									</h2>
 									<p><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></p>
 									<div class="cta-container">
-										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="Read <?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
+										<a class="btn btn-primary" href="<?php echo esc_url( $content->link ); ?>" aria-label="Read <?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo isset($categoryname) ? $categoryname : ''; ?>">Read more</a>
 										<?php
-											if ( $atts['include_link'] ) {
+											if ( $atts['include_link'] && isset($categoryname) && isset($categorylink)) {
 										?>
 											<a href="<?php echo $categorylink; ?>" class="btn btn-outline-primary" aria-label="View the full list of <?php echo $categoryname; ?> stories" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">View the <?php echo $categoryname; ?> Archive</a>
 										<?php } ?>
@@ -1056,29 +1080,29 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$media_request = WP_REST_Request::from_url( $media_request_url );
 					$media_response = rest_do_request( $media_request );
 					$data = $media_response->data;
-					$data = $data['media_details']['sizes'];
+					$data = (array)$data['media_details']['sizes']; // Make it an array to for syntax Object -> vs Array [] 
 
-					if ( isset( $data->{'post-thumbnail'} ) ) {
+					if ( isset( $data['post-thumbnail'] ) ) {
 						$subset->thumbnail = $data['post-thumbnail']['source_url'];
 					} elseif ( isset( $data->{'thumbnail'} ) ) {
-						$subset->thumbnail = $data->{'thumbnail'}->{'source_url'};
+						$subset->thumbnail = $data['thumbnail']['source_url'];
 					} else {
 						$subset->thumbnail = $media_response->data['source_url'];
 					}
 					// Add Image
-					if ( isset( $data->{'aspect-16-9'} ) ) {
+					if ( isset( $data['aspect-16-9'] ) ) {
 						$subset->image = $data['aspect-16-9']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
 						if ( isset( $data['aspect-16-9-small'] ) ) {
 							$subset->image_sm =  $data['aspect-16-9-small']['source_url'];
 						}
-					} elseif ( isset( $data->{'aspect-16-9-small'} ) ) {
-						$subset->image = $data['aspect-16-9-small']['source_url'];
+					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
+						$subset->image = $$data['aspect-16-9-small']['source_url'];
 						$subset->image_sm = $data['aspect-16-9-small']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
-					} elseif ( isset( $data->{'large'} ) ) {
+					} elseif ( isset( $data['large'] ) ) {
 						$subset->image = $data['large']['source_url'];
 						$subset->image_sm = $data['large']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
