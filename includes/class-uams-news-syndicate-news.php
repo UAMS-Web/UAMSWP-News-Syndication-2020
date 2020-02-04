@@ -393,6 +393,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<ul class="uamswp-news-syndication-list">
 										<?php
 										$offset_x = 0;
+										$categorylink = '';
+										$categoryname = '';
 										foreach ( $new_data as $content ) {
 											if ( $offset_x < absint( $atts['offset'] ) ) {
 												$offset_x++;
@@ -447,6 +449,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								<div class="item-container">
 								<?php
 								$offset_x = 0;
+								$categorylink = '';
+								$categoryname = '';
 								foreach ( $new_data as $content ) {
 									if ( $offset_x < absint( $atts['offset'] ) ) {
 										$offset_x++;
@@ -507,6 +511,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							</div>
 							<?php
 							$offset_x = 0;
+							$categorylink = '';
+							$categoryname = '';
 							foreach ( $new_data as $content ) {
 								if ( $offset_x < absint( $atts['offset'] ) ) {
 									$offset_x++;
@@ -544,7 +550,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<picture>
 												<?php if ( isset($content->image_sm) ) : ?>
 													<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
-													<?php elseif ( isset($content->image) ) : ?>
+													<?php elseif ( isset($content->image) && $content->image ) : ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
 													<?php else: ?>
 												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
@@ -618,6 +624,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<?php
 										$offset_x = 0;
 										$count = 1;
+										$categorylink = '';
+										$categoryname = '';
 										// echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>';
 										foreach ( $new_data as $content ) {
 											if ( $offset_x < absint( $atts['offset'] ) ) {
@@ -680,7 +688,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<?php if ( !$atts[ 'hide_img' ] ) { ?>
 													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-														<?php if ( isset($content->image) ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
+														<?php if ( isset($content->image) && $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
 													<?php } ?>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
@@ -742,6 +750,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			<!-- UAMSWP Output Side-by-Side Image & Text -->
 			<?php
 			$offset_x = 0;
+			$categorylink = '';
+			$categoryname = '';
 			foreach ( $new_data as $content ):
 				if ( $offset_x < absint( $atts['offset'] ) ) {
 					$offset_x++;
@@ -852,6 +862,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				<div class="uamswp-news-syndication-container">
 					<?php
 					$offset_x = 0;
+					$categorylink = '';
+					$categoryname = '';
 					foreach ( $new_data as $content ) {
 						if ( $offset_x < absint( $atts['offset'] ) ) {
 							$offset_x++;
