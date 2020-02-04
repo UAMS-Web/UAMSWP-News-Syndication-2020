@@ -553,7 +553,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<?php elseif ( isset($content->image) && $content->image ) : ?>
 													<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
 													<?php else: ?>
-												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="UAMS Logo" itemprop="url">
+												<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.jpg'; ?>" alt="UAMS Logo" itemprop="url">
 												<?php endif; ?>
 											</picture>
 										</div>
@@ -688,7 +688,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 													<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 													<?php if ( !$atts[ 'hide_img' ] ) { ?>
 													<picture itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-														<?php if ( isset($content->image) && $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.png'; ?>" alt="" itemprop="url"><?php endif; ?>
+														<?php if ( isset($content->image) && $content->image ) : ?><img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagecaption ); ?>" itemprop="url"><?php else: ?><img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.jpg'; ?>" alt="" itemprop="url"><?php endif; ?>
 													</picture>
 													<?php } ?>
 													<h3 class="h4" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
@@ -826,7 +826,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo (isset($content->imagealt) ? esc_html( $content->imagealt ) : 'UAMS logo'); ?>" role="img">
 								<style>
-									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( isset($content->image) && !empty($content->image) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.png' ); ?>"); }
+									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo ( isset($content->image) && !empty($content->image) ? esc_url( $content->image ) : plugin_dir_url( __DIR__ ) . 'images/uams_logo.jpg' ); ?>"); }
 								</style>
 								<div class="image-inner-container">
 								</div>
