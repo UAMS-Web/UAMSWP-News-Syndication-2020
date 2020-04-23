@@ -406,6 +406,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
 															$categorylink = get_category_link($cat_id);
 															$categoryname = get_category( $cat_id )->name;
+															break;
 														}
 													}
 												}
@@ -415,6 +416,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														if ( strpos($atts['category'], $cat->slug ) !== false ) {
 															$categoryname = $cat->name;
 															$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+															break;
 														}
 													}
 												} else {
@@ -524,6 +526,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
 												$categorylink = get_category_link($cat_id);
 												$categoryname = get_category( $cat_id )->name;
+												break;
 											}
 										}
 									}
@@ -533,6 +536,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											if ( strpos($atts['category'], $cat->slug ) !== false ) {
 												$categoryname = $cat->name;
 												$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+												break;
 											}
 										}
 									} else {
@@ -638,6 +642,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
 															$categorylink = get_category_link($cat_id);
 															$categoryname = get_category( $cat_id )->name;
+															break;
 														}
 													}
 												}
@@ -647,6 +652,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 														if ( strpos($atts['category'], $cat->slug ) !== false ) {
 															$categoryname = $cat->name;
 															$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+															break;
 														}
 													}
 												} else {
@@ -764,6 +770,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
 								$categorylink = get_category_link($cat_id);
 								$categoryname = get_category( $cat_id )->name;
+								break;
 							}
 						}
 					}
@@ -773,6 +780,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							if ( strpos($atts['category'], $cat->slug ) !== false ) {
 								$categoryname = $cat->name;
 								$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+								break;
 							}
 						}
 					} else {
