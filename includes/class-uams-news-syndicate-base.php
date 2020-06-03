@@ -31,6 +31,7 @@ class UAMS_Syndicate_News_Base {
 		'style' => '',
 		'query' => 'posts',
 		'local' => false,
+		'local_only' => false,
 		'count' => false,
 		'date_format' => 'F j, Y',
 		'offset' => 0,
@@ -192,7 +193,7 @@ class UAMS_Syndicate_News_Base {
 			}
 		}
 		$request_url = esc_url( $url_scheme . '://' . $site_url['host'] . $site_url['path'] . $this->default_path ) . $atts['query'];
-		// echo '<script>console.log('. $request_url .')</script>';
+		// echo '<script>console.log("URL: '. $request_url .'");</script>';
 		$request = array(
 			'url' => $request_url,
 			'scheme' => $atts['scheme'],

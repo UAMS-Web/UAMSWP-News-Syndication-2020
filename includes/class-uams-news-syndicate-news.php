@@ -217,6 +217,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 	 *     @type string $style                    Adds additional styles to the wrapper. Defaults to empty.
 	 *     @type string $query                    Allows for a custom WP-API query. Defaults as "posts". Any
 	 *     @type int    $local             		  The number of local items to merge with the remote results.
+	 * 	   @type int    $local_only				  Display only local items. Exclude remote
 	 *     @type int    $count                    The number of items to pull from a feed. Defaults to the
 	 *                                            posts_per_page setting of the remote site.
 	 *     @type string $date_format              PHP Date format for the output of the item's date.
@@ -285,18 +286,20 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				wp_cache_set( $cache_key, $new_data, 'uamswp-news' );
 			}
 		} else {
-			$new_data = $this->get_content_cache( $atts, 'uamswp_news' );
-			if ( ! is_array( $new_data ) ) {
-				$response = wp_remote_get( $request_url );
-				if ( ! is_wp_error( $response ) && 404 !== wp_remote_retrieve_response_code( $response ) ) {
-					$data = wp_remote_retrieve_body( $response );
-					$data = json_decode( $data );
-					if ( null === $data ) {
-						$data = array();
+			if (0 === absint( $atts['local_only'] ) ) {
+				$new_data = $this->get_content_cache( $atts, 'uamswp_news' );
+				if ( ! is_array( $new_data ) ) {
+					$response = wp_remote_get( $request_url );
+					if ( ! is_wp_error( $response ) && 404 !== wp_remote_retrieve_response_code( $response ) ) {
+						$data = wp_remote_retrieve_body( $response );
+						$data = json_decode( $data );
+						if ( null === $data ) {
+							$data = array();
+						}
+						$new_data = $this->process_remote_posts( $data, $atts );
+						// Store the built content in cache for repeated use.
+						$this->set_content_cache( $atts, 'uamswp_news', $new_data );
 					}
-					$new_data = $this->process_remote_posts( $data, $atts );
-					// Store the built content in cache for repeated use.
-					$this->set_content_cache( $atts, 'uamswp_news', $new_data );
 				}
 			}
 		}
@@ -305,7 +308,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 			$new_data = array();
 		}
 
-		if ( 0 !== absint( $atts['local'] ) ) {
+		if ( 0 !== absint( $atts['local'] ) || 0 !== absint( $atts['local_only']) ) {
 			$local_atts = array();
 			foreach ( $atts as $attribute => $value ) {
 				if ( 0 === stripos( $attribute, 'local_' ) ) {
