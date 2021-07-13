@@ -518,7 +518,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<div class="col-12">
 								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
-							<div class="card-list card-list-left">
+							<div class="card-list card-list-left col-12">
 							<?php
 							$offset_x = 0;
 							$categorylink = '';
