@@ -480,9 +480,17 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												<?php } //endif ?>
 													<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<div class="news-item-byline">
-														<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> | </small></span>
+													<?php if ( $atts['hide_date'] ) { ?>
+														<span itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"></span>
+													<?php } else { ?>
+														<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> <?php echo $atts['hide_author'] ? '' : ' | ' ?></small></span>
+													<?php } ?>
 														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+													<?php if ( $atts['hide_author'] ) { ?>
+														<span itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>" /></span>
+													<?php } else { ?>
 														<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
+													<?php } ?>
 													</div>
 													<div class="news-item-excerpt" itemprop="articleBody"><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></div>
 													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
@@ -909,7 +917,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<header class="news-item-title"><h2 itemprop="headline"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo esc_html( $content->title ); ?></a></h2></header>
 							<div class="news-item-byline">
 								<!-- <?php if ( $content->date) : ?><span class="news-item-byline-date"><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?></span> | <?php endif; ?>-->
-								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
+								<?php if ( $content->author_name && !$atts['hide_author'] ) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
 								<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 					            <meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
 							</div>
