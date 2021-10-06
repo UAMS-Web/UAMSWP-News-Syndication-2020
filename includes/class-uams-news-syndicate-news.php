@@ -410,6 +410,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 															$categorylink = get_category_link($cat_id);
 															$categoryname = get_category( $cat_id )->name;
 															break;
+														} else {
+															$categorylink = get_category_link($cat_id);
+															$categoryname = get_category( $cat_id )->name;
+															break;
 														}
 													}
 												}
@@ -531,6 +535,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												$categorylink = get_category_link($cat_id);
 												$categoryname = get_category( $cat_id )->name;
 												break;
+											} else {
+												$categorylink = get_category_link($cat_id);
+												$categoryname = get_category( $cat_id )->name;
+												break;
 											}
 										}
 									}
@@ -645,6 +653,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 												if($content->terms) {
 													foreach ($content->terms as $cat_id) {
 														if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+															$categorylink = get_category_link($cat_id);
+															$categoryname = get_category( $cat_id )->name;
+															break;
+														} else {
 															$categorylink = get_category_link($cat_id);
 															$categoryname = get_category( $cat_id )->name;
 															break;
@@ -776,6 +788,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								$categorylink = get_category_link($cat_id);
 								$categoryname = get_category( $cat_id )->name;
 								break;
+							} else {
+								$categorylink = get_category_link($cat_id);
+								$categoryname = get_category( $cat_id )->name;
+								break;
 							}
 						}
 					}
@@ -832,6 +848,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 				// }
 				$article_id = esc_attr($content->ID);
 			?>
+			<?php echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>'; ?>
 			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?> no-padding side-by-side image-on-<?php echo $image_position; ?> image-background-center"id="side-by-side-<?php echo $article_id; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
 				<div class="uamswp-news-syndication-side">
 				<?php echo '<script>var ' . esc_js( $atts['object'] ) . ' = ' . wp_json_encode( $new_data ) .';</script>'; ?>
