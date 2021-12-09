@@ -522,6 +522,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 						</div>
 						<div class="card-list card-list-left col-12">
+						<div class="row">
 						<?php
 						$offset_x = 0;
 						$categorylink = '';
@@ -600,6 +601,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 							</div>
 						<?php } // endif?>
+						</div>
 						<?php
 						// Original Code
 						// if( 0 !== absint( $atts['local'] ) ) {
