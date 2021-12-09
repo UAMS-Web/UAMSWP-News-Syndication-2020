@@ -445,59 +445,69 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'excerpts' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Excerpts -->
-			<section class="uamswp-news-syndication-wrapper uams-module uamswp-news-syndication-excerpts<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
-						</div>
-						<div class="col-12">
-							<div class="item-container">
-							<?php
-							$offset_x = 0;
-							$categorylink = '';
-							$categoryname = '';
-							foreach ( $new_data as $content ) {
-								if ( $offset_x < absint( $atts['offset'] ) ) {
-									$offset_x++;
-									continue;
-								}
-								?>
-								<div class="item">
-									<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
-										<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
-										<div class="row">
-											<?php if ( $content->thumbnail && !$atts[ 'hide_img' ] ) { ?>
-											<div class="col-12 col-sm-4 image-container">
-												<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url">
-											</div>
-											<div class="col-12 col-sm-8 text-container">
-											<?php } else { ?>
-											<div class="col-12 col-sm-8 offset-sm-4 text-container">
-											<?php } //endif ?>
-												<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
-												<div class="news-item-byline">
-													<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> | </small></span>
-													<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
+				<div class="uamswp-news-syndication-excerpts">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
+							</div>
+							<div class="col-12">
+								<div class="item-container">
+								<?php
+								$offset_x = 0;
+								$categorylink = '';
+								$categoryname = '';
+								foreach ( $new_data as $content ) {
+									if ( $offset_x < absint( $atts['offset'] ) ) {
+										$offset_x++;
+										continue;
+									}
+									?>
+									<div class="item">
+										<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
+											<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+											<div class="row">
+												<?php if ( $content->thumbnail && !$atts[ 'hide_img' ] ) { ?>
+												<div class="col-12 col-sm-4 image-container">
+													<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url">
 												</div>
-												<div class="news-item-excerpt" itemprop="articleBody"><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></div>
-												<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
-												<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-													<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-													<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-														<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-														<meta itemprop="width" content="297"/>
-														<meta itemprop="height" content="40"/>
+												<div class="col-12 col-sm-8 text-container">
+												<?php } else { ?>
+												<div class="col-12 col-sm-8 offset-sm-4 text-container">
+												<?php } //endif ?>
+													<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
+													<div class="news-item-byline">
+													<?php if ( $atts['hide_date'] ) { ?>
+														<span itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"></span>
+													<?php } else { ?>
+														<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> <?php echo $atts['hide_author'] ? '' : ' | ' ?></small></span>
+													<?php } ?>
+														<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+													<?php if ( $atts['hide_author'] ) { ?>
+														<span itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>" /></span>
+													<?php } else { ?>
+														<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
+													<?php } ?>
+													</div>
+													<div class="news-item-excerpt" itemprop="articleBody"><?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?></div>
+													<a class="btn btn-primary stretched-link" href="<?php echo esc_url( $content->link ); ?>" itemprop="url" aria-label="<?php echo esc_html( $content->title ); ?>" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
+													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+															<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+															<meta itemprop="width" content="297"/>
+															<meta itemprop="height" content="40"/>
+														</span>
 													</span>
-												</span>
+												</div>
 											</div>
 										</div>
 									</div>
+									<?php
+								}
+								?>
 								</div>
-								<?php
-							}
-							?>
 							</div>
 						</div>
 					</div>
@@ -901,7 +911,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							<header class="news-item-title"><h2 itemprop="headline"><a href="<?php echo esc_url( $content->link ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo esc_html( $content->title ); ?></a></h2></header>
 							<div class="news-item-byline">
 								<!-- <?php if ( $content->date) : ?><span class="news-item-byline-date"><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?></span> | <?php endif; ?>-->
-								<?php if ( $content->author_name) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
+								<?php if ( $content->author_name && !$atts['hide_author'] ) : ?><span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">By <span itemprop="name"><?php echo esc_html( $content->author_name ); ?></span></span><?php endif; ?>
 								<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
 					            <meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
 							</div>

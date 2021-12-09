@@ -39,6 +39,8 @@ class UAMS_Syndicate_News_Base {
 		'include_link' => false,
 		'hide_img' => false,
 		'news_position' => 'left',
+		'hide_author' => false,
+		'hide_date' => false,
 	);
 
 	/**
