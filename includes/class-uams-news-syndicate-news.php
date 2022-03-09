@@ -568,7 +568,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									}
 								}
 								?>
-								<div class="col-12 col-sm-6 col-xl-3 item" itemscope itemtype="http://schema.org/NewsArticle">
+								<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
 									<div class="card">
 										<?php if ( !$atts[ 'hide_img' ] ) { ?>
 										<div class="card-img-top">
