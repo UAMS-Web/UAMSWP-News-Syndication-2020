@@ -604,7 +604,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									</span>
 									<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
 								</div>
-							<?php } // endif?>
+							<?php } // end foreach ?>
 							</div>
 							<?php
 							// Original Code
