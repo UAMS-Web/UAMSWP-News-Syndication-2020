@@ -615,7 +615,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<?php } // end foreach ?>
 								</div>
 							</div>
-						<?php } // endif?>
 						<?php
 						// Original Code
 						// if( 0 !== absint( $atts['local'] ) ) {
