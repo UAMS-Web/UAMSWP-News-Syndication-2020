@@ -475,16 +475,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 											<?php } else { ?>
 											<div class="col-12 col-sm-8 offset-sm-4 text-container">
 											<?php } //endif ?>
-												<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
-												<div class="news-item-byline">
-													<span class="news-item-byline-date" itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"><small><?php echo esc_html( date( $atts['date_format'], strtotime( $content->date ) ) ); ?> | </small></span>
-													<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-													<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name"><?php echo esc_html( $content->author_name ); ?></small></span>
-												</div>
-												<div class="col-12 col-sm-8 text-container">
-												<?php } else { ?>
-												<div class="col-12 col-sm-8 offset-sm-4 text-container">
-												<?php } //endif ?>
 													<h3 class="h5 news-item-title" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
 													<div class="news-item-byline">
 													<?php if ( $atts['hide_date'] ) { ?>
