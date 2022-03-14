@@ -605,7 +605,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 									<?php } // end foreach ?>
 								</div>
 							</div>
-						<?php } // endif?>
 						<?php
 						// Original Code
 						// if( 0 !== absint( $atts['local'] ) ) {
@@ -620,7 +619,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						// }
 							if ( 0 !== absint( $atts['include_link'] ) && $atts['category'] ) {
 						?>
-						</div>
 						<div class="col-12 more">
 							<p class="lead">Want to read more stories like these?</p>
 							<div class="cta-container">
