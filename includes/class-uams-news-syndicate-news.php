@@ -516,91 +516,95 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 		} elseif ( 'cards' === $atts['output'] ) {
 			?>
             <!-- UAMSWP Output Cards -->
-			<section class="uamswp-news-syndication-wrapper uams-module uamswp-news-syndication-cards<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12">
-							<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
-						</div>
-						<div class="card-list card-list-left col-12">
-						<?php
-						$offset_x = 0;
-						$categorylink = '';
-						$categoryname = '';
-						foreach ( $new_data as $content ) {
-							if ( $offset_x < absint( $atts['offset'] ) ) {
-								$offset_x++;
-								continue;
-							}
-							if (strpos($content->link, get_home_url()) !== false) { // Local
-								if($content->terms) {
-									foreach ($content->terms as $cat_id) {
-										if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
-											$categorylink = get_category_link($cat_id);
-											$categoryname = get_category( $cat_id )->name;
-											break;
-										} else {
-											$categorylink = get_category_link($cat_id);
-											$categoryname = get_category( $cat_id )->name;
-											break;
-										}
-									}
-								}
-							} else { // Remote
-								if ( $atts['category'] ) {
-									foreach( $content->terms as $cat ) {
-										if ( strpos($atts['category'], $cat->slug ) !== false ) {
-											$categoryname = $cat->name;
-											$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-											break;
-										}
-									}
-								} else {
-									foreach( $content->terms as $cat ) {
-										$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
-										$categoryname = $cat->name;
-									}
-								}
-							}
-							?>
-							<div class="col-12 col-sm-6 col-xl-3 item" itemscope itemtype="http://schema.org/NewsArticle">
-								<div class="card">
-									<?php if ( !$atts[ 'hide_img' ] ) { ?>
-									<div class="card-img-top">
-										<picture>
-											<?php if ( isset($content->image_sm) ) : ?>
-												<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
-												<?php elseif ( isset($content->image) && $content->image ) : ?>
-												<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
-												<?php else: ?>
-											<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.jpg'; ?>" alt="UAMS Logo" itemprop="url">
-											<?php endif; ?>
-										</picture>
-									</div>
-									<?php } ?>
-									<div class="card-body">
-										<h3 class="card-title h5" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
-										<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
-										<!-- <p class="card-text" itemprop="articleBody"></p> -->
-										<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" aria-label="<?php echo esc_html( $content->title ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
-									</div>
-								</div>
-								<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-									<meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/>
-								</span>
-								<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
-								<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
-								<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-									<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
-									<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-										<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
-										<meta itemprop="width" content="297"/>
-										<meta itemprop="height" content="40"/>
-									</span>
-								</span>
-								<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+			<section class="uamswp-news-syndication-wrapper uams-module<?php echo $style; ?>" aria-label="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>">
+				<div class="uamswp-news-syndication-cards">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<h2 class="module-title<?php echo (0 !== absint( $atts['hide_title'] ) ) ? ' sr-only' : ''; ?>"><span class="title"><?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?></span></h2>
 							</div>
-						<?php } // endif?>
+							<div class="col-12">
+								<div class="card-list card-list-left">
+									<?php
+									$offset_x = 0;
+									$categorylink = '';
+									$categoryname = '';
+									foreach ( $new_data as $content ) {
+										if ( $offset_x < absint( $atts['offset'] ) ) {
+											$offset_x++;
+											continue;
+										}
+										if (strpos($content->link, get_home_url()) !== false) { // Local
+											if($content->terms) {
+												foreach ($content->terms as $cat_id) {
+													if( strpos($atts['category'], get_category( $cat_id )->slug ) !== false ) {
+														$categorylink = get_category_link($cat_id);
+														$categoryname = get_category( $cat_id )->name;
+														break;
+													} else {
+														$categorylink = get_category_link($cat_id);
+														$categoryname = get_category( $cat_id )->name;
+														break;
+													}
+												}
+											}
+										} else { // Remote
+											if ( $atts['category'] ) {
+												foreach( $content->terms as $cat ) {
+													if ( strpos($atts['category'], $cat->slug ) !== false ) {
+														$categoryname = $cat->name;
+														$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+														break;
+													}
+												}
+											} else {
+												foreach( $content->terms as $cat ) {
+													$categorylink = $atts[ 'scheme' ] . '://'. $atts[ 'host' ] . '/category/' . $cat->slug . '/';
+													$categoryname = $cat->name;
+												}
+											}
+										}
+										?>
+										<div class="item" itemscope itemtype="http://schema.org/NewsArticle">
+											<div class="card">
+												<?php if ( !$atts[ 'hide_img' ] ) { ?>
+													<div class="card-img-top">
+														<picture>
+															<?php if ( isset($content->image_sm) ) : ?>
+																<img src="<?php echo esc_url( $content->image_sm ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
+																<?php elseif ( isset($content->image) && $content->image ) : ?>
+																<img src="<?php echo esc_url( $content->image ); ?>" alt="<?php echo esc_html( $content->imagealt ); ?>" itemprop="url">
+																<?php else: ?>
+															<img src="<?php echo plugin_dir_url( __DIR__ ) . 'images/uams_logo.jpg'; ?>" alt="UAMS Logo" itemprop="url">
+															<?php endif; ?>
+														</picture>
+													</div>
+												<?php } ?>
+												<div class="card-body">
+													<h3 class="card-title h5" itemprop="headline"><?php echo esc_html( $content->title ); ?></h3>
+													<?php echo preg_replace('#<a class="more"(.*?)</a>#', '', wp_kses_post( $content->excerpt )); ?>
+													<!-- <p class="card-text" itemprop="articleBody"></p> -->
+													<a href="<?php echo esc_url( $content->link ); ?>" class="btn btn-primary stretched-link" aria-label="<?php echo esc_html( $content->title ); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html( $atts['news_title'] ) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>">Read more</a>
+												</div>
+											</div>
+											<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+												<meta itemprop="name" content="<?php echo esc_html( $content->author_name ); ?>"/>
+											</span>
+											<meta itemprop="datePublished" content="<?php echo esc_html( date( 'c', strtotime( $content->date ) ) ); ?>"/>
+											<meta itemprop="dateModified" content="<?php echo esc_html( date( 'c', strtotime( $content->modified ) ) ); ?>"/>
+											<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+												<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+												<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+													<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+													<meta itemprop="width" content="297"/>
+													<meta itemprop="height" content="40"/>
+												</span>
+											</span>
+											<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url( $content->link ); ?>"/>
+										</div>
+									<?php } // end foreach ?>
+								</div>
+							</div>
 						<?php
 						// Original Code
 						// if( 0 !== absint( $atts['local'] ) ) {
@@ -615,7 +619,6 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						// }
 							if ( 0 !== absint( $atts['include_link'] ) && $atts['category'] ) {
 						?>
-						</div>
 						<div class="col-12 more">
 							<p class="lead">Want to read more stories like these?</p>
 							<div class="cta-container">
