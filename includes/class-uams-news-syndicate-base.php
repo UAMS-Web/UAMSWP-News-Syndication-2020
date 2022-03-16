@@ -97,7 +97,7 @@ class UAMS_Syndicate_News_Base {
 
 	// 	$post = get_post();
 	// 	if ( isset( $post->post_content ) && has_shortcode( $post->post_content, 'uamswp_news' ) ) {
-	// 		//wp_register_style( 'uamswp-syndication-news', plugins_url('/css/uamswp-syndication-news.css', __FILE__ ) );
+	// 		//wp_register_style( 'uamswp-syndication-news', UAMS_NEWS_ROOT_URL . 'css/uamswp-syndication-news.css' );
 	// 	}
 	// }
 
