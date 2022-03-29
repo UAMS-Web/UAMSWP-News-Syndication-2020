@@ -5,7 +5,7 @@ Plugin URI: -
 Description: News Syndication plugin for uams.edu & uamshealth.com (2020 version)
 Author: uams, Todd McKee, MEd
 Author URI: http://www.uams.edu/
-Version: 1.0.0
+Version: 1.0.4
 */
 
 // If this file is called directly, abort.
