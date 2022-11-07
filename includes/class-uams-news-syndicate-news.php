@@ -1104,9 +1104,10 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 
 			// Only a subset of data is returned for a headlines request.
 			if ( 'headlines' === $atts['output'] ) {
-				$subset->link = $post->link;
-				$subset->date = $post->date;
-				$subset->title = $post->title->rendered;
+				$subset->ID = $post['id'];
+				$subset->link = $post['link'];
+				$subset->date = $post['date'];
+				$subset->title = $post['title']['rendered'];
 			} else {
 				$subset->ID = $post['id'];
 				$subset->date = $post['date']; // In time zone of requested site
