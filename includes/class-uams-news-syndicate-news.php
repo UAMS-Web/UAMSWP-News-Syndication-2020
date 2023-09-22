@@ -1145,7 +1145,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 							$subset->image_sm =  $data['aspect-16-9-small']['source_url'];
 						}
 					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
-						$subset->image = $$data['aspect-16-9-small']['source_url'];
+						$subset->image = $data['aspect-16-9-small']['source_url'];
 						$subset->image_sm = $data['aspect-16-9-small']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
 						$subset->imagecaption = $media_response->data['caption']['rendered'];
