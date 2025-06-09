@@ -469,7 +469,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 										<div class="row">
 											<?php if ( $content->thumbnail && !$atts[ 'hide_img' ] ) { ?>
 											<div class="col-12 col-sm-4 image-container">
-												<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo esc_html( $content->thumbalt ); ?>" itemprop="url">
+												<img src="<?php echo esc_url( $content->thumbnail ); ?>" alt="<?php echo isset( $content->thumbalt ) ? esc_html( $content->thumbalt ) : ''; ?>" itemprop="url">
 											</div>
 											<div class="col-12 col-sm-8 text-container">
 											<?php } else { ?>
@@ -1127,7 +1127,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 					$media_request = WP_REST_Request::from_url( $media_request_url );
 					$media_response = rest_do_request( $media_request );
 					$data = $media_response->data;
-					$data = (array)$data['media_details']['sizes']; // Make it an array to for syntax Object -> vs Array [] 
+					$data = (array)$data['media_details']['sizes']; // Make it an array to for syntax Object -> vs Array []
 
 					if ( isset( $data['post-thumbnail'] ) ) {
 						$subset->thumbnail = $data['post-thumbnail']['source_url'];
@@ -1144,7 +1144,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base {
 						if ( isset( $data['aspect-16-9-small'] ) ) {
 							$subset->image_sm =  $data['aspect-16-9-small']['source_url'];
 						}
-					} elseif ( isset( $data['aspect-16-9-small'] ) ) {
+					} elseif ( !is_null( $data['aspect-16-9-small'] ) && isset( $data['aspect-16-9-small'] ) ) {
 						$subset->image = $data['aspect-16-9-small']['source_url'];
 						$subset->image_sm = $data['aspect-16-9-small']['source_url'];
 						$subset->imagealt = $media_response->data['alt_text'];
