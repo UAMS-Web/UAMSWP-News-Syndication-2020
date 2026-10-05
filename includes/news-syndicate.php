@@ -9,7 +9,7 @@ add_action( 'plugins_loaded', 'UAMS\News_Syndicate\bootstrap' );
  *
  * @since 1.0.0
  */
-function bootstrap() {
+function bootstrap(): void {
 	include_once __DIR__ . '/class-uams-news-syndicate-base.php';
 
 	add_action( 'init', 'UAMS\News_Syndicate\activate_shortcodes' );
@@ -22,8 +22,8 @@ function bootstrap() {
  *
  * @since 1.0.0
  */
-function activate_shortcodes() {
-	include_once dirname( __FILE__ ) . '/class-uams-news-syndicate-news.php';
+function activate_shortcodes(): void {
+	include_once __DIR__ . '/class-uams-news-syndicate-news.php';
 
 	// Add the [uamswp_news] shortcode to pull standard post news.
 	new \UAMS_Syndicate_News();
@@ -37,6 +37,6 @@ function activate_shortcodes() {
  *
  * @since 1.4.0
  */
-function clear_local_news_cache() {
+function clear_local_news_cache(): void {
 	wp_cache_set( 'last_changed', microtime(), 'uamswp-news' );
 }
