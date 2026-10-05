@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			rawMessage: Function shortcode_ui_register_for_shortcode not found.
+			identifier: function.notFound
+			count: 1
+			path: includes/class-uams-news-syndicate-news.php
