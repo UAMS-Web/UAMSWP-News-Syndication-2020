@@ -80,6 +80,14 @@ if (! defined('ABSPATH')) {
 }
 
 /*
+ * This plugin's entry file guards on WPINC rather than ABSPATH and calls die()
+ * without it, which ends the PHPUnit process with exit 0 and no output.
+ */
+if (! defined('WPINC')) {
+    define('WPINC', 'wp-includes');
+}
+
+/*
  * Load definitions+registrations inside one Brain Monkey session. Do not
  * define permanent WordPress function stubs in this file — Patchwork treats
  * this bootstrap as too early and Brain Monkey cannot redefine them in tests
@@ -93,6 +101,7 @@ Brain\Monkey\Functions\when('plugin_basename')->alias(static function ($file) {
     return basename(dirname($file)).'/'.basename($file);
 });
 Brain\Monkey\Functions\when('is_multisite')->justReturn(false);
+Brain\Monkey\Functions\when('get_file_data')->justReturn(['version' => 'test']);
 Brain\Monkey\Functions\when('get_site_option')->alias(static function ($key, $default = false) {
     return $default;
 });

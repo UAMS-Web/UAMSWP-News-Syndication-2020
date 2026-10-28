@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace UamswpNewsSyndication\\Tests\Unit;
+namespace UamswpNewsSyndication\Tests\Unit;
 
-use UamswpNewsSyndication\\Tests\Support\UnitTestCase;
+use UamswpNewsSyndication\Tests\Support\UnitTestCase;
 
 final class HarnessSmokeTest extends UnitTestCase
 {
