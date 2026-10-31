@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Test bootstrap (PHPUnit path, PHP 7.4-safe).
+ * Unit bootstrap, on Pest 5.
  *
  * The Unit suite runs with no WordPress: WordPress functions are mocked per
- * test with Brain Monkey. The Integration suite boots a real WordPress through
- * wp-phpunit (tests/Integration/bootstrap.php). Each suite runs in its own
- * process, and this file decides which one it is in.
+ * test with Brain Monkey. The Integration suite has its own Composer setup and
+ * bootstrap (tests/Integration/bootstrap.php) and never loads this file.
  */
 
 declare(strict_types=1);
@@ -21,46 +20,6 @@ if (defined('UAMSWP_NEWS_SYNDICATION_TESTS_BOOTSTRAPPED')) {
 define('UAMSWP_NEWS_SYNDICATION_TESTS_BOOTSTRAPPED', true);
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
-
-/**
- * Whether this process runs the Integration suite.
- *
- * True for `--testsuite=Integration` (either spelling) and for a run naming a
- * path under tests/Integration. Anything else is the Unit suite.
- *
- * @param  array  $argv
- * @return bool
- */
-function uamswp_news_syndication_tests_want_wordpress(array $argv)
-{
-    foreach ($argv as $index => $argument) {
-        if (! is_string($argument)) {
-            continue;
-        }
-
-        if ($argument === '--testsuite=Integration') {
-            return true;
-        }
-
-        if ($argument === '--testsuite' && ($argv[$index + 1] ?? null) === 'Integration') {
-            return true;
-        }
-
-        if (strpos(str_replace('\\', '/', $argument), 'tests/Integration') !== false) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-$argv = $_SERVER['argv'] ?? [];
-
-if (uamswp_news_syndication_tests_want_wordpress(is_array($argv) ? $argv : [])) {
-    require __DIR__.'/Integration/bootstrap.php';
-
-    return;
-}
 
 /*
  * The Unit suite.
