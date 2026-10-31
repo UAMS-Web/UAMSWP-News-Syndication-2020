@@ -2,3 +2,4 @@
 /.phpunit.result.cache
 /.phpstan/
 /tests/Integration/vendor/
+/tests/Integration/.phpunit.result.cache
