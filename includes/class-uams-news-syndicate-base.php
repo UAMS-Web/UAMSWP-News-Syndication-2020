@@ -293,7 +293,7 @@ class UAMS_Syndicate_News_Base
      */
     public function sanitized_terms($terms): string
     {
-        $term_array = explode(',', $terms);
+        $term_array = explode(',', (string) $terms);
         $sanitize_term_array = array_map(sanitize_key(...), $term_array);
 
         return implode(',', $sanitize_term_array);
@@ -309,7 +309,7 @@ class UAMS_Syndicate_News_Base
      */
     public function sanitized_ids($terms): string
     {
-        $term_array = explode(',', $terms);
+        $term_array = explode(',', (string) $terms);
         $sanitize_term_array = array_map(intval(...), $term_array);
 
         return implode(',', $sanitize_term_array);
