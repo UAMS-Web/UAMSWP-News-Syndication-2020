@@ -3,14 +3,23 @@
 declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
+use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector;
+use Rector\DeadCode\Rector\ConstFetch\RemovePhpVersionIdCheckRector;
+use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
+use Rector\Php72\Rector\FuncCall\CreateFunctionToAnonymousFunctionRector;
 use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Php82\Rector\Class_\ReadOnlyClassRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddParamFromDimFetchKeyUseRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnTypeFromStrictNewArrayRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\ReturnUnionTypeRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\StrictArrayParamDimFetchRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\StringReturnTypeFromStrictScalarReturnsRector;
+use Rector\TypeDeclaration\Rector\ClassMethod\StringReturnTypeFromStrictStringReturnsRector;
 // WordPress repositories: uncomment the import below together with the matching
 // `ArrayToFirstClassCallableRector::class` entry in `$sweepOnlyRules`. A `use`
 // inside that array is a parse error; keep the import here with the others.
@@ -108,7 +117,28 @@ $sweepOnlyRules = [
 //     RemovePhpVersionIdCheckRector::class => $guardFile,
 //     VersionCompareFuncCallToConstantRector::class => $guardFile,
 // ];
-$neverRules = [];
+//
+// Filled: this plugin's header file carries that guard.
+$guardFile = [__DIR__.'/uamswp-news-syndication.php'];
+$baseClassFile = [__DIR__.'/includes/class-uams-news-syndicate-base.php'];
+$neverRules = [
+    UnwrapFutureCompatibleIfPhpVersionRector::class => $guardFile,
+    RemovePhpVersionIdCheckRector::class => $guardFile,
+    VersionCompareFuncCallToConstantRector::class => $guardFile,
+    // Filled: the guard's create_function() body is a string Rector cannot
+    // parse, so the rule fails the whole run on this file.
+    CreateFunctionToAnonymousFunctionRector::class => $guardFile,
+
+    // Filled: the shortcode base class is extended, and a return type added to
+    // one of its methods is a fatal "must be compatible" error in every
+    // subclass that overrides the method without one (measured on PHP 8.4.27:
+    // UAMS_Syndicate_News::display_shortcode()).
+    AddVoidReturnTypeWhereNoReturnRector::class => $baseClassFile,
+    ReturnTypeFromStrictNewArrayRector::class => $baseClassFile,
+    ReturnUnionTypeRector::class => $baseClassFile,
+    StringReturnTypeFromStrictScalarReturnsRector::class => $baseClassFile,
+    StringReturnTypeFromStrictStringReturnsRector::class => $baseClassFile,
+];
 
 return RectorConfig::configure()
     // Filled: the directories holding first-party PHP. Never a vendor
@@ -141,7 +171,7 @@ return RectorConfig::configure()
     // order of precedence for that check is this call, then composer.json's
     // `php` require, then `config.platform.php`, then the running PHP.
     // Constants: PhpVersion::PHP_74, PHP_80, PHP_81, PHP_82, PHP_83, PHP_84.
-    ->withPhpVersion(PhpVersion::PHP_74)
+    ->withPhpVersion(PhpVersion::PHP_82)
     // Every PHP upgrade set up to the floor, and no further. With no argument
     // this reads the floor from composer.json's `require.php` (then
     // `config.platform.php`), NOT from withPhpVersion() above, and fails the

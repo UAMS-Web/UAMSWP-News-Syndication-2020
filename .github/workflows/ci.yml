@@ -1,11 +1,23 @@
 # Public repository: Actions minutes are free, so this workflow is the remote
 # gate. Private UAMS-Web repositories gate the same jobs behind RUN_REMOTE_CI
 # and validate with the shared local CI runner instead.
+#
+# PHP 8.4 is the development PHP (`config.platform.php` in composer.json); the
+# lock resolves for it, so an older runner PHP cannot install it.
+#
+# `CI` is the one check a ruleset would require. It needs every job above it:
+# a job added, renamed or removed here changes its `needs:` in the same change.
 name: CI
 
 on:
   push:
+    branches: [master, staging, dev]
   pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -13,11 +25,12 @@ permissions:
 jobs:
   pint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
           tools: composer
       - run: composer install --no-interaction --prefer-dist --no-progress
@@ -26,11 +39,12 @@ jobs:
 
   rector:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
           tools: composer
       - run: composer install --no-interaction --prefer-dist --no-progress
@@ -39,11 +53,12 @@ jobs:
 
   phpstan:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
           tools: composer
       - run: composer install --no-interaction --prefer-dist --no-progress
@@ -52,13 +67,34 @@ jobs:
 
   phpunit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
           tools: composer
       - run: composer install --no-interaction --prefer-dist --no-progress
       - name: phpunit
         run: composer test:unit
+
+  ci:
+    name: CI
+    needs: [pint, rector, phpstan, phpunit]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Every needed job succeeded
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Needed job results: $RESULTS"
+          if [ -z "$RESULTS" ]; then echo "::error::No needed job results to read"; exit 1; fi
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              echo "::error::A needed job reported $result"
+              exit 1
+            fi
+          done

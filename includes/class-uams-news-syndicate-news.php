@@ -237,7 +237,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
      *
      * @return string Data to output where the shortcode is used.
      */
-    public function display_shortcode($atts): string
+    public function display_shortcode($atts)
     {
         $atts = $this->process_attributes($atts);
 
@@ -376,7 +376,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
      * @param  array  $atts  Array of options passed with the shortcode.
      * @return string Content to display for the shortcode.
      */
-    private function generate_shortcode_output(array $new_data, $atts)
+    private function generate_shortcode_output(array $new_data, $atts): string|false
     {
 
         ob_start();
@@ -408,7 +408,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 
                     continue;
                 }
-                if (strpos($content->link, (string) get_home_url()) !== false) { // Local
+                if (str_contains($content->link, get_home_url())) { // Local
                     if ($content->terms) {
                         foreach ($content->terms as $cat_id) {
                             $categorylink = get_category_link($cat_id);
@@ -419,7 +419,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                 } else { // Remote
                     if ($atts['category']) {
                         foreach ($content->terms as $cat) {
-                            if (strpos($atts['category'], (string) $cat->slug) !== false) {
+                            if (str_contains($atts['category'], $cat->slug)) {
                                 $categoryname = $cat->name;
                                 $categorylink = $atts['scheme'].'://'.$atts['host'].'/category/'.$cat->slug.'/';
                                 break;
@@ -470,7 +470,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 										<div class="row">
 											<?php if ($content->thumbnail && ! $atts['hide_img']) { ?>
 											<div class="col-12 col-sm-4 image-container">
-												<img src="<?php echo esc_url($content->thumbnail); ?>" alt="<?php echo esc_html($content->thumbalt); ?>" itemprop="url">
+												<img src="<?php echo esc_url($content->thumbnail); ?>" alt="<?php echo isset($content->thumbalt) ? esc_html($content->thumbalt) : ''; ?>" itemprop="url">
 											</div>
 											<div class="col-12 col-sm-8 text-container">
 											<?php } else { ?>
@@ -536,7 +536,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 
                     continue;
                 }
-                if (strpos($content->link, (string) get_home_url()) !== false) { // Local
+                if (str_contains($content->link, get_home_url())) { // Local
                     if ($content->terms) {
                         foreach ($content->terms as $cat_id) {
                             $categorylink = get_category_link($cat_id);
@@ -547,7 +547,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                 } else { // Remote
                     if ($atts['category']) {
                         foreach ($content->terms as $cat) {
-                            if (strpos($atts['category'], (string) $cat->slug) !== false) {
+                            if (str_contains($atts['category'], $cat->slug)) {
                                 $categoryname = $cat->name;
                                 $categorylink = $atts['scheme'].'://'.$atts['host'].'/category/'.$cat->slug.'/';
                                 break;
@@ -651,7 +651,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 
                     continue;
                 }
-                if (strpos($content->link, (string) get_home_url()) !== false) { // Local
+                if (str_contains($content->link, get_home_url())) { // Local
                     if ($content->terms) {
                         foreach ($content->terms as $cat_id) {
                             $categorylink = get_category_link($cat_id);
@@ -662,7 +662,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                 } else { // Remote
                     if ($atts['category']) {
                         foreach ($content->terms as $cat) {
-                            if (strpos($atts['category'], (string) $cat->slug) !== false) {
+                            if (str_contains($atts['category'], $cat->slug)) {
                                 $categoryname = $cat->name;
                                 $categorylink = $atts['scheme'].'://'.$atts['host'].'/category/'.$cat->slug.'/';
                                 break;
@@ -777,7 +777,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                     continue;
                 }
 
-                if (strpos($content->link, (string) get_home_url()) !== false) { // Local
+                if (str_contains($content->link, get_home_url())) { // Local
                     if ($content->terms) {
                         foreach ($content->terms as $cat_id) {
                             $categorylink = get_category_link($cat_id);
@@ -788,7 +788,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                 } else { // Remote
                     if ($atts['category']) {
                         foreach ($content->terms as $cat) {
-                            if (strpos($atts['category'], (string) $cat->slug) !== false) {
+                            if (str_contains($atts['category'], $cat->slug)) {
                                 $categoryname = $cat->name;
                                 $categorylink = $atts['scheme'].'://'.$atts['host'].'/category/'.$cat->slug.'/';
                                 break;
@@ -846,7 +846,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 						<div class="row">
 							<div class="col-12 col-md-6 image-container" aria-label="<?php echo isset($content->imagealt) ? esc_html($content->imagealt) : 'UAMS logo'; ?>" role="img">
 								<style>
-									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo  isset($content->image) && ! empty($content->image) ? esc_url($content->image) : plugin_dir_url(__DIR__).'images/uams_logo.jpg'; ?>"); }
+									#side-by-side-<?php echo $article_id; ?> .image-container { background-image: url("<?php echo isset($content->image) && ! empty($content->image) ? esc_url($content->image) : plugin_dir_url(__DIR__).'images/uams_logo.jpg'; ?>"); }
 								</style>
 								<div class="image-inner-container">
 								</div>
@@ -895,7 +895,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 							<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo esc_url($content->link); ?>"/>
 							<div class="news-item-thumbnail" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
 								<?php if ($content->image) { ?><img src="<?php echo esc_url($content->image); ?>" alt="<?php echo $content->imagealt; ?>"><?php } else { ?><meta itemprop="url" content="http://www.uams.edu/_images/blank.gif"/><?php } ?>
-								<?php echo  $content->imagecaption ? '<div class="wp-caption-text">'.$content->imagecaption.'</div>' : ''; ?>
+								<?php echo $content->imagecaption ? '<div class="wp-caption-text">'.$content->imagecaption.'</div>' : ''; ?>
 							</div>
 							<header class="news-item-title"><h2 itemprop="headline"><a href="<?php echo esc_url($content->link); ?>" itemprop="url" data-moduletitle="<?php echo $atts['news_title'] ? esc_html($atts['news_title']) : 'News &amp; Announcements'; ?>" data-categorytitle="<?php echo $categoryname; ?>"><?php echo wp_kses_post($content->title); ?></a></h2></header>
 							<div class="news-item-byline">
@@ -1128,8 +1128,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                         if (isset($data['aspect-16-9-small'])) {
                             $subset->image_sm = $data['aspect-16-9-small']['source_url'];
                         }
-                    } elseif (isset($data['aspect-16-9-small'])) {
-                        $subset->image = ${$data}['aspect-16-9-small']['source_url'];
+                    } elseif (! is_null($data['aspect-16-9-small']) && isset($data['aspect-16-9-small'])) {
+                        $subset->image = $data['aspect-16-9-small']['source_url'];
                         $subset->image_sm = $data['aspect-16-9-small']['source_url'];
                         $subset->imagealt = $media_response->data['alt_text'];
                         $subset->imagecaption = $media_response->data['caption']['rendered'];

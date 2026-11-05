@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace UamswpNewsSyndication\\Tests\Support;
+namespace UamswpNewsSyndication\Tests\Support;
 
 use WP_UnitTest_Factory;
 use WP_UnitTestCase;
