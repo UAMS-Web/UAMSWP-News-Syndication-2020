@@ -18,3 +18,7 @@ composer test:pint
 ```
 
 Rector, PHPStan and Pint come from the shared `code-quality` standard. `composer refactor` and `composer pint` apply the changes the two checks report.
+
+## Continuous integration
+
+Pull requests are gated by the GitHub Actions workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs Pint, Rector (dry run), PHPStan and the Unit suite on PHP 8.4 on every pull request and on pushes to `dev`, `staging` and `master`. A failing job fails the `CI` check.
