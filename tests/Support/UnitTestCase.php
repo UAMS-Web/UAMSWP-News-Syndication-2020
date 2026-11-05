@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace UamswpNewsSyndication\\Tests\Support;
+namespace UamswpNewsSyndication\Tests\Support;
 
 use Brain\Monkey;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;

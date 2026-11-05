@@ -69,7 +69,7 @@ class UAMS_Syndicate_News_Base
     /**
      * A common constructor that initiates the shortcode.
      */
-    public function construct(): void
+    public function construct()
     {
         $this->add_shortcode();
     }
@@ -85,7 +85,7 @@ class UAMS_Syndicate_News_Base
      * @param  array  $atts  A list of attributes assigned to the shortcode.
      * @return string Final output for the shortcode.
      */
-    public function display_shortcode($atts): string
+    public function display_shortcode($atts)
     {
         return '';
     }
@@ -159,7 +159,7 @@ class UAMS_Syndicate_News_Base
      * @param  string  $shortcode  Shortcode being displayed.
      * @param  string  $content  Generated content after processing the shortcode.
      */
-    public function set_content_cache($atts, $shortcode, $content): void
+    public function set_content_cache($atts, $shortcode, $content)
     {
         $atts_key = md5(serialize($atts)); // @codingStandardsIgnoreLine
 
@@ -176,7 +176,7 @@ class UAMS_Syndicate_News_Base
      * @param  array  $atts  Contains the original shortcode attributes.
      * @return array List of request information.
      */
-    public function build_initial_request($site_url, $atts): array
+    public function build_initial_request($site_url, $atts)
     {
         $url_scheme = 'https';
         $local_site_id = false;
@@ -294,7 +294,7 @@ class UAMS_Syndicate_News_Base
     public function sanitized_terms($terms): string
     {
         $term_array = explode(',', $terms);
-        $sanitize_term_array = array_map('sanitize_key', $term_array);
+        $sanitize_term_array = array_map(sanitize_key(...), $term_array);
 
         return implode(',', $sanitize_term_array);
     }
@@ -310,7 +310,7 @@ class UAMS_Syndicate_News_Base
     public function sanitized_ids($terms): string
     {
         $term_array = explode(',', $terms);
-        $sanitize_term_array = array_map('intval', $term_array);
+        $sanitize_term_array = array_map(intval(...), $term_array);
 
         return implode(',', $sanitize_term_array);
     }

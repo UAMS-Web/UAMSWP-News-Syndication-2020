@@ -5,3 +5,9 @@ parameters:
 			identifier: function.notFound
 			count: 1
 			path: includes/class-uams-news-syndicate-news.php
+
+		-
+			rawMessage: Function create_function not found.
+			identifier: function.notFound
+			count: 1
+			path: uamswp-news-syndication.php

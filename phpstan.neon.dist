@@ -52,8 +52,8 @@ parameters:
     # 7.0 = 70000, 7.4 = 70400, 8.2 = 80200, 8.4 = 80400. The range form needs
     # PHPStan 2.0 or later.
     phpVersion:
-        min: 70400
-        max: 80400
+        min: 80200
+        max: 80499
 
     # Filled: the highest level the code passes today. Find it by running
     # from 0 upward (see the code-quality skill), then raise it by one per
