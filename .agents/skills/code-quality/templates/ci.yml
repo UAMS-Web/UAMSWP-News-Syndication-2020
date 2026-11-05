@@ -1,7 +1,7 @@
 name: CI
 
-# cspell:ignore vitest
-# (the input name `vitest` in the commented examples below is the test runner, not a misspelling)
+# cspell:ignore vitest vite
+# (the input names `vitest` and `vite-build` in the commented examples below are the tools, not misspellings)
 
 # Template: .claude/skills/code-quality/templates/ci.yml in UAMS-Web/uams-claude-skills,
 # copied to .github/workflows/ci.yml. Delete this header paragraph after reading it.
@@ -71,7 +71,7 @@ permissions:
 jobs:
   # The shared chain. Its checks report as `checks / <job name> (<operating system>)`.
   checks:
-    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.1.0
+    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.2.0
     # with:
     #   linux-only: true
     #   all-platform-jobs: 'pint'

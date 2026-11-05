@@ -19,6 +19,8 @@ description: >-
   Edit it there, not here; the next sync overwrites this copy.
   Delivered to this repository through the profile(s): core.
 -->
+<!-- cspell:ignore Larastan Packagist -->
+
 # Repository settings
 
 Repository settings are not in any repository's tree, so nothing a pull request reviews shows them, and each one is whatever someone last set by hand. The three moves to a new public repository (`UAMS-Web/uamswp-migration-api-archive#465`, `UAMS-Web/wordpress-importer-archive#1244`, `UAMS-Web/uams-statamic-archive#2649`) each read the same settings off the old repository and recreated them one at a time. This skill writes them down once: a baseline, the questions it leaves open, and a checker that reports where a repository departs from it.
