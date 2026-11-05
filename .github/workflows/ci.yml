@@ -82,7 +82,11 @@ jobs:
   ci:
     name: CI
     needs: [pint, rector, phpstan, phpunit]
-    if: always()
+    # Runs whenever the run was not cancelled, so a failed or skipped job still
+    # fails it. A run superseded by a newer push or a base change is cancelled
+    # by `concurrency`, and this job then shows as skipped rather than as a red
+    # `CI` beside the newer run's result on the same commit.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
