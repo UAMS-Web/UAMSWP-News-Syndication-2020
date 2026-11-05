@@ -9,11 +9,14 @@
     },
     "config": {
         "platform": {
-            "php": "8.4.1"
+            "php": "8.4.27"
         },
         "sort-packages": true
     },
     "scripts": {
         "test": "phpunit"
+    },
+    "extra": {
+        "spell": "cspell:ignore yoast ."
     }
 }
