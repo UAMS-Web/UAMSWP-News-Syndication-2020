@@ -1,5 +1,5 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+* text=auto eol=lf
 
 # Keep-list: a GitHub download holds only what the plugin runs.
 # A new runtime path needs its -export-ignore line in the same change.
