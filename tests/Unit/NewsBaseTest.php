@@ -40,7 +40,11 @@ function newsBaseStubCoreFunctions(): void
     });
     Functions\when('trailingslashit')->alias(static fn ($value) => rtrim((string) $value, '/\\').'/');
     Functions\when('wp_parse_url')->alias(static fn ($url, $component = -1) => parse_url($url, $component));
-    Functions\when('esc_url')->returnArg();
+    Functions\when('esc_url')->alias(
+        // Core's esc_url() prepends http:// to a URL with no scheme.
+        static fn ($url) => ($url === '' || str_contains((string) $url, ':') || in_array($url[0], ['/', '#', '?'], true))
+            ? $url : 'http://'.$url
+    );
     Functions\when('sanitize_key')->alias(
         static fn ($key) => preg_replace('/[^a-z0-9_\-]/', '', strtolower((string) $key))
     );
@@ -287,8 +291,14 @@ describe('get_request_url()', function (): void {
             ->toBe(['scheme' => 'https', 'host' => 'site.test', 'path' => '/blog/']);
     });
 
+    it('adds http:// to a host with no scheme, through esc_url()', function (): void {
+        expect($this->base->get_request_url(['site' => '', 'host' => 'news.uams.edu']))
+            ->toBe(['scheme' => 'http', 'host' => 'news.uams.edu', 'path' => '/']);
+    });
+
     it('returns false when the URL has no host', function (): void {
-        expect($this->base->get_request_url(['site' => '', 'host' => 'news.uams.edu']))->toBeFalse();
+        expect($this->base->get_request_url(['site' => '', 'host' => '/relative']))->toBeFalse()
+            ->and($this->base->get_request_url(['site' => '', 'host' => '']))->toBeFalse();
     });
 });
 
