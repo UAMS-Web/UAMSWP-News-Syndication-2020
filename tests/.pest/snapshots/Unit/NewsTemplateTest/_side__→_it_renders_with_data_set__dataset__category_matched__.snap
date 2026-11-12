@@ -1,0 +1,52 @@
+			<!-- UAMSWP Output Side-by-Side Image & Text -->
+						<script>var json_data = [{"ID":2,"date":"2024-05-02T10:00:00","modified":"2024-05-02T11:00:00","link":"https:\/\/news.uams.edu\/story-2\/","title":"Story 2 <em>title<\/em>","content":"<p>Content 2<\/p>","excerpt":"<p>Excerpt 2 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-2.jpg","thumbalt":"Thumb alt 2","thumbcaption":"Thumb caption 2","image":"https:\/\/news.uams.edu\/image-2.jpg","imagealt":"Image alt 2","imagecaption":"Image caption 2","author_name":"Author 2","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]},{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]}];</script>			<section class="uamswp-news-syndication-wrapper uams-module no-padding side-by-side image-on-left image-background-center"id="side-by-side-2" aria-label="News &amp;amp; Announcements">
+				<div class="uamswp-news-syndication-side">
+				<script>var json_data = [{"ID":2,"date":"2024-05-02T10:00:00","modified":"2024-05-02T11:00:00","link":"https:\/\/news.uams.edu\/story-2\/","title":"Story 2 <em>title<\/em>","content":"<p>Content 2<\/p>","excerpt":"<p>Excerpt 2 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-2.jpg","thumbalt":"Thumb alt 2","thumbcaption":"Thumb caption 2","image":"https:\/\/news.uams.edu\/image-2.jpg","imagealt":"Image alt 2","imagecaption":"Image caption 2","author_name":"Author 2","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]},{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]}];</script>					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-md-6 image-container" aria-label="Image alt 2" role="img">
+								<style>
+									#side-by-side-2 .image-container { background-image: url("https://news.uams.edu/image-2.jpg"); }
+								</style>
+								<div class="image-inner-container">
+								</div>
+							</div>
+							<div class="col-12 col-md-6 text-container">
+								<div class="text-inner-container">
+									<h2 class="h3">
+										<span class="category"><a href="https://news.uams.edu/category/beta/" aria-label="See more Beta stories" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="Beta">Beta</a></span><span class="sr-only">: </span>										<span class="title">Story 2 <em>title</em></span>
+									</h2>
+									<p><p>Excerpt 2 </p></p>
+									<div class="cta-container">
+										<a class="btn btn-primary" href="https://news.uams.edu/story-2/" aria-label="Read Story 2 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="Beta">Read more</a>
+																			</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+							<script>var json_data = [{"ID":2,"date":"2024-05-02T10:00:00","modified":"2024-05-02T11:00:00","link":"https:\/\/news.uams.edu\/story-2\/","title":"Story 2 <em>title<\/em>","content":"<p>Content 2<\/p>","excerpt":"<p>Excerpt 2 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-2.jpg","thumbalt":"Thumb alt 2","thumbcaption":"Thumb caption 2","image":"https:\/\/news.uams.edu\/image-2.jpg","imagealt":"Image alt 2","imagecaption":"Image caption 2","author_name":"Author 2","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]},{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]}];</script>			<section class="uamswp-news-syndication-wrapper uams-module no-padding side-by-side image-on-left image-background-center"id="side-by-side-1" aria-label="News &amp;amp; Announcements">
+				<div class="uamswp-news-syndication-side">
+				<script>var json_data = [{"ID":2,"date":"2024-05-02T10:00:00","modified":"2024-05-02T11:00:00","link":"https:\/\/news.uams.edu\/story-2\/","title":"Story 2 <em>title<\/em>","content":"<p>Content 2<\/p>","excerpt":"<p>Excerpt 2 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-2.jpg","thumbalt":"Thumb alt 2","thumbcaption":"Thumb caption 2","image":"https:\/\/news.uams.edu\/image-2.jpg","imagealt":"Image alt 2","imagecaption":"Image caption 2","author_name":"Author 2","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]},{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[{"slug":"alpha","name":"Alpha"},{"slug":"beta","name":"Beta"}]}];</script>					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-md-6 image-container" aria-label="Image alt 1" role="img">
+								<style>
+									#side-by-side-1 .image-container { background-image: url("https://news.uams.edu/image-1.jpg"); }
+								</style>
+								<div class="image-inner-container">
+								</div>
+							</div>
+							<div class="col-12 col-md-6 text-container">
+								<div class="text-inner-container">
+									<h2 class="h3">
+										<span class="category"><a href="https://news.uams.edu/category/beta/" aria-label="See more Beta stories" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="Beta">Beta</a></span><span class="sr-only">: </span>										<span class="title">Story 1 <em>title</em></span>
+									</h2>
+									<p><p>Excerpt 1 </p></p>
+									<div class="cta-container">
+										<a class="btn btn-primary" href="https://news.uams.edu/story-1/" aria-label="Read Story 1 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="Beta">Read more</a>
+																			</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+							

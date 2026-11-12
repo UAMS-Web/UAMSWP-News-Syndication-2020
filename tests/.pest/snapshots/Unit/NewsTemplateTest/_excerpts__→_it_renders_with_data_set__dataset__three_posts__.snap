@@ -1,0 +1,102 @@
+            <!-- UAMSWP Output Excerpts -->
+			<section class="uamswp-news-syndication-wrapper uams-module uamswp-news-syndication-excerpts" aria-label="News &amp;amp; Announcements">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<h2 class="module-title"><span class="title">News &amp;amp; Announcements</span></h2>
+						</div>
+						<div class="col-12">
+							<div class="item-container">
+															<div class="item">
+									<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
+										<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://news.uams.edu/story-3/"/>
+										<div class="row">
+																						<div class="col-12 col-sm-4 image-container">
+												<img src="https://news.uams.edu/thumb-3.jpg" alt="Thumb alt 3" itemprop="url">
+											</div>
+											<div class="col-12 col-sm-8 text-container">
+																								<h3 class="h5 news-item-title" itemprop="headline">Story 3 <em>title</em></h3>
+													<div class="news-item-byline">
+																											<span class="news-item-byline-date" itemprop="datePublished" content="2024-05-03T10:00:00+00:00"><small>May 3, 2024  | </small></span>
+																											<meta itemprop="dateModified" content="2024-05-03T10:00:00+00:00"/>
+																											<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name">Author 3</small></span>
+																										</div>
+													<div class="news-item-excerpt" itemprop="articleBody"><p>Excerpt 3 </p></div>
+													<a class="btn btn-primary stretched-link" href="https://news.uams.edu/story-3/" itemprop="url" aria-label="Story 3 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Read more</a>
+													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+															<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+															<meta itemprop="width" content="297"/>
+															<meta itemprop="height" content="40"/>
+														</span>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+																<div class="item">
+									<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
+										<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://news.uams.edu/story-2/"/>
+										<div class="row">
+																						<div class="col-12 col-sm-4 image-container">
+												<img src="https://news.uams.edu/thumb-2.jpg" alt="Thumb alt 2" itemprop="url">
+											</div>
+											<div class="col-12 col-sm-8 text-container">
+																								<h3 class="h5 news-item-title" itemprop="headline">Story 2 <em>title</em></h3>
+													<div class="news-item-byline">
+																											<span class="news-item-byline-date" itemprop="datePublished" content="2024-05-02T10:00:00+00:00"><small>May 2, 2024  | </small></span>
+																											<meta itemprop="dateModified" content="2024-05-02T10:00:00+00:00"/>
+																											<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name">Author 2</small></span>
+																										</div>
+													<div class="news-item-excerpt" itemprop="articleBody"><p>Excerpt 2 </p></div>
+													<a class="btn btn-primary stretched-link" href="https://news.uams.edu/story-2/" itemprop="url" aria-label="Story 2 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Read more</a>
+													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+															<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+															<meta itemprop="width" content="297"/>
+															<meta itemprop="height" content="40"/>
+														</span>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+																<div class="item">
+									<div class="uamswp-news-syndication-item" itemscope itemtype="http://schema.org/NewsArticle">
+										<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://news.uams.edu/story-1/"/>
+										<div class="row">
+																						<div class="col-12 col-sm-4 image-container">
+												<img src="https://news.uams.edu/thumb-1.jpg" alt="Thumb alt 1" itemprop="url">
+											</div>
+											<div class="col-12 col-sm-8 text-container">
+																								<h3 class="h5 news-item-title" itemprop="headline">Story 1 <em>title</em></h3>
+													<div class="news-item-byline">
+																											<span class="news-item-byline-date" itemprop="datePublished" content="2024-05-01T10:00:00+00:00"><small>May 1, 2024  | </small></span>
+																											<meta itemprop="dateModified" content="2024-05-01T10:00:00+00:00"/>
+																											<span class="news-item-byline-author" itemprop="author" itemscope itemtype="http://schema.org/Person"><small itemprop="name">Author 1</small></span>
+																										</div>
+													<div class="news-item-excerpt" itemprop="articleBody"><p>Excerpt 1 </p></div>
+													<a class="btn btn-primary stretched-link" href="https://news.uams.edu/story-1/" itemprop="url" aria-label="Story 1 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Read more</a>
+													<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+														<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+														<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+															<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+															<meta itemprop="width" content="297"/>
+															<meta itemprop="height" content="40"/>
+														</span>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+															</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			

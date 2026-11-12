@@ -19,6 +19,19 @@ if (defined('UAMSWP_NEWS_SYNDICATION_TESTS_BOOTSTRAPPED')) {
 
 define('UAMSWP_NEWS_SYNDICATION_TESTS_BOOTSTRAPPED', true);
 
+/*
+ * A plugin file that ends the process while this bootstrap loads it (the entry
+ * file's WPINC guard calls exit) would otherwise leave PHPUnit exiting 0 with
+ * no output, which reads as a pass. Fail the process unless the bootstrap
+ * reached its end.
+ */
+register_shutdown_function(static function (): void {
+    if (! defined('UAMSWP_NEWS_SYNDICATION_TESTS_LOADED')) {
+        fwrite(STDERR, "tests/bootstrap.php: the process ended before the bootstrap finished loading.\n");
+        exit(1);
+    }
+});
+
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 /*
@@ -95,5 +108,7 @@ if (is_readable(dirname(__DIR__).'/includes/news-syndicate.php')) {
 }
 
 Brain\Monkey\tearDown();
+
+define('UAMSWP_NEWS_SYNDICATION_TESTS_LOADED', true);
 
 // cspell:ignore ABSPATH

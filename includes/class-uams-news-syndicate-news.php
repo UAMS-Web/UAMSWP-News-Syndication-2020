@@ -280,6 +280,8 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
             ], $request_url);
         }
 
+        $new_data = [];
+
         if ($request['scheme'] === 'local') {
             $last_changed = wp_cache_get_last_changed('uamswp-news');
             $cache_key = md5($request_url).':'.$last_changed;

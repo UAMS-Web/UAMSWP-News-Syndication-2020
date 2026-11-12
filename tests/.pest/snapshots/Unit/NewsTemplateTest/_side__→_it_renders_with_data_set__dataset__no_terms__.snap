@@ -1,0 +1,27 @@
+			<!-- UAMSWP Output Side-by-Side Image & Text -->
+						<script>var json_data = [{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[]}];</script>			<section class="uamswp-news-syndication-wrapper uams-module no-padding side-by-side image-on-left image-background-center"id="side-by-side-1" aria-label="News &amp;amp; Announcements">
+				<div class="uamswp-news-syndication-side">
+				<script>var json_data = [{"ID":1,"date":"2024-05-01T10:00:00","modified":"2024-05-01T11:00:00","link":"https:\/\/news.uams.edu\/story-1\/","title":"Story 1 <em>title<\/em>","content":"<p>Content 1<\/p>","excerpt":"<p>Excerpt 1 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-1.jpg","thumbalt":"Thumb alt 1","thumbcaption":"Thumb caption 1","image":"https:\/\/news.uams.edu\/image-1.jpg","imagealt":"Image alt 1","imagecaption":"Image caption 1","author_name":"Author 1","terms":[]}];</script>					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-md-6 image-container" aria-label="Image alt 1" role="img">
+								<style>
+									#side-by-side-1 .image-container { background-image: url("https://news.uams.edu/image-1.jpg"); }
+								</style>
+								<div class="image-inner-container">
+								</div>
+							</div>
+							<div class="col-12 col-md-6 text-container">
+								<div class="text-inner-container">
+									<h2 class="h3">
+										<span class="category"><a href="" aria-label="See more  stories" data-moduletitle="News &amp;amp; Announcements" data-categorytitle=""></a></span><span class="sr-only">: </span>										<span class="title">Story 1 <em>title</em></span>
+									</h2>
+									<p><p>Excerpt 1 </p></p>
+									<div class="cta-container">
+										<a class="btn btn-primary" href="https://news.uams.edu/story-1/" aria-label="Read Story 1 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Read more</a>
+																			</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+							

@@ -1,0 +1,27 @@
+			<!-- UAMSWP Output Side-by-Side Image & Text -->
+						<script>var json_data = [{"ID":4,"date":"2024-05-04T10:00:00","modified":"2024-05-04T11:00:00","link":"https:\/\/this.test\/story-4\/","title":"Story 4 <em>title<\/em>","content":"<p>Content 4<\/p>","excerpt":"<p>Excerpt 4 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-4.jpg","thumbalt":"Thumb alt 4","thumbcaption":"Thumb caption 4","image":"https:\/\/news.uams.edu\/image-4.jpg","imagealt":"Image alt 4","imagecaption":"Image caption 4","author_name":"Author 4","terms":[]}];</script>			<section class="uamswp-news-syndication-wrapper uams-module no-padding side-by-side image-on-left image-background-center"id="side-by-side-4" aria-label="News &amp;amp; Announcements">
+				<div class="uamswp-news-syndication-side">
+				<script>var json_data = [{"ID":4,"date":"2024-05-04T10:00:00","modified":"2024-05-04T11:00:00","link":"https:\/\/this.test\/story-4\/","title":"Story 4 <em>title<\/em>","content":"<p>Content 4<\/p>","excerpt":"<p>Excerpt 4 <a class=\"more\" href=\"#\">Read more<\/a><\/p>","fullcontent":"","thumbnail":"https:\/\/news.uams.edu\/thumb-4.jpg","thumbalt":"Thumb alt 4","thumbcaption":"Thumb caption 4","image":"https:\/\/news.uams.edu\/image-4.jpg","imagealt":"Image alt 4","imagecaption":"Image caption 4","author_name":"Author 4","terms":[]}];</script>					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 col-md-6 image-container" aria-label="Image alt 4" role="img">
+								<style>
+									#side-by-side-4 .image-container { background-image: url("https://news.uams.edu/image-4.jpg"); }
+								</style>
+								<div class="image-inner-container">
+								</div>
+							</div>
+							<div class="col-12 col-md-6 text-container">
+								<div class="text-inner-container">
+									<h2 class="h3">
+										<span class="category"><a href="" aria-label="See more  stories" data-moduletitle="News &amp;amp; Announcements" data-categorytitle=""></a></span><span class="sr-only">: </span>										<span class="title">Story 4 <em>title</em></span>
+									</h2>
+									<p><p>Excerpt 4 </p></p>
+									<div class="cta-container">
+										<a class="btn btn-primary" href="https://this.test/story-4/" aria-label="Read Story 4 title" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Read more</a>
+																			</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+							
