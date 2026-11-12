@@ -3,13 +3,9 @@
 declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
-use Rector\CodingStyle\Rector\FuncCall\VersionCompareFuncCallToConstantRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveDuplicatedReturnSelfDocblockRector;
-use Rector\DeadCode\Rector\ConstFetch\RemovePhpVersionIdCheckRector;
-use Rector\DeadCode\Rector\If_\UnwrapFutureCompatibleIfPhpVersionRector;
 use Rector\DeadCode\Rector\Property\RemoveUselessVarTagRector;
-use Rector\Php72\Rector\FuncCall\CreateFunctionToAnonymousFunctionRector;
 use Rector\Php81\Rector\Array_\ArrayToFirstClassCallableRector;
 use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Php82\Rector\Class_\ReadOnlyClassRector;
@@ -118,17 +114,10 @@ $sweepOnlyRules = [
 //     VersionCompareFuncCallToConstantRector::class => $guardFile,
 // ];
 //
-// Filled: this plugin's header file carries that guard.
-$guardFile = [__DIR__.'/uamswp-news-syndication.php'];
+// Filled: the header file's PHP-version guard was removed (#61), so no
+// per-file safety carve-out remains for it.
 $baseClassFile = [__DIR__.'/includes/class-uams-news-syndicate-base.php'];
 $neverRules = [
-    UnwrapFutureCompatibleIfPhpVersionRector::class => $guardFile,
-    RemovePhpVersionIdCheckRector::class => $guardFile,
-    VersionCompareFuncCallToConstantRector::class => $guardFile,
-    // Filled: the guard's create_function() body is a string Rector cannot
-    // parse, so the rule fails the whole run on this file.
-    CreateFunctionToAnonymousFunctionRector::class => $guardFile,
-
     // Filled: the shortcode base class is extended, and a return type added to
     // one of its methods is a fatal "must be compatible" error in every
     // subclass that overrides the method without one (measured on PHP 8.4.27:
