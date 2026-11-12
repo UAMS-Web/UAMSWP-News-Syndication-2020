@@ -1121,7 +1121,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
 
                     if (isset($data['post-thumbnail'])) {
                         $subset->thumbnail = $data['post-thumbnail']['source_url'];
-                    } elseif (isset($data->{'thumbnail'})) {
+                    } elseif (isset($data['thumbnail'])) {
                         $subset->thumbnail = $data['thumbnail']['source_url'];
                     } else {
                         $subset->thumbnail = $media_response->data['source_url'];
@@ -1134,7 +1134,7 @@ class UAMS_Syndicate_News extends UAMS_Syndicate_News_Base
                         if (isset($data['aspect-16-9-small'])) {
                             $subset->image_sm = $data['aspect-16-9-small']['source_url'];
                         }
-                    } elseif (! is_null($data['aspect-16-9-small']) && isset($data['aspect-16-9-small'])) {
+                    } elseif (isset($data['aspect-16-9-small'])) {
                         $subset->image = $data['aspect-16-9-small']['source_url'];
                         $subset->image_sm = $data['aspect-16-9-small']['source_url'];
                         $subset->imagealt = $media_response->data['alt_text'];
