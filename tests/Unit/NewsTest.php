@@ -533,15 +533,17 @@ describe('display_shortcode()', function (): void {
             ->and($this->captured['data'])->toBe($cached);
     });
 
-    it('skips the remote request and currently warns on an undefined variable when local_only is set (#65)', function (): void {
+    it('skips the remote request and raises no warning when local_only is set (#65)', function () use ($ids): void {
+        $this->restResponse = static fn () => newsResponse(200, [newsLocalPost()]);
+
         [, $warnings] = newsCaptureWarnings(
             fn () => $this->news->display_shortcode(['host' => 'news.uams.edu', 'local_only' => '1'])
         );
 
-        expect($warnings)->toBe(['Undefined variable $new_data'])
+        expect($warnings)->toBe([])
             ->and($this->remoteUrl)->toBeNull()
             ->and($this->restUrls)->toBe(['https://this.test/wp-json/wp/v2/posts?per_page=0&_embed='])
-            ->and($this->captured['data'])->toBe([]);
+            ->and($ids($this->captured['data']))->toBe([21]);
     });
 
     it('reads this site through rest_do_request(), cached under the URL and last-changed key', function () use ($ids): void {
