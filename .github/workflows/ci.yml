@@ -16,6 +16,12 @@ on:
     branches: [master, staging, dev]
   pull_request:
   workflow_dispatch:
+  # The weekly full mutation pass: a scheduled run mutates everything `composer mutate` covers, under the
+  # shared chain's `mutate-full-timeout-minutes` (default 180), to catch drift from a dependency or tooling
+  # change that no pull request touches. A schedule runs on the default branch, and GitHub disables it after
+  # 60 days without repository activity.
+  schedule:
+    - cron: '17 7 * * 1'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
