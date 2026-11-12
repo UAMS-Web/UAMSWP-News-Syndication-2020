@@ -2,11 +2,13 @@
 # gate. Private UAMS-Web repositories gate the same jobs behind RUN_REMOTE_CI
 # and validate with the shared local CI runner instead.
 #
+# The checks are the shared chain in UAMS-Web/uams-ci-workflows, called as
+# `checks` at a pinned release tag (it moves only when this line does).
 # PHP 8.4 is the development PHP (`config.platform.php` in composer.json); the
 # lock resolves for it, so an older runner PHP cannot install it.
 #
-# `CI` is the one check a ruleset would require. It needs every job above it:
-# a job added, renamed or removed here changes its `needs:` in the same change.
+# `CI` is the one check a ruleset requires. It needs the call: a job added
+# beside the call changes its `needs:` in the same change.
 name: CI
 
 on:
@@ -23,73 +25,29 @@ permissions:
   contents: read
 
 jobs:
-  pint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-          tools: composer
-      - run: composer install --no-interaction --prefer-dist --no-progress
-      - name: pint
-        run: composer test:pint
-
-  rector:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-          tools: composer
-      - run: composer install --no-interaction --prefer-dist --no-progress
-      - name: rector
-        run: composer test:refactor
-
-  phpstan:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-          tools: composer
-      - run: composer install --no-interaction --prefer-dist --no-progress
-      - name: phpstan
-        run: composer stan
-
-  phpunit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-          tools: composer
-      - run: composer install --no-interaction --prefer-dist --no-progress
-      - name: phpunit
-        run: composer test:unit
+  checks:
+    uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.10.1
+    with:
+      linux-only: true
+      pest-command: composer test:unit
+      # Mutation testing is turned on by UAMS-Web/UAMSWP-News-Syndication-2020#77.
+      mutate: false
+      floor-lint: true
+      floor-lint-php: '8.2'
+      floor-lint-command: >-
+        find . -name '*.php' -not -path './vendor/*' -not -path './tests/*' -not -path './.*/*' -print0
+        | xargs -0 -r -n1 php -l
+      download-archive: true
+      download-archive-command: node .claude/skills/download-archive-check/check-download-archive.mjs
 
   ci:
     name: CI
-    needs: [pint, rector, phpstan, phpunit]
-    # Runs whenever the run was not cancelled, so a failed or skipped job still
-    # fails it. A run superseded by a newer push or a base change is cancelled
-    # by `concurrency`, and this job then shows as skipped rather than as a red
-    # `CI` beside the newer run's result on the same commit.
-    if: ${{ !cancelled() }}
+    needs: [checks]
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      # `skipped` and `cancelled` fail as well as `failure`: a call that did not run proved nothing.
       - name: Every needed job succeeded
         env:
           RESULTS: ${{ join(needs.*.result, ' ') }}
