@@ -132,7 +132,65 @@ class UAMS_Syndicate_News_Base
 
         $defaults = array_merge($defaults, $local_defaults);
 
-        return shortcode_atts($defaults, $atts, $this->shortcode_name);
+        $atts = shortcode_atts($defaults, $atts, $this->shortcode_name);
+
+        // Attributes that are echoed into markup or script only accept the values they can hold.
+        if (! in_array($atts['scheme'] ?? '', ['http', 'https'], true)) {
+            $atts['scheme'] = 'https';
+        }
+
+        if (! preg_match('/^[A-Za-z_$][A-Za-z0-9_$]*$/', (string) ($atts['object'] ?? ''))) {
+            $atts['object'] = 'json_data';
+        }
+
+        if (! in_array($atts['news_position'] ?? '', ['left', 'right'], true)) {
+            $atts['news_position'] = 'left';
+        }
+
+        $style_classes = array_map(sanitize_html_class(...), preg_split('/\s+/', trim((string) ($atts['style'] ?? ''))));
+        $atts['style'] = implode(' ', array_filter($style_classes));
+
+        return $atts;
+    }
+
+    /**
+     * Hosts that the shortcode is allowed to request content from. A host matches when it
+     * equals an entry or is a subdomain of one.
+     *
+     * @return array List of allowed host names.
+     */
+    public function get_allowed_hosts()
+    {
+        $hosts = ['uams.edu', 'uamshealth.com'];
+        $home_host = wp_parse_url(get_home_url(), PHP_URL_HOST);
+        if ($home_host) {
+            $hosts[] = $home_host;
+        }
+
+        if (is_multisite()) {
+            $hosts[] = get_site()->domain;
+        }
+
+        return apply_filters('uamswp_news_syndicate_allowed_hosts', array_unique($hosts));
+    }
+
+    /**
+     * Check a host name against the allowed hosts.
+     *
+     * @param  string  $host  Host name taken from the requested URL.
+     * @return bool True if the host may be requested, false if not.
+     */
+    public function is_allowed_host($host): bool
+    {
+        $host = strtolower($host);
+        foreach ($this->get_allowed_hosts() as $allowed) {
+            $allowed = strtolower($allowed);
+            if ($host === $allowed || str_ends_with($host, '.'.$allowed)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -204,7 +262,13 @@ class UAMS_Syndicate_News_Base
             }
         }
 
-        $request_url = esc_url($url_scheme.'://'.$site_url['host'].$site_url['path'].$this->default_path).$atts['query'];
+        // The query is a route under the REST base, so it is limited to path characters.
+        $query = trim(preg_replace('#[^a-z0-9_/-]#i', '', (string) $atts['query']), '/');
+        if ($query === '') {
+            $query = 'posts';
+        }
+
+        $request_url = esc_url($url_scheme.'://'.$site_url['host'].$site_url['path'].$this->default_path).$query;
         // echo '<script>console.log("URL: '. $request_url .'");</script>';
         $request = [
             'url' => $request_url,
@@ -231,7 +295,7 @@ class UAMS_Syndicate_News_Base
         }
 
         $site_url = wp_parse_url($site_url);
-        if (empty($site_url['host'])) {
+        if (empty($site_url['host']) || ! $this->is_allowed_host($site_url['host'])) {
             return false;
         }
 

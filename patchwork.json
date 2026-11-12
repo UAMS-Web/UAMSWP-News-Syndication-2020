@@ -1,0 +1,14 @@
+{
+    "blacklist": [
+        "vendor/symfony",
+        "vendor/pestphp",
+        "vendor/phpunit",
+        "vendor/sebastian",
+        "vendor/nikic",
+        "vendor/brianium",
+        "vendor/composer"
+    ],
+    "redefinable-internals": [
+        "class_exists"
+    ]
+}
