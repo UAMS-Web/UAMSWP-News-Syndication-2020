@@ -1,0 +1,28 @@
+            <!-- UAMSWP Output Full -->
+			<section class="uamswp-news-syndication-wrapper uams-module" aria-label="News &amp;amp; Announcements">
+				<div class="uamswp-news-syndication-container">
+											<div class="uamswp-news-syndication-full" itemscope itemtype="http://schema.org/NewsArticle">
+							<meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://news.uams.edu/story-1/"/>
+							<div class="news-item-thumbnail" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+								<img src="https://news.uams.edu/image-1.jpg" alt="Image alt 1">								<div class="wp-caption-text">Image caption 1</div>							</div>
+							<header class="news-item-title"><h2 itemprop="headline"><a href="https://news.uams.edu/story-1/" itemprop="url" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="">Story 1 <em>title</em></a></h2></header>
+							<div class="news-item-byline">
+								<!-- <span class="news-item-byline-date">May 1, 2024</span> | -->
+																<meta itemprop="datePublished" content="2024-05-01T10:00:00+00:00"/>
+					            <meta itemprop="dateModified" content="2024-05-01T11:00:00+00:00"/>
+							</div>
+							<div class="news-item-content" itemprop="articleBody">
+								<p>Content 1</p>								<!-- <hr size="1" width="75%"/> -->
+							</div>
+							<span itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+								<meta itemprop="name" content="University of Arkansas for Medical Sciences"/>
+								<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+									<meta itemprop="url" content="http://web.uams.edu/wp-content/uploads/sites/51/2017/09/UAMS_Academic_40-1.png"/>
+								    <meta itemprop="width" content="297"/>
+								    <meta itemprop="height" content="40"/>
+								</span>
+							</span>
+						</div>
+										</div>
+			</section>
+			

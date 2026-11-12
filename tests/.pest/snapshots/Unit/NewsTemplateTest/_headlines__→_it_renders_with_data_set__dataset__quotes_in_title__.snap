@@ -1,0 +1,17 @@
+            <!-- UAMSWP Output Headlines -->
+			<section class="uamswp-news-syndication-wrapper uams-module uamswp-news-syndication-headlines" aria-label="News &amp;amp; Announcements">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<h2 class="module-title"><span class="title">News &amp;amp; Announcements</span></h2>
+						</div>
+						<div class="col-12">
+							<div class="inner-container">
+								<ul class="uamswp-news-syndication-list">
+									<li class="uamswp-news-syndication-item"><a href="https://news.uams.edu/story-1/" data-moduletitle="News &amp;amp; Announcements" data-categorytitle="Beta">He said "no"</a></li>								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
