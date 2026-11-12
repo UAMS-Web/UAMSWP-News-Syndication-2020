@@ -100,7 +100,7 @@ function runPluginFileInChild(string $prelude): string
         function plugin_dir_url($file) { return "url/"; }
         function plugin_dir_path($file) { return "path/"; }
         function get_file_data($file, $headers) { return ["version" => "child-version"]; }
-        function add_action($hook, $callback) { echo "add_action:$hook\n"; }
+        function add_action($hook, $callback) { echo "add_action:$hook:$callback\n"; }
         require '.var_export(realpath(PLUGIN_FILE), true).';
         echo "constants:", UAMS_NEWS_ROOT_URL, UAMS_NEWS_PATH, UAMS_NEWS_VERSION, "\n";
         echo "included:", in_array('.var_export(realpath(dirname(PLUGIN_FILE).'/includes/news-syndicate.php'), true).', get_included_files(), true) ? "yes" : "no", "\n";
@@ -117,7 +117,7 @@ function runPluginFileInChild(string $prelude): string
 
 it('includes includes/news-syndicate.php and defines the constants when WPINC is defined', function (): void {
     expect(runPluginFileInChild('define("WPINC", "wp-includes");'))->toBe(
-        "add_action:plugins_loaded\n"
+        "add_action:plugins_loaded:UAMS\\News_Syndicate\\bootstrap\n"
         ."constants:url/path/child-version\n"
         ."included:yes\n"
     );

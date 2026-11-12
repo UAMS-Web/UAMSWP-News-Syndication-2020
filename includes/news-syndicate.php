@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace UAMS\News_Syndicate;
 
-add_action('plugins_loaded', 'UAMS\News_Syndicate\bootstrap');
-
 /**
  * Loads the UAMSWP News Syndicate base.
  *

@@ -15,6 +15,9 @@ class UAMS_Syndicate_News_Base
      */
     public $default_path = 'wp-json/wp/v2/';
 
+    // A property default is not an executable line, so coverage never attributes it to a test and
+    // its mutants report as uncovered. NewsBaseTest pins every value of it.
+    // @pest-mutate-ignore:RemoveArrayItem,FalseToTrue,EmptyStringToNotEmpty,IncrementInteger,DecrementInteger
     /**
      * Default attributes applied to all shortcodes that extend this base.
      *
@@ -61,6 +64,8 @@ class UAMS_Syndicate_News_Base
      */
     public $local_extended_atts = [];
 
+    // An empty-string property default is not an executable line, so coverage never attributes it to a test.
+    // @pest-mutate-ignore:EmptyStringToNotEmpty
     /**
      * @var string The shortcode name.
      */
