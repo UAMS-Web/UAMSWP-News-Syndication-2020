@@ -1,0 +1,39 @@
+name: Lint floor
+
+# Parses every shipped PHP file with the supported floor, PHP 8.2, so syntax newer than
+# the floor fails the pull request that adds it. Shipped files are every PHP file outside
+# vendor/ and tests/. The development PHP is 8.4 (composer.json's config.platform.php).
+# See the tests skill ("The floor lint job"). This public repository runs it in Actions
+# because it has no shared local CI runner.
+
+on:
+  pull_request:
+  push:
+    branches: [main, master, dev, staging]
+
+permissions: {}
+
+jobs:
+  lint-floor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Parse every shipped PHP file on PHP 8.2
+        run: |
+          set -o pipefail
+          count=0
+          while IFS= read -r -d '' file; do
+            php -l "$file" > /dev/null
+            count=$((count + 1))
+          done < <(find . -name '*.php' -not -path './vendor/*' -not -path './tests/*' -not -path './.*/*' -print0)
+          echo "parsed $count file(s) on PHP $(php -r 'echo PHP_VERSION;')"
+          test "$count" -gt 0
