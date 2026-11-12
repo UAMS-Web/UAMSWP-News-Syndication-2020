@@ -5,8 +5,8 @@ declare(strict_types=1);
 Plugin Name: UAMSWP News Syndication (2020)
 Plugin URI: https://github.com/UAMS-Web/UAMSWP-News-Syndication-2020
 Description: News Syndication plugin for uams.edu & uamshealth.com (2020 version)
-Author: uams, Todd McKee, MEd
-Author URI: http://www.uams.edu/
+Author: UAMS Web Services
+Author URI: https://communications.uams.edu/web/
 Version: 1.0.4
 Requires PHP: 8.2
 */
