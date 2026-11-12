@@ -45,6 +45,9 @@ function newsBaseStubCoreFunctions(): void
         static fn ($url) => ($url === '' || str_contains((string) $url, ':') || in_array($url[0], ['/', '#', '?'], true))
             ? $url : 'http://'.$url
     );
+    Functions\when('sanitize_html_class')->alias(static fn ($class) => preg_replace('/[^A-Za-z0-9_-]/', '', (string) $class));
+    Functions\when('get_home_url')->justReturn('https://this.test/');
+    Functions\when('is_multisite')->justReturn(false);
     Functions\when('sanitize_key')->alias(
         static fn ($key) => preg_replace('/[^a-z0-9_\-]/', '', strtolower((string) $key))
     );
@@ -120,8 +123,55 @@ describe('process_attributes()', function (): void {
             ->with($this->base->defaults_atts)
             ->andReturn(['host' => 'filtered.test', 'count' => 3]);
 
-        expect($this->base->process_attributes([]))->toBe(['host' => 'filtered.test', 'count' => 3]);
+        expect($this->base->process_attributes([]))->toBe([
+            'host' => 'filtered.test',
+            'count' => 3,
+            'scheme' => 'https',
+            'object' => 'json_data',
+            'news_position' => 'left',
+            'style' => '',
+        ]);
     });
+
+    it('falls back to https for a scheme other than http or https', function (string $scheme, string $expected): void {
+        expect($this->base->process_attributes(['scheme' => $scheme])['scheme'])->toBe($expected);
+    })->with([
+        'https kept' => ['https', 'https'],
+        'http kept' => ['http', 'http'],
+        'javascript' => ['javascript', 'https'],
+        'a quote' => ['https"onmouseover="x', 'https'],
+        'empty' => ['', 'https'],
+    ]);
+
+    it('falls back to json_data for an object that is not a JavaScript identifier', function (string $object, string $expected): void {
+        expect($this->base->process_attributes(['object' => $object])['object'])->toBe($expected);
+    })->with([
+        'identifier kept' => ['my_news', 'my_news'],
+        'dollar kept' => ['$news1', '$news1'],
+        'a space' => ['my news', 'json_data'],
+        'a script close' => ['x</script><script>y', 'json_data'],
+        'a leading digit' => ['1news', 'json_data'],
+        'empty' => ['', 'json_data'],
+    ]);
+
+    it('allows only left and right as the news position', function (string $position, string $expected): void {
+        expect($this->base->process_attributes(['news_position' => $position])['news_position'])->toBe($expected);
+    })->with([
+        'right kept' => ['right', 'right'],
+        'left kept' => ['left', 'left'],
+        'other' => ['right" onclick="x', 'left'],
+        'empty' => ['', 'left'],
+    ]);
+
+    it('rebuilds the style as class tokens', function (string $style, string $expected): void {
+        expect($this->base->process_attributes(['style' => $style])['style'])->toBe($expected);
+    })->with([
+        'one class kept' => ['bg-gray', 'bg-gray'],
+        'several classes kept' => ['bg-gray  text-center', 'bg-gray text-center'],
+        'quote and bracket removed' => ['bg-gray" onclick="x<b>', 'bg-gray onclickxb'],
+        'only junk' => ['"<>', ''],
+        'empty' => ['', ''],
+    ]);
 
     it('overrides a default with a local default of the same name', function (): void {
         $this->base->local_default_atts = ['host' => 'local.test'];
@@ -157,7 +207,13 @@ describe('process_attributes()', function (): void {
         $this->base->shortcode_name = 'uamswp_news';
         Filters\expectApplied('shortcode_atts_uamswp_news')->once()->andReturn(['filtered' => true]);
 
-        expect($this->base->process_attributes([]))->toBe(['filtered' => true]);
+        expect($this->base->process_attributes([]))->toBe([
+            'filtered' => true,
+            'scheme' => 'https',
+            'object' => 'json_data',
+            'news_position' => 'left',
+            'style' => '',
+        ]);
     });
 });
 
@@ -263,7 +319,7 @@ describe('build_initial_request()', function (): void {
         ]);
     });
 
-    it('escapes the base URL but appends the query unescaped', function (): void {
+    it('escapes the base URL and appends the query reduced to path characters', function (): void {
         Functions\when('get_home_url')->justReturn('http://this.test/');
         Functions\when('is_multisite')->justReturn(false);
         // A `when()` stub from beforeEach answers before a later `expect()`, so the
@@ -273,8 +329,63 @@ describe('build_initial_request()', function (): void {
         );
         $this->atts['query'] = 'posts?a=b';
 
-        expect($this->base->build_initial_request($this->remote, $this->atts)['url'])->toBe('ESCAPED/posts?a=b');
+        expect($this->base->build_initial_request($this->remote, $this->atts)['url'])->toBe('ESCAPED/postsab');
     });
+
+    it('limits the query to a route under the REST base', function (string $query, string $expected): void {
+        $this->atts['query'] = $query;
+
+        expect($this->base->build_initial_request($this->remote, $this->atts)['url'])
+            ->toBe('https://news.uams.edu/wp-json/wp/v2/'.$expected);
+    })->with([
+        'posts kept' => ['posts', 'posts'],
+        'a custom route kept' => ['pages/12', 'pages/12'],
+        'a leading slash trimmed' => ['/posts/', 'posts'],
+        'traversal dropped' => ['../../x', 'x'],
+        'a query string dropped' => ['posts?per_page=1&x=y', 'postsper_page1xy'],
+        'empty falls back to posts' => ['', 'posts'],
+        'only junk falls back to posts' => ['?=&..', 'posts'],
+    ]);
+});
+
+describe('allowed hosts', function (): void {
+    it('lists the UAMS domains and this site', function (): void {
+        expect($this->base->get_allowed_hosts())->toBe(['uams.edu', 'uamshealth.com', 'this.test']);
+    });
+
+    it('adds the network domain on multisite, without repeating a host', function (): void {
+        Functions\when('is_multisite')->justReturn(true);
+        Functions\when('get_site')->justReturn((object) ['domain' => 'network.test']);
+
+        expect($this->base->get_allowed_hosts())->toBe(['uams.edu', 'uamshealth.com', 'this.test', 'network.test']);
+
+        Functions\when('get_site')->justReturn((object) ['domain' => 'this.test']);
+
+        expect(array_values($this->base->get_allowed_hosts()))->toBe(['uams.edu', 'uamshealth.com', 'this.test']);
+    });
+
+    it('applies the allowed-hosts filter to the list', function (): void {
+        Filters\expectApplied('uamswp_news_syndicate_allowed_hosts')
+            ->once()
+            ->with(['uams.edu', 'uamshealth.com', 'this.test'])
+            ->andReturn(['custom.test']);
+
+        expect($this->base->get_allowed_hosts())->toBe(['custom.test']);
+    });
+
+    it('matches an exact host or a subdomain, ignoring case', function (string $host, bool $allowed): void {
+        expect($this->base->is_allowed_host($host))->toBe($allowed);
+    })->with([
+        'the domain' => ['uams.edu', true],
+        'a subdomain' => ['news.uams.edu', true],
+        'a deep subdomain' => ['a.b.uamshealth.com', true],
+        'upper case' => ['NEWS.UAMS.EDU', true],
+        'this site' => ['this.test', true],
+        'a look-alike prefix' => ['notuams.edu', false],
+        'a suffix on another name' => ['uams.edu.example.com', false],
+        'another domain' => ['example.com', false],
+        'empty' => ['', false],
+    ]);
 });
 
 describe('get_request_url()', function (): void {
@@ -287,8 +398,27 @@ describe('get_request_url()', function (): void {
     });
 
     it('prefers the site attribute over the host attribute', function (): void {
-        expect($this->base->get_request_url(['site' => 'https://site.test/blog', 'host' => 'https://news.uams.edu']))
-            ->toBe(['scheme' => 'https', 'host' => 'site.test', 'path' => '/blog/']);
+        expect($this->base->get_request_url(['site' => 'https://site.uams.edu/blog', 'host' => 'https://news.uams.edu']))
+            ->toBe(['scheme' => 'https', 'host' => 'site.uams.edu', 'path' => '/blog/']);
+    });
+
+    it('returns false for a host outside the allowed hosts', function (string $host): void {
+        expect($this->base->get_request_url(['site' => '', 'host' => $host]))->toBeFalse()
+            ->and($this->base->get_request_url(['site' => $host, 'host' => 'https://news.uams.edu']))->toBeFalse();
+    })->with([
+        'another domain' => ['https://example.com'],
+        'a look-alike prefix' => ['https://notuams.edu'],
+        'a suffix on another name' => ['https://uams.edu.example.com'],
+        'loopback' => ['http://127.0.0.1'],
+        'link-local' => ['http://169.254.169.254'],
+        'localhost' => ['http://localhost'],
+    ]);
+
+    it('allows a host that an allowed-hosts filter adds', function (): void {
+        Filters\expectApplied('uamswp_news_syndicate_allowed_hosts')->once()->andReturn(['partner.test']);
+
+        expect($this->base->get_request_url(['site' => '', 'host' => 'https://www.partner.test']))
+            ->toBe(['scheme' => 'https', 'host' => 'www.partner.test', 'path' => '/']);
     });
 
     it('adds http:// to a host with no scheme, through esc_url()', function (): void {

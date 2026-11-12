@@ -116,6 +116,8 @@ function newsStubRequestFunctions(): void
     Functions\when('add_query_arg')->alias(static function (array $args, string $url): string {
         return $url.(str_contains($url, '?') ? '&' : '?').http_build_query($args);
     });
+    Functions\when('sanitize_html_class')->alias(static fn ($class) => preg_replace('/[^A-Za-z0-9_-]/', '', (string) $class));
+    Functions\when('is_user_logged_in')->justReturn(false);
     Functions\when('get_home_url')->justReturn('https://this.test/');
     Functions\when('is_multisite')->justReturn(false);
 }
@@ -353,7 +355,7 @@ describe('display_shortcode()', function (): void {
         $this->captured = null;
         Functions\when('is_wp_error')->justReturn(false);
         Functions\when('wp_remote_retrieve_response_code')->justReturn(200);
-        Functions\when('wp_remote_get')->alias(function (string $url) {
+        Functions\when('wp_safe_remote_get')->alias(function (string $url) {
             $this->remoteUrl = $url;
 
             return ['body' => 'response'];
@@ -394,9 +396,19 @@ describe('display_shortcode()', function (): void {
 
     it('returns an error comment for an empty host', function (): void {
         expect($this->news->display_shortcode(['host' => '']))
-            ->toBe('<!-- uamswp_news ERROR - an empty host was supplied -->')
+            ->toBe('<!-- uamswp_news ERROR - an empty or disallowed host was supplied -->')
             ->and($this->captured)->toBeNull()
             ->and($this->remoteUrl)->toBeNull();
+    });
+
+    it('returns an error comment and makes no request for a host outside the allowed hosts', function (): void {
+        expect($this->news->display_shortcode(['host' => 'https://example.com']))
+            ->toBe('<!-- uamswp_news ERROR - an empty or disallowed host was supplied -->')
+            ->and($this->news->display_shortcode(['site' => 'http://169.254.169.254', 'host' => 'news.uams.edu']))
+            ->toBe('<!-- uamswp_news ERROR - an empty or disallowed host was supplied -->')
+            ->and($this->captured)->toBeNull()
+            ->and($this->remoteUrl)->toBeNull()
+            ->and($this->restUrls)->toBe([]);
     });
 
     it('requests a remote site over https with _embed, then applies the output and final filters', function (): void {
@@ -545,6 +557,32 @@ describe('display_shortcode()', function (): void {
             ->and($this->cacheSets[0][0])->toBe(md5($url).':lc1')
             ->and($this->cacheSets[0][2])->toBe('uamswp-news')
             ->and($ids($this->captured['data']))->toBe([21]);
+    });
+
+    it('does not read or write the cache for this site when the visitor is logged in', function () use ($ids): void {
+        Functions\when('is_user_logged_in')->justReturn(true);
+        $url = 'https://this.test/wp-json/wp/v2/posts?_embed=';
+        $this->cached = static fn () => [5 => (object) ['ID' => 8]];
+        $this->restResponse = static fn () => newsResponse(200, [newsLocalPost()]);
+
+        $this->news->display_shortcode(['host' => 'this.test']);
+
+        expect($this->restUrls)->toBe([$url])
+            ->and($this->cacheGets)->toBe([])
+            ->and($this->cacheSets)->toBe([])
+            ->and($ids($this->captured['data']))->toBe([21]);
+    });
+
+    it('does not read or write the merged local cache when the visitor is logged in', function (): void {
+        Functions\when('is_user_logged_in')->justReturn(true);
+        $this->body = (string) json_encode([newsRemotePost(['id' => 1, 'date' => '2024-01-01T00:00:00'])]);
+        $this->restResponse = static fn () => newsResponse(200, [newsLocalPost(['id' => 2, 'date' => '2024-02-01T00:00:00'])]);
+
+        $this->news->display_shortcode(['host' => 'news.uams.edu', 'local' => '1']);
+
+        expect($this->restUrls)->toHaveCount(1)
+            ->and(array_filter($this->cacheGets, static fn ($get) => $get[1] === 'uamswp-news'))->toBe([])
+            ->and(array_filter($this->cacheSets, static fn ($set) => $set[2] === 'uamswp-news'))->toBe([]);
     });
 
     it('caches false for this site when the local request does not answer 200', function (): void {
@@ -957,5 +995,61 @@ describe('process_local_posts()', function (): void {
         $key = array_key_first($this->news->process_local_posts([newsLocalPost(['date' => ''])], ['output' => 'headlines']));
 
         expect($key)->toBeGreaterThanOrEqual($before)->toBeLessThanOrEqual(time());
+    });
+});
+
+describe('generate_shortcode_output()', function (): void {
+    beforeEach(function (): void {
+        Functions\when('esc_url')->alias(static fn ($url) => htmlspecialchars((string) $url, ENT_QUOTES));
+        Functions\when('esc_attr')->alias(static fn ($text) => htmlspecialchars((string) $text, ENT_QUOTES));
+        Functions\when('esc_html')->alias(static fn ($text) => htmlspecialchars((string) $text, ENT_QUOTES));
+        Functions\when('wp_kses_post')->alias(static fn ($text) => preg_replace('#<script.*?</script>#is', '', (string) $text));
+        Functions\when('absint')->alias(static fn ($value) => abs((int) $value));
+        $this->render = function (array $atts, array $post): string {
+            $method = new ReflectionMethod(UAMS_Syndicate_News::class, 'generate_shortcode_output');
+            $atts += [
+                'output' => 'full', 'style' => '', 'news_title' => '', 'offset' => 0, 'hide_author' => 0,
+                'date_format' => 'F j, Y',
+            ];
+            $content = (object) ($post + [
+                'link' => 'https://news.uams.edu/a/', 'title' => 'A title', 'content' => 'Content',
+                'fullcontent' => '', 'image' => '', 'imagealt' => '', 'imagecaption' => '',
+                'author_name' => 'Ann', 'date' => '2024-05-01T10:00:00', 'modified' => '2024-05-02T10:00:00',
+            ]);
+
+            return (string) $method->invoke(new UAMS_Syndicate_News, [$content], $atts);
+        };
+    });
+
+    it('escapes the featured image alt text in the full output', function (): void {
+        $html = ($this->render)([], ['image' => 'https://news.uams.edu/i.jpg', 'imagealt' => '"><script>alert(1)</script>']);
+
+        expect($html)->toContain('alt="&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;"')
+            ->and($html)->not->toContain('<script>alert(1)');
+    });
+
+    it('filters the featured image caption in the full output', function (): void {
+        $html = ($this->render)([], ['imagecaption' => 'Caption<script>alert(1)</script>']);
+
+        expect($html)->toContain('<div class="wp-caption-text">Caption</div>');
+    });
+
+    it('does not run shortcodes on fetched content in the full output', function (): void {
+        Functions\expect('do_shortcode')->never();
+
+        $html = ($this->render)([], ['fullcontent' => '[dangerous]', 'content' => '[other]']);
+
+        expect($html)->toContain('[dangerous]')
+            ->and($html)->not->toContain('[other]');
+
+        $html = ($this->render)([], ['fullcontent' => '', 'content' => '[other]']);
+
+        expect($html)->toContain('[other]');
+    });
+
+    it('escapes the style in the wrapper class', function (): void {
+        $html = ($this->render)(['style' => 'bg-gray"x'], []);
+
+        expect($html)->toContain('uams-module bg-gray&quot;x"');
     });
 });
