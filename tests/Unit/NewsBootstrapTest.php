@@ -3,9 +3,8 @@
 /**
  * Characterization tests for includes/news-syndicate.php, the plugin bootstrap.
  *
- * The file registers its `plugins_loaded` callback as it loads, so the load itself is tested in a
- * child process (tests/Support/load-news-syndicate.php), because tests/bootstrap.php has already
- * loaded it in this one. The three functions are tested in this process.
+ * The file only declares its three functions. The entry file (uamswp-news-syndication.php) registers
+ * bootstrap() on `plugins_loaded`, and tests/Unit/PluginFileTest.php pins that.
  */
 
 declare(strict_types=1);
@@ -22,15 +21,6 @@ function newsBootstrapLoad(): void
 {
     require_once dirname(__DIR__, 2).'/includes/news-syndicate.php';
 }
-
-it('registers bootstrap() on plugins_loaded as the file loads', function (): void {
-    $script = dirname(__DIR__).'/Support/load-news-syndicate.php';
-    $output = [];
-    exec(escapeshellarg(PHP_BINARY).' '.escapeshellarg($script).' 2>&1', $output, $status);
-
-    expect($status)->toBe(0, implode(PHP_EOL, $output))
-        ->and(implode(PHP_EOL, $output))->toBe('loaded');
-});
 
 describe('bootstrap()', function (): void {
     it('loads the base class', function (): void {

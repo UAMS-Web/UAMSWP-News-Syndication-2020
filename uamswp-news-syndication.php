@@ -27,3 +27,7 @@ $plugin_header = get_file_data(
 $plugin_version = $plugin_header['version'];
 define('UAMS_NEWS_VERSION', $plugin_version);
 include_once __DIR__.'/includes/news-syndicate.php';
+
+// Registered here and not in includes/news-syndicate.php: a statement at the top level of that file runs at
+// load, before any test can cover it, so a mutation run reported its mutant as uncovered.
+add_action('plugins_loaded', 'UAMS\News_Syndicate\bootstrap');

@@ -30,8 +30,8 @@ jobs:
     with:
       linux-only: true
       pest-command: composer test:unit
-      # Mutation testing is turned on by UAMS-Web/UAMSWP-News-Syndication-2020#77.
-      mutate: false
+      mutate-paths: includes
+      mutate-ignore-paths: includes
       floor-lint: true
       floor-lint-php: '8.2'
       floor-lint-command: >-
