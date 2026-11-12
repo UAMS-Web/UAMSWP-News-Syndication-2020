@@ -918,12 +918,12 @@ describe('process_local_posts()', function (): void {
             ->toBe('');
     });
 
-    it('currently ignores a thumbnail size and uses the original image instead (#64)', function (): void {
+    it('uses the thumbnail size when there is no post-thumbnail size (#64)', function (): void {
         newsStubLocalMedia(['thumbnail', 'aspect-16-9']);
 
         $subset = current($this->news->process_local_posts([newsLocalPost(newsLocalLinks())], ['output' => 'json']));
 
-        expect($subset->thumbnail)->toBe('https://img.test/local-original.jpg');
+        expect($subset->thumbnail)->toBe('https://img.test/local-thumbnail.jpg');
     });
 
     it('uses the 16:9 size without a small image when the small size is absent', function (): void {
@@ -946,7 +946,7 @@ describe('process_local_posts()', function (): void {
             ->and($subset->imagecaption)->toBe('Local caption');
     });
 
-    it('currently warns on a missing small 16:9 size, then uses large for both images (#64)', function (): void {
+    it('uses large for both images, with no warning, when neither 16:9 size exists (#64)', function (): void {
         newsStubLocalMedia(['post-thumbnail', 'large']);
 
         [$result, $warnings] = newsCaptureWarnings(
@@ -954,21 +954,21 @@ describe('process_local_posts()', function (): void {
         );
         $subset = current($result);
 
-        expect($warnings)->toBe(['Undefined array key "aspect-16-9-small"'])
+        expect($warnings)->toBe([])
             ->and($subset->image)->toBe('https://img.test/local-large.jpg')
             ->and($subset->image_sm)->toBe('https://img.test/local-large.jpg')
             ->and($subset->imagealt)->toBe('Local alt')
             ->and($subset->imagecaption)->toBe('Local caption');
     });
 
-    it('currently warns on a missing small 16:9 size, then sets no image when no size matches (#64)', function (): void {
+    it('sets no image, with no warning, when no image size matches (#64)', function (): void {
         newsStubLocalMedia(['post-thumbnail']);
 
         [$result, $warnings] = newsCaptureWarnings(
             fn () => $this->news->process_local_posts([newsLocalPost(newsLocalLinks())], ['output' => 'json'])
         );
 
-        expect($warnings)->toBe(['Undefined array key "aspect-16-9-small"'])
+        expect($warnings)->toBe([])
             ->and(current($result)->image)->toBeFalse();
     });
 
