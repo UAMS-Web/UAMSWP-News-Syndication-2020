@@ -7,7 +7,7 @@ Plugin URI: https://github.com/UAMS-Web/UAMSWP-News-Syndication-2020
 Description: News Syndication plugin for uams.edu & uamshealth.com (2020 version)
 Author: UAMS Web Services
 Author URI: https://communications.uams.edu/web/
-Version: 1.1.0
+Version: 1.2.0
 Requires at least: 6.8
 Requires PHP: 8.2
 */
