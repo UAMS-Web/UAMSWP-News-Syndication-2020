@@ -1,5 +1,21 @@
 # UAMSWP News Syndication 2020
 
+A WordPress plugin that shows news posts from another WordPress site, from this site, or from both, through the `[uamswp_news]` shortcode, as headlines, excerpts, cards, a grid, side-by-side items or full articles.
+
+The documentation (a walkthrough, guides, every shortcode attribute, the developer hooks and troubleshooting) is in the [wiki](https://github.com/UAMS-Web/UAMSWP-News-Syndication-2020/wiki).
+
+## Requirements
+
+- WordPress 6.8 or later
+- PHP 8.2 or later
+
+## Installation
+
+1. Download the source code zip of the latest release from [Releases](https://github.com/UAMS-Web/UAMSWP-News-Syndication-2020/releases).
+2. In WordPress, go to **Plugins**, **Add New Plugin**, **Upload Plugin**, choose the zip and install it.
+3. Activate **UAMSWP News Syndication (2020)**.
+4. Add a shortcode to a page: see [Your first news list](https://github.com/UAMS-Web/UAMSWP-News-Syndication-2020/wiki/Your-first-news-list).
+
 ## Tests
 
 ```bash

@@ -1,0 +1,22 @@
+{
+  // Spell check for this repository's prose (#116). Every word below is a name that cannot be
+  // reworded: the organization and plugin names, a developer's surname, or an identifier the
+  // plugin's code fixes (a shortcode, an attribute, a field, a PHP function). See the
+  // american-english-prose rule for what justifies an entry.
+  "version": "0.2",
+  "language": "en-US",
+  "words": [
+    "atts",
+    "categorytitle",
+    "Ccolor",
+    "fullcontent",
+    "intval",
+    "moduletitle",
+    "multisite",
+    "Passmore",
+    "postid",
+    "UAMS",
+    "UAMSWP",
+    "uamswp"
+  ]
+}
