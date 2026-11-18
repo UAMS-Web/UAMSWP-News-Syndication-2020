@@ -5,6 +5,7 @@ Written against v1.2.0.
 - [The heading shows but no posts](#the-heading-shows-but-no-posts)
 - [The category or tag is ignored](#the-category-or-tag-is-ignored)
 - [Local posts are missing](#local-posts-are-missing)
+- [A fatal error about get_site() on a single site](#a-fatal-error-about-get_site-on-a-single-site)
 - [A hide option hides when set to false](#a-hide-option-hides-when-set-to-false)
 - [New posts do not appear](#new-posts-do-not-appear)
 - [The editor form's Post ID or Background Color has no effect](#the-editor-forms-post-id-or-background-color-has-no-effect)
@@ -33,7 +34,7 @@ The page source contains `<!-- UAMSWP Output JSON -->` followed by `<script>var 
 
 **Cause:** the request returned no posts. The source site may be unreachable, may answer with an error, or may have no posts matching the filters. An `offset` as large as the number of posts also leaves nothing to show.
 
-**Fix:** open the source site's `wp-json/wp/v2/posts` in a browser and confirm it lists posts. Remove the filters one at a time to find the one that excludes everything. A failed remote request is not cached, so the next page view tries again.
+**Fix:** open the source site's `wp-json/wp/v2/posts` in a browser and confirm it lists posts. Remove the filters one at a time to find the one that excludes everything. A request that fails to connect, or answers 404, is not cached, so the next page view tries again. Any other error response is cached for up to ten minutes like a normal result; see [Getting fresh posts now](Caching.md#getting-fresh-posts-now).
 
 ## The category or tag is ignored
 
@@ -50,6 +51,14 @@ The list shows posts from every category even though `category` is set.
 **Cause:** without `count`, the local request asks for zero posts, which the REST API rejects.
 
 **Fix:** add a `count`. See [Adding this site's posts to a news list](Adding-this-sites-posts-to-a-news-list.md).
+
+## A fatal error about get_site() on a single site
+
+The page stops rendering, and the PHP error log shows `Call to undefined function get_site()`.
+
+**Cause:** `local` or `local_only` is set on a site that is not part of a multisite network. Those options read the current site's address with `get_site()`, which WordPress defines only on multisite.
+
+**Fix:** remove `local` or `local_only`, and set `host` to this site's own address to list its posts. See [Point the shortcode at this site](Adding-this-sites-posts-to-a-news-list.md#point-the-shortcode-at-this-site).
 
 ## A hide option hides when set to false
 

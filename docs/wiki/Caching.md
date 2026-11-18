@@ -13,7 +13,7 @@ The plugin keeps the posts it fetched in the WordPress object cache, so a page v
 
 ## Getting fresh posts now
 
-- **A remote list:** wait up to ten minutes, or change any attribute (adding `style=""` and then removing it is enough), or flush the object cache.
+- **A remote list:** wait up to ten minutes, flush the object cache, or change an attribute to a value that changes what is requested or shown (for example, a different `style` class). An empty `style=""` or an attribute the shortcode does not know leaves the cache key unchanged.
 - **A local list:** save any post or page on this site.
 
 ## Reference

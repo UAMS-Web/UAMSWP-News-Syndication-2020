@@ -7,7 +7,7 @@ A common layout puts the newest story in a large format and the next few below i
 1. Add the featured story:
 
    ```text
-   [uamswp_news output="side" host="news.example.edu" count="1" news_title="Featured story"]
+   [uamswp_news output="cards" host="news.example.edu" count="1" news_title="Featured story"]
    ```
 
 2. Below it, add the headlines, skipping the first item:
@@ -16,7 +16,7 @@ A common layout puts the newest story in a large format and the next few below i
    [uamswp_news output="headlines" host="news.example.edu" count="4" offset="1" hide_title="1"]
    ```
 
-3. Preview the page. The newest story appears once, in the side-by-side format, and the four stories after it are listed as headlines.
+3. Preview the page. The newest story appears once, as a card under **Featured story**, and the four stories after it are listed as headlines.
 
 Both shortcodes need the same `host`, `category`, `tag` and other filters, or the second list does not continue the first one.
 

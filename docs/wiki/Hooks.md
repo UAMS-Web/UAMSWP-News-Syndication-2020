@@ -1,6 +1,6 @@
 Written against v1.2.0.
 
-The plugin offers six filters and one action. Add callbacks from a theme or another plugin, after this plugin has loaded (it loads its classes on `plugins_loaded` and registers the shortcode on `init`).
+The plugin offers six filters and one action. Add callbacks from a theme or another plugin, after this plugin has loaded (it loads its base class on `plugins_loaded`, and loads the `[uamswp_news]` class and registers the shortcode on `init`).
 
 ## Filters
 

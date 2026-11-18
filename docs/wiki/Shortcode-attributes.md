@@ -10,10 +10,10 @@ Shortcode attributes are text. For the on/off attributes, `1` turns the option o
 | --- | --- | --- |
 | `host` | the plugin's default news site | Host name to read posts from, such as `news.example.edu`. |
 | `site` | empty | Host and path, such as `news.example.edu/research/`, for a site below the host's root. Overrides `host` when set. |
-| `scheme` | `https` | `http` or `https`. Any other value is replaced with `https`. |
+| `scheme` | `https` | The scheme of the category links the formats print: `http` or `https`, and any other value becomes `https`. Requests to a remote host are always made over https. |
 | `query` | `posts` | The REST route under `wp-json/wp/v2/` to read. Only letters, digits, `_`, `-` and `/` are kept; an empty result falls back to `posts`. |
-| `local` | off | `1` merges this site's posts into the remote results. See [Adding this site's posts to a news list](Adding-this-sites-posts-to-a-news-list.md). |
-| `local_only` | off | `1` shows this site's posts only and makes no remote request. |
+| `local` | off | `1` merges this site's posts into the remote results. Multisite only, and needs `count`; see [Adding this site's posts to a news list](Adding-this-sites-posts-to-a-news-list.md). |
+| `local_only` | off | `1` shows this site's posts only and makes no remote request. Multisite only, and needs `count`. |
 
 **Allowed hosts.** The host of `site` or `host` must be on the allowed list, or the shortcode prints only an HTML comment (see [Troubleshooting](Troubleshooting.md#nothing-shows-and-the-page-source-has-an-error-comment)). The list holds the organization's two public domains with every subdomain of them, this site's own host, and on a multisite network the current site's domain. `get_allowed_hosts()` in the base class holds the list, and the [`uamswp_news_syndicate_allowed_hosts`](Hooks.md#filters) filter changes it.
 
@@ -22,7 +22,7 @@ Shortcode attributes are text. For the on/off attributes, `1` turns the option o
 | Attribute | Default | Effect |
 | --- | --- | --- |
 | `count` | the source site's own page size | Number of items to show. Requests are capped at 100. |
-| `offset` | `0` | Number of newest items to skip. Added to `count` for the request, so the shown number stays `count`. |
+| `offset` | `0` | Number of newest items to skip. Added to `count` for the request, so the shown number stays `count`. Set `count` with it: an `offset` alone requests only `offset` posts and then skips all of them. |
 | `category` | empty | Category slug, or several separated by commas. |
 | `advanced_cat` | empty | Category ids separated by commas; a negative id excludes that category. |
 | `tag` | empty | Tag slug, or several separated by commas. |
@@ -35,21 +35,21 @@ Slugs are passed through `sanitize_key()` and ids through `intval()` before they
 | Attribute | Default | Effect |
 | --- | --- | --- |
 | `output` | `json` | The format. One of `json`, `headlines`, `excerpts`, `cards`, `grid`, `side`, `full`; see [Output formats](Output-formats.md). |
-| `news_title` | `News & Announcements` | The heading above the list. It also labels the section for screen readers and is written to each link's `data-moduletitle` attribute. |
+| `news_title` | `News & Announcements` | The heading above the list in `headlines`, `excerpts`, `cards` and `grid`. The other formats except `json` use it only as the section's screen-reader label and in the links' `data-moduletitle` attribute. |
 | `style` | empty | Extra CSS classes for the outer wrapper, separated by spaces. Each one is passed through `sanitize_html_class()`. |
 | `date_format` | `F j, Y` | PHP date format for the item date in `excerpts`. |
 | `news_position` | `left` | `left` or `right`: the image side in the `side` format. |
-| `object` | `json_data` | The JavaScript variable name for the `json` format. Anything that is not a valid name is replaced with `json_data`. |
+| `object` | `json_data` | The JavaScript variable name the `json` and `side` formats write the posts to. Anything that is not a valid name is replaced with `json_data`. |
 
 ## What each item shows
 
 | Attribute | Default | Effect |
 | --- | --- | --- |
-| `hide_title` | off | `1` hides the heading visually and keeps it for screen readers. |
+| `hide_title` | off | `1` hides the heading visually and keeps it for screen readers, in the formats that print one. |
 | `hide_img` | off | `1` leaves out the images in `excerpts`, `cards` and `grid`. |
 | `hide_date` | off | `1` hides the date in `excerpts`. |
 | `hide_author` | off | `1` hides the author in `excerpts` and `full`. |
-| `include_link` | off | `1` adds a **View the Full List** button linking to the category's archive, in `cards`, `grid` and `side`. In `cards` and `grid` it also needs `category`. |
+| `include_link` | off | `1` adds a button linking to the category's archive: **View the Full List** in `cards` and `grid`, which also need `category`, and one named after the category in `side` (**View the Research Archive** for a category named Research). |
 
 ## Example
 
